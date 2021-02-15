@@ -10,6 +10,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 
 public class RegisterPageController {
 
@@ -68,6 +69,24 @@ public class RegisterPageController {
         assert ssnTextField != null : "fx:id=\"ssnTextField\" was not injected: check your FXML file 'registerpage.fxml'.";
         assert registerButton != null : "fx:id=\"registerButton\" was not injected: check your FXML file 'registerpage.fxml'.";
 
+    }
+
+    public void onRegisterExitied(MouseEvent mouseEvent) {
+        registerButton.setStyle("-fx-background-color: #313131;");
+    }
+
+
+
+    public void onRegisterHovered(MouseEvent mouseEvent) {
+        registerButton.setStyle("-fx-background-color: #9d2929;");
+    }
+
+    public void onClearButtonExitied(MouseEvent mouseEvent) {
+        clearButton.setStyle("-fx-background-color: #313131;");
+    }
+
+    public void onClearButtonHovered(MouseEvent mouseEvent) {
+        clearButton.setStyle("-fx-background-color: #9d2929;");
     }
 }
 // 700 x 835

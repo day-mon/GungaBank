@@ -7,26 +7,40 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import de.jensd.fx.glyphs.*;
 import javafx.stage.StageStyle;
+import sample.util.ArrayList;
 
 import java.io.IOException;
 
 public class Main extends Application {
     private static Scene scene;
+    public static ArrayList<Stage> stages;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
 
+        stages = new ArrayList<>();
         scene = new Scene(loadFXML("gui/loginpage"), 700, 500);
         primaryStage.setTitle("Gunga Niggas");
         primaryStage.setScene(scene);
         primaryStage.initStyle(StageStyle.UTILITY);
         primaryStage.setResizable(false);
         primaryStage.show();
+        stages.add(primaryStage);
 
     }
 
     public static void setRoot(String fxml) throws IOException {
         scene.setRoot(loadFXML(fxml));
+
+    }
+
+    public static void setRoot(String fxml, int l, int w, boolean resize, StageStyle style) throws IOException {
+        scene = new Scene(loadFXML(fxml), l, w);
+        Stage stg = new Stage();
+        stg.setScene(scene);
+        stg.setResizable(resize);
+        stg.initStyle(style);
+        stg.show();
 
     }
 

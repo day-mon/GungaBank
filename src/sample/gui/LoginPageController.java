@@ -18,6 +18,8 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import sample.Main;
 
 public class LoginPageController {
@@ -43,6 +45,11 @@ public class LoginPageController {
     @FXML // fx:id="registerButton"
     private Button registerButton; // Value injected by FXMLLoader
 
+    /**
+     *
+     */
+    private boolean registerPageOpened = false;
+
 
     /**
      * When the login button is hovered over by a mouse it will change to a different color
@@ -66,10 +73,13 @@ public class LoginPageController {
     }
 
     public void onRegisterButtonClick(ActionEvent actionEvent) {
-        try {
-            Main.setRoot("gui/registerpage");
-        } catch (IOException e) {
-            e.printStackTrace();
+        if (!registerPageOpened) {
+            try {
+                Main.setRoot("gui/registerpage", 700, 835, false, StageStyle.UTILITY);
+                registerPageOpened = true;
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 }
