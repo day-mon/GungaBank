@@ -1,4 +1,4 @@
-//fart
+//ok
 package sample.util;
 
 import java.util.Arrays;
