@@ -8,17 +8,31 @@ import javafx.stage.Stage;
 import de.jensd.fx.glyphs.*;
 import javafx.stage.StageStyle;
 
+import java.io.IOException;
+
 public class Main extends Application {
+    private static Scene scene;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("gui/loginpage.fxml"));
+
+        scene = new Scene(loadFXML("gui/loginpage"), 700, 500);
         primaryStage.setTitle("Gunga Niggas");
-        primaryStage.setScene(new Scene(root, 700, 500));
+        primaryStage.setScene(scene);
         primaryStage.initStyle(StageStyle.UTILITY);
         primaryStage.setResizable(false);
         primaryStage.show();
 
+    }
+
+    public static void setRoot(String fxml) throws IOException {
+        scene.setRoot(loadFXML(fxml));
+
+    }
+
+    public static Parent loadFXML(String fxml) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource(fxml + ".fxml"));
+        return fxmlLoader.load();
     }
 
 

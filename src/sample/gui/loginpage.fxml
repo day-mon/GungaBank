@@ -30,7 +30,7 @@
             <Button id="loginTextLabel" fx:id="loginTextLabel" layoutX="136.0" layoutY="297.0" mnemonicParsing="false" onMouseEntered="#onLoginHovered" onMouseExited="#onLoginHoveredExitied" prefHeight="34.0" prefWidth="115.0" style="-fx-background-color: #212121;" text="Login" textFill="WHITE" />
             <Text fill="#212121" layoutX="170.0" layoutY="106.0" strokeType="OUTSIDE" strokeWidth="0.0" text="User Login" />
             <Text id="forgotPasswordLabel" fx:id="forgotPasswordLabel" layoutX="138.0" layoutY="472.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Forget Your Password?" />
-            <Button id="registerButton" fx:id="registerButton" layoutX="154.0" layoutY="349.0" mnemonicParsing="false" onMouseEntered="#onRegisterHovered" onMouseExited="#onRegisterExitied" prefHeight="34.0" prefWidth="80.0" style="-fx-background-color: #212121;" text="Register" textFill="WHITE" />
+            <Button id="registerButton" fx:id="registerButton" layoutX="154.0" layoutY="349.0" mnemonicParsing="false" onAction="#onRegisterButtonClick" onMouseEntered="#onRegisterHovered" onMouseExited="#onRegisterExitied" prefHeight="34.0" prefWidth="80.0" style="-fx-background-color: #212121;" text="Register" textFill="WHITE" />
             <ImageView id="usersIcon" layoutX="165.0" layoutY="22.0">
                <image>
                   <Image url="@../dependencies/icons8_user_group_64px.png" />

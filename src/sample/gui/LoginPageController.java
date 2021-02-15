@@ -10,12 +10,15 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
+import sample.Main;
 
 public class LoginPageController {
 
@@ -60,5 +63,13 @@ public class LoginPageController {
 
     public void onRegisterExitied(MouseEvent mouseEvent) {
         registerButton.setStyle("-fx-background-color: #212121;");
+    }
+
+    public void onRegisterButtonClick(ActionEvent actionEvent) {
+        try {
+            Main.setRoot("gui/registerpage");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
