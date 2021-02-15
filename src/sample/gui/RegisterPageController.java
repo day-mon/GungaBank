@@ -148,6 +148,10 @@ public class RegisterPageController {
                         errorReasons.put(10, "Your email is too long!");
                     }
 
+                    if (!emailVaildaotr(currentField.getText())) {
+                        errorReasons.put(11, "You do not have a valid email!");
+                    }
+
 
           }
 
@@ -194,7 +198,7 @@ public class RegisterPageController {
 
     private boolean emailVaildaotr(String email) {
         // Regex pattern for emails
-        final String EMAIL_REGEX = "^[a-zA-Z][a-zA-Z0-9._-]*\\\\@\\\\w+(\\\\.)*\\\\w+\\\\.\\\\w+$";
+        final String EMAIL_REGEX = "^(.+)@(.+)$";
         Pattern pat = Pattern.compile(EMAIL_REGEX);
         Matcher match = pat.matcher(email);
 

@@ -1,6 +1,8 @@
 //ok
 package sample.util;
 
+import sample.util.interfaces.ArraySetInterface;
+
 import java.util.Arrays;
 
 public class ArraySet<T> implements ArraySetInterface<T> {

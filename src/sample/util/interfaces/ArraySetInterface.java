@@ -1,4 +1,4 @@
-package sample.util;
+package sample.util.interfaces;
 
 public interface ArraySetInterface<T> {
     public boolean add(T obj);
