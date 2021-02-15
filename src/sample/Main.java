@@ -5,15 +5,14 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import de.jensd.fx.glyphs.*;
 import javafx.stage.StageStyle;
-import sample.util.ArrayList;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class Main extends Application {
     private static Scene scene;
-    public static ArrayList<Stage> stages;
+    public static java.util.ArrayList<Stage> stages;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
