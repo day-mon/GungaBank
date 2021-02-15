@@ -75,7 +75,7 @@ public class LoginPageController {
     public void onRegisterButtonClick(ActionEvent actionEvent) {
         if (!registerPageOpened) {
             try {
-                Main.setRoot("gui/registerpage", 700, 835, false, StageStyle.UTILITY);
+               Main.setRoot("gui/registerpage", 700, 835, false, StageStyle.UTILITY, 0);
                 registerPageOpened = true;
             } catch (IOException e) {
                 e.printStackTrace();

@@ -31,11 +31,11 @@ public class Main extends Application {
 
     public static void setRoot(String fxml) throws IOException {
         scene.setRoot(loadFXML(fxml));
-
     }
 
-    public static void setRoot(String fxml, int l, int w, boolean resize, StageStyle style) throws IOException {
+    public static void setRoot(String fxml, int l, int w, boolean resize, StageStyle style, int index) throws IOException {
         scene = new Scene(loadFXML(fxml), l, w);
+        stages.get(index).hide();
         Stage stg = new Stage();
         stg.setScene(scene);
         stg.setResizable(resize);
