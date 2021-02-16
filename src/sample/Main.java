@@ -24,6 +24,37 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
 
+        /**
+         * On start load all of things we had before.
+         */
+        try {
+            ArrayList<File> files = FileOperations.getAllFilesWithExt(new File("src\\sample\\files\\"), "ser");
+            int serFiles = 0;
+            try {
+                serFiles = files.size();
+            } catch (NullPointerException npex) {
+                System.out.println("No files exist and serializer input failed.");
+            }
+
+            for (int i = 0; i < serFiles; i++) {
+                FileInputStream fis = new FileInputStream(files.get(i).getAbsolutePath());
+                ObjectInputStream ois = new ObjectInputStream(fis);
+
+                String fileName = files.get(i).getName().split("\\.")[0];
+
+                switch (fileName) {
+                    case "users":
+                        users = (HashMap<String, User>) ois.readObject();
+                        break;
+                    default:
+                        throw new IllegalStateException("Unexpected value: " + fileName);
+                }
+
+
+            }
+        } catch (IOException | ClassNotFoundException e) {};
+
+
         stages = new ArrayList<>();
         scene = new Scene(loadFXML("gui/loginpage"), 700, 500);
         primaryStage.setTitle("Gunga Niggas");
@@ -58,35 +89,6 @@ public class Main extends Application {
 
     public static void main(String[] args) {
 
-        /**
-         * On start load all of things we had before.
-         */
-        try {
-            ArrayList<File> files = FileOperations.getAllFilesWithExt(new File("GungaBankV4\\src\\sample\\files\\"), "ser");
-            int serFiles = 0;
-            try {
-                serFiles = files.size();
-            } catch (NullPointerException npex) {
-                System.out.println("No files exist and serializer input failed.");
-            }
-
-            for (int i = 0; i < serFiles; i++) {
-                FileInputStream fis = new FileInputStream(files.get(i).getAbsolutePath());
-                ObjectInputStream ois = new ObjectInputStream(fis);
-
-                String fileName = files.get(i).getName().split("\\.")[0];
-
-                switch (fileName) {
-                    case "users":
-                        users = (HashMap<String, User>) ois.readObject();
-                        break;
-                    default:
-                        throw new IllegalStateException("Unexpected value: " + fileName);
-                }
-
-
-            }
-        } catch (IOException | ClassNotFoundException e) {};
 
 
             launch(args);

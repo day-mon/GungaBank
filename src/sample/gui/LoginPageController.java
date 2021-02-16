@@ -12,6 +12,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -20,6 +21,8 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import sample.Main;
+import sample.core.objects.User;
+import sample.core.operations.StringOperations;
 
 public class LoginPageController {
 
@@ -80,5 +83,25 @@ public class LoginPageController {
                 e.printStackTrace();
             }
         }
+    }
+
+    public void onLoginClick(ActionEvent actionEvent) {
+
+        String login = usernameTextField.getText();
+        String password = passwordField.getText();
+
+        if (login.length() < 0) {
+
+        } else {
+            if (Main.users.containsKey(login)) {
+                String hashedPassword = StringOperations.hashPassword(password);
+                User userToLogin = Main.users.get(login);
+                if (userToLogin.gethashedPass().equals(hashedPassword) && userToLogin.getEmail().equals(login)) {
+                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                    alert.show();
+                }
+            }
+        }
+
     }
 }

@@ -6,6 +6,8 @@ package sample.gui;
 
 import java.io.IOException;
 import java.net.URL;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -25,6 +27,7 @@ import javafx.scene.input.MouseEvent;
 import sample.Main;
 import sample.core.objects.User;
 import sample.core.operations.FileOperations;
+import sample.core.operations.StringOperations;
 import sample.util.ArrayList;
 
 public class RegisterPageController {
@@ -224,7 +227,9 @@ public class RegisterPageController {
 
 
 
-                        Main.users.put(emailTextField.getText().toString(), new User(firstNameTextField.getText(), lastNameTextField.getText(), emailTextField.getText(), date, phoneNumberTextField.getText(), ssnTextField.getText(), passwordField.getText()));
+                        Main.users.put(emailTextField.getText().toString(),
+                                new User(firstNameTextField.getText(), lastNameTextField.getText(), emailTextField.getText(), date, phoneNumberTextField.getText(), ssnTextField.getText(), StringOperations.hashPassword(passwordField.getText())));
+
 
                         FileOperations.writeToFile(FileOperations.users, Main.users);
 
@@ -281,6 +286,7 @@ public class RegisterPageController {
         Matcher match = pt.matcher(phone);
         return match.matches();
     }
+
 
 }
 
