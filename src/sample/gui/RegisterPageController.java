@@ -6,14 +6,11 @@ package sample.gui;
 
 import java.io.IOException;
 import java.net.URL;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.ResourceBundle;
 import java.util.Set;
-import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -26,9 +23,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import sample.Main;
 import sample.core.objects.User;
-import sample.core.operations.FileOperations;
-import sample.core.operations.StringOperations;
-import sample.util.ArrayList;
+import sample.util.operations.FileOperations;
+import sample.util.operations.StringOperations;
 
 public class RegisterPageController {
 
@@ -86,6 +82,7 @@ public class RegisterPageController {
 
     @FXML
     void clearButtonClicked(ActionEvent event) {
+
 
         for (TextField fieldsToClear : textFields) {
             if (!fieldsToClear.getText().equals("")) {

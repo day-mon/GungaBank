@@ -162,7 +162,7 @@ public class ArrayList<E> implements ListInterface<E>, Serializable, Iterable<E>
     return (ListIterator<E>) this.iterator();
   }
 
-  public void growCheck() {
+  private void growCheck() {
     if (size == capacity - 1) {
       int newNum = capacity << 1;
       capacity = newNum;

@@ -1,6 +1,6 @@
 package sample.util.interfaces;
 
-public interface ArraySetInterface<T> {
+public interface Set<T> {
     public boolean add(T obj);
 
     public void clear();
@@ -10,7 +10,6 @@ public interface ArraySetInterface<T> {
     public Object[] toArray();
 
     public boolean remove(T obj);
-
 
     public boolean contains(T obj);
 

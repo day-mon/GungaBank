@@ -1,4 +1,4 @@
-package sample.core.operations;
+package sample.util.operations;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;

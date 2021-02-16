@@ -1,15 +1,20 @@
 //ok
 package sample.util;
 
-import sample.util.interfaces.ArraySetInterface;
+import sample.util.interfaces.Set;
 
 import java.util.Arrays;
 
-public class ArraySet<T> implements ArraySetInterface<T> {
+public class ArraySet<T> implements Set<T> {
     private static final int defaultCap = 25;
     private Object[] set;
     private int size;
     private int capacity;
+
+    /**
+     * TODO: Make resizeArray private,  resize array is not needed to be used by the actual person using the data structure only by you (Shane)
+     *
+     */
 
     public ArraySet(){
         this(defaultCap);

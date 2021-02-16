@@ -44,6 +44,10 @@ public class User implements Serializable {
      *
      */
     private ArrayList<BankAccount> bankAccounts;
+    /**
+     *
+     */
+    private Date lastLogin;
 
 
     /**
@@ -137,6 +141,14 @@ public class User implements Serializable {
 
     public ArrayList<BankAccount> getBankAccounts() {
         return bankAccounts;
+    }
+
+    public Date getLastLogin() {
+        return lastLogin;
+    }
+
+    public void setLastLogin(Date lastLogin) {
+        this.lastLogin = lastLogin;
     }
 
     @Override

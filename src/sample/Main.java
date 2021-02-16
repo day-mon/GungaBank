@@ -7,7 +7,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import sample.core.objects.User;
-import sample.core.operations.FileOperations;
+import sample.util.operations.FileOperations;
 
 import java.io.File;
 import java.io.FileInputStream;
