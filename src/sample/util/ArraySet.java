@@ -1,6 +1,8 @@
 //ok
 package sample.util;
 
+import sample.util.interfaces.ArraySetInterface;
+
 import java.util.Arrays;
 
 public class ArraySet<T> implements ArraySetInterface<T> {
@@ -72,7 +74,7 @@ public class ArraySet<T> implements ArraySetInterface<T> {
 
     @Override
     public boolean isEmpty() {
-        return set == null;
+        return size == 0;
     }
 
     @Override
