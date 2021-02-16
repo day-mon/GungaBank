@@ -1,4 +1,4 @@
-package sample.core;
+package sample.core.objects;
 
 import java.io.Serializable;
 import java.math.BigDecimal;

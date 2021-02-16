@@ -1,4 +1,6 @@
-package sample.core;
+package sample.core.objects;
+
+import sample.util.ArrayList;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -38,8 +40,10 @@ public class User implements Serializable {
      *
      */
     private String hashedPass;
-
-
+    /**
+     *
+     */
+    private ArrayList<BankAccount> bankAccounts;
 
 
     /**
@@ -125,6 +129,14 @@ public class User implements Serializable {
 
     public void sethashedPass(String hashedPass) {
         this.hashedPass = hashedPass;
+    }
+
+    public void setBankAccounts(ArrayList<BankAccount> bankAccounts) {
+        this.bankAccounts = bankAccounts;
+    }
+
+    public ArrayList<BankAccount> getBankAccounts() {
+        return bankAccounts;
     }
 
     @Override

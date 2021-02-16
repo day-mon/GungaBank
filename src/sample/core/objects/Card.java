@@ -1,4 +1,4 @@
-package sample.core;
+package sample.core.objects;
 
 public class Card {
 

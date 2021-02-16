@@ -6,13 +6,20 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import sample.core.objects.User;
+import sample.core.operations.FileOperations;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Main extends Application {
     private static Scene scene;
     public static java.util.ArrayList<Stage> stages;
+    public static HashMap<String, User> users = new HashMap<>();
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -50,6 +57,39 @@ public class Main extends Application {
 
 
     public static void main(String[] args) {
-        launch(args)    ;
+
+        /**
+         * On start load all of things we had before.
+         */
+        try {
+            ArrayList<File> files = FileOperations.getAllFilesWithExt(new File("GungaBankV4\\src\\sample\\files\\"), "ser");
+            int serFiles = 0;
+            try {
+                serFiles = files.size();
+            } catch (NullPointerException npex) {
+                System.out.println("No files exist and serializer input failed.");
+            }
+
+            for (int i = 0; i < serFiles; i++) {
+                FileInputStream fis = new FileInputStream(files.get(i).getAbsolutePath());
+                ObjectInputStream ois = new ObjectInputStream(fis);
+
+                String fileName = files.get(i).getName().split("\\.")[0];
+
+                switch (fileName) {
+                    case "users":
+                        users = (HashMap<String, User>) ois.readObject();
+                        break;
+                    default:
+                        throw new IllegalStateException("Unexpected value: " + fileName);
+                }
+
+
+            }
+        } catch (IOException | ClassNotFoundException e) {};
+
+
+            launch(args);
+
     }
 }

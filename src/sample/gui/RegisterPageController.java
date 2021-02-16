@@ -19,13 +19,17 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import sample.Main;
+import sample.core.objects.User;
+import sample.core.operations.FileOperations;
 import sample.util.ArrayList;
 
 public class RegisterPageController {
 
+    public PasswordField passwordField;
     @FXML // ResourceBundle that was given to the FXMLLoader
     private ResourceBundle resources;
 
@@ -60,17 +64,17 @@ public class RegisterPageController {
     private Button registerButton; // Value injected by FXMLLoader
 
     // TODO: Something wrong with our arraylist?? we need to fix epic poggers :O
-    private ArrayList<TextField> textFields;
+    private java.util.ArrayList<TextField> textFields;
 
 
     @FXML
         // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
-        textFields = new ArrayList<TextField>();
+        textFields = new java.util.ArrayList<TextField>();
         textFields.add(firstNameTextField);
         textFields.add(lastNameTextField);
         textFields.add(emailTextField);
-        textFields.add(passwordTextField);
+        textFields.add( (TextField) passwordField ) ;
         textFields.add(dobTextField);
         textFields.add(phoneNumberTextField);
         textFields.add(ssnTextField);
@@ -89,9 +93,10 @@ public class RegisterPageController {
     }
 
     @FXML
-    void registerButtonClicked(ActionEvent event) throws IOException, InterruptedException {
+    void registerButtonClicked(ActionEvent event) throws IOException, InterruptedException, ParseException {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         java.util.HashMap<Integer, String> errorReasons = new java.util.HashMap<>();
+        Date date = null;
         int currentErrors = 0;
         for (int i = 0; i < textFields.size(); i++) {
             // Jesus this is horrible :(
@@ -116,7 +121,7 @@ public class RegisterPageController {
                     if (!textFields.get(i).getText().chars().allMatch(Character::isLetter)) {
                         errorReasons.put(currentErrors++, "Your first name field contains non-alphabetic characters");
                     }
-                    break;
+                    continue;
 
                 // error checks Last name field
                 case 1:
@@ -131,12 +136,10 @@ public class RegisterPageController {
 
                     if (currentField.getText().length() >= 45) {
                         errorReasons.put(currentErrors++, "Your last name is too long!");
-                    }
-
-                    if (currentField.getText().chars().anyMatch(Character::isDigit)) {
+                    } else if (currentField.getText().chars().anyMatch(Character::isDigit)) {
                         errorReasons.put(currentErrors++, "Your last name contains numbers! ");
                     }
-                    break;
+                    continue;
 
                 // error checks email field
                 case 2:
@@ -146,12 +149,10 @@ public class RegisterPageController {
                      */
                     if (currentField.getText().equals("")) {
                         errorReasons.put(currentErrors++, "Your email field is empty!");
-                    }
-
-                        if(!emailVaildaotr(currentField.getText())){
+                    } else if(!emailVaildaotr(currentField.getText())){
                             errorReasons.put(currentErrors++, "Your email field is wrong!");
-                        }
-                    break;
+                    }
+                    continue;
 
                 // error checks Password field
                 case 3:
@@ -159,68 +160,73 @@ public class RegisterPageController {
 
                     if (currentField.getText().equals("")) {
                         errorReasons.put(currentErrors++, "Your Password field is empty!");
-                    }
-
-                     if(!paswordValidator(currentField.getText())){
+                    } else if(!paswordValidator(currentField.getText())){
                      errorReasons.put(currentErrors++, "Password field must be contain a digit (4-20), a number, special char, upper and lower case letter at least once!");
 
                      }
 
-                    break;
+                    continue;
 
                 // error checks Date field
                 case 4:
                     currentField = textFields.get(i);
                     if (currentField.getText().equals("")) {
                         errorReasons.put(currentErrors++, "Your Date field is empty!");
-                    }
-                    if(!DateValidator(currentField.getText())){
+                    } else if(!DateValidator(currentField.getText())){
                         errorReasons.put(currentErrors++, "Date is invalid must be (mm/dd/yyyy)!");
                     }
 
-                    break;
+
+                    continue;
 
                 // error checks Number field
                 case 5:
                     currentField = textFields.get(i);
                     if (currentField.getText().equals("")) {
                         errorReasons.put(currentErrors++, "Your number field is empty!");
-                    }
-                    if(!phoneValidator(currentField.getText())){
+                    } else if(!phoneValidator(currentField.getText())){
                         errorReasons.put(currentErrors++, "Phone number is wrong!");
                     }
-                    break;
+                    continue;
 
                 // error checks SSN field
                 case 6:
                     currentField = textFields.get(i);
                     if (currentField.getText().equals("")) {
                         errorReasons.put(currentErrors++, "Your SSN field is empty!");
-                    }
-                    if(currentField.getText().length() != 9 || currentField.getText().contains("[a-zA-Z]+") ){
+                    } else if(currentField.getText().length() != 9 || currentField.getText().contains("[a-zA-Z]+") ){
                         errorReasons.put(currentErrors++, "Not a valid SSN!");
                     }
-                    break;
+                     break;
 
 
             }
 
-                        //Creates map of error messages to throw when a field is wrong
-                        Set<Integer> keySet = errorReasons.keySet();
+                    //Creates map of error messages to throw when a field is wrong
+                  Set<Integer> keySet = errorReasons.keySet();
                     if (keySet.size() > 0) {
                         System.out.println(keySet.size());
                         int errorAmount = keySet.size();
                         alert.setHeaderText("You have " + errorAmount + " errors!");
+                        StringBuilder errors = new StringBuilder("");
                         for (int erroReasonsInts : keySet) {
-                            alert.setContentText(errorReasons.get(erroReasonsInts) + "\n");
-
+                            errors.append(errorReasons.get(erroReasonsInts) + "\n");
                         }
+
+                        alert.setContentText(errors.toString());
                         alert.show();
                         return;
                     } else {
                         alert = new Alert(Alert.AlertType.CONFIRMATION);
                         alert.setContentText("You have successfully registered \n Sending you back to the login page");
+                        SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyy");
+                        date = format.parse(dobTextField.getText());
 
+
+
+                        Main.users.put(emailTextField.getText().toString(), new User(firstNameTextField.getText(), lastNameTextField.getText(), emailTextField.getText(), date, phoneNumberTextField.getText(), ssnTextField.getText(), passwordField.getText()));
+
+                        FileOperations.writeToFile(FileOperations.users, Main.users);
 
                         // CREATES users
                         Main.setRoot("gui/loginpage");
@@ -275,6 +281,7 @@ public class RegisterPageController {
         Matcher match = pt.matcher(phone);
         return match.matches();
     }
+
 }
 
 // 700 x 835
