@@ -6,6 +6,9 @@ package sample.gui;
 
 import java.io.IOException;
 import java.net.URL;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
@@ -57,12 +60,13 @@ public class RegisterPageController {
     private Button registerButton; // Value injected by FXMLLoader
 
     // TODO: Something wrong with our arraylist?? we need to fix epic poggers :O
-    private  java.util.ArrayList<TextField> textFields;
+    private ArrayList<TextField> textFields;
 
 
-    @FXML // This method is called by the FXMLLoader when initialization is complete
+    @FXML
+        // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
-        textFields = new java.util.ArrayList<TextField>();
+        textFields = new ArrayList<TextField>();
         textFields.add(firstNameTextField);
         textFields.add(lastNameTextField);
         textFields.add(emailTextField);
@@ -88,119 +92,189 @@ public class RegisterPageController {
     void registerButtonClicked(ActionEvent event) throws IOException, InterruptedException {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         java.util.HashMap<Integer, String> errorReasons = new java.util.HashMap<>();
+        int currentErrors = 0;
         for (int i = 0; i < textFields.size(); i++) {
             // Jesus this is horrible :(
             TextField currentField;
             switch (i) {
 
-                // TODO: fix some stuff man these else if statements
-              case 0:
-                  currentField = textFields.get(i);
-                  // Names could be 2 chars, usually asian names tho (Ki, Li, etc)
-                  if (currentField.equals("")) {
-                        errorReasons.put(0, "Your name field is empty!");
-                  } else if (currentField.getText().length() < 2) {
-                      errorReasons.put(1, "Your name is less then 2 characters");
-                  }
-                  if (currentField.getText().length() >= 35) {
-                      errorReasons.put(2, "Your name is too long? \n(UK Government data suggest that this is a unreasonable length for a first name) \n Source: https://webarchive.nationalarchives.gov.uk/20100407173424/http://www.cabinetoffice.gov.uk/govtalk/schemasstandards/e-gif/datastandards.aspx");
-                  }
-                  /**
-                   * This checks if everything in the text file is a letter
-                   */
-                  if (!textFields.get(i).getText().chars().allMatch(Character::isLetter)) {
-                      errorReasons.put(3, "Your first name field contains non-alphabetic characters");
-                  }
-                  break;
-              case 1:
-                  currentField = textFields.get(i);
+                // error checks First name field
+                case 0:
+                    currentField = textFields.get(i);
+                    // Names could be 2 chars, usually asian names tho (Ki, Li, etc)
+                    if (currentField.equals("")) {
+                        errorReasons.put(currentErrors++, "Your name field is empty!");
+                    } else if (currentField.getText().length() < 2) {
+                        errorReasons.put(currentErrors++, "Your name is less then 2 characters");
+                    }
+                    if (currentField.getText().length() >= 35) {
+                        errorReasons.put(currentErrors++, "Your name is too long? \n(UK Government data suggest that this is a unreasonable length for a first name) \n Source: https://webarchive.nationalarchives.gov.uk/20100407173424/http://www.cabinetoffice.gov.uk/govtalk/schemasstandards/e-gif/datastandards.aspx");
+                    }
+                    /**
+                     * This checks if everything in the text file is a letter
+                     */
+                    if (!textFields.get(i).getText().chars().allMatch(Character::isLetter)) {
+                        errorReasons.put(currentErrors++, "Your first name field contains non-alphabetic characters");
+                    }
+                    break;
 
-                  if (currentField.equals("")) {
-                      errorReasons.put(4, "Your last name field is empty!");
-                  } else if (currentField.getText().length() < 2) {
-                      errorReasons.put(5, "Your last name field is less than 2 characters");
-                  }
+                // error checks Last name field
+                case 1:
+                    currentField = textFields.get(i);
 
-                  if (currentField.getText().length() >= 45) {
-                      errorReasons.put(6, "Your last name is too long!");
-                  }
 
-                  if (currentField.getText().chars().anyMatch(Character::isDigit)) {
-                      errorReasons.put(7, "Your last name contains numbers! ");
-                  }
-            break;
+                    if (currentField.equals("")) {
+                        errorReasons.put(currentErrors++, "Your last name field is empty!");
+                    } else if (currentField.getText().length() < 2) {
+                        errorReasons.put(currentErrors++, "Your last name field is less than 2 characters");
+                    }
+
+                    if (currentField.getText().length() >= 45) {
+                        errorReasons.put(currentErrors++, "Your last name is too long!");
+                    }
+
+                    if (currentField.getText().chars().anyMatch(Character::isDigit)) {
+                        errorReasons.put(currentErrors++, "Your last name contains numbers! ");
+                    }
+                    break;
+
+                // error checks email field
                 case 2:
                     currentField = textFields.get(i);
                     /**
                      * For emails we will do a regex pattern checker
                      */
                     if (currentField.getText().equals("")) {
-                        errorReasons.put(8, "Your email field is empty!");
-                    } else if (currentField.getText().length() < 16) {
-                        /**
-                         * https://www.freshaddress.com/blog/long-email-addresses/
-                         * Says 21, but mine is 16. So I will go with that basis.
-                         */
-                        errorReasons.put(9, "Your email is too short!");
+                        errorReasons.put(currentErrors++, "Your email field is empty!");
                     }
 
-                    if (currentField.getText().length() > 49) {
-                        errorReasons.put(10, "Your email is too long!");
+                        if(!emailVaildaotr(currentField.getText())){
+                            errorReasons.put(currentErrors++, "Your email field is wrong!");
+                        }
+                    break;
+
+                // error checks Password field
+                case 3:
+                    currentField = textFields.get(i);
+
+                    if (currentField.getText().equals("")) {
+                        errorReasons.put(currentErrors++, "Your Password field is empty!");
                     }
 
+                     if(!paswordValidator(currentField.getText())){
+                     errorReasons.put(currentErrors++, "Password field must be contain a digit (4-20), a number, special char, upper and lower case letter at least once!");
 
-          }
+                     }
 
-            Set<Integer> keySet = errorReasons.keySet();
+                    break;
 
-          if (keySet.size() > 0) {
-              System.out.println(keySet.size());
-              int errorAmount = keySet.size();
-              alert.setHeaderText("You have " + errorAmount + " errors!");
-              for (int erroReasonsInts : keySet) {
-                  alert.setContentText(errorReasons.get(erroReasonsInts) + "\n");
+                // error checks Date field
+                case 4:
+                    currentField = textFields.get(i);
+                    if (currentField.getText().equals("")) {
+                        errorReasons.put(currentErrors++, "Your Date field is empty!");
+                    }
+                    if(!DateValidator(currentField.getText())){
+                        errorReasons.put(currentErrors++, "Date is invalid must be (mm/dd/yyyy)!");
+                    }
 
-              }
-              alert.show();
-              return;
-          } else {
-            alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setContentText("You have successfully registered \n Sending you back to the login page");
+                    break;
+
+                // error checks Number field
+                case 5:
+                    currentField = textFields.get(i);
+                    if (currentField.getText().equals("")) {
+                        errorReasons.put(currentErrors++, "Your number field is empty!");
+                    }
+                    if(!phoneValidator(currentField.getText())){
+                        errorReasons.put(currentErrors++, "Phone number is wrong!");
+                    }
+                    break;
+
+                // error checks SSN field
+                case 6:
+                    currentField = textFields.get(i);
+                    if (currentField.getText().equals("")) {
+                        errorReasons.put(currentErrors++, "Your SSN field is empty!");
+                    }
+                    if(currentField.getText().length() != 9 || currentField.getText().contains("[a-zA-Z]+") ){
+                        errorReasons.put(currentErrors++, "Not a valid SSN!");
+                    }
+                    break;
 
 
-            // CREATES users
-            Main.setRoot("gui/loginpage");
-          }
+            }
+
+                        //Creates map of error messages to throw when a field is wrong
+                        Set<Integer> keySet = errorReasons.keySet();
+                    if (keySet.size() > 0) {
+                        System.out.println(keySet.size());
+                        int errorAmount = keySet.size();
+                        alert.setHeaderText("You have " + errorAmount + " errors!");
+                        for (int erroReasonsInts : keySet) {
+                            alert.setContentText(errorReasons.get(erroReasonsInts) + "\n");
+
+                        }
+                        alert.show();
+                        return;
+                    } else {
+                        alert = new Alert(Alert.AlertType.CONFIRMATION);
+                        alert.setContentText("You have successfully registered \n Sending you back to the login page");
+
+
+                        // CREATES users
+                        Main.setRoot("gui/loginpage");
+                    }
+            }
         }
-    }
 
 
 
-    public void onRegisterExitied(MouseEvent mouseEvent) {
+    public void onRegisterExitied (MouseEvent mouseEvent){
         registerButton.setStyle("-fx-background-color: #313131;");
     }
 
-    public void onRegisterHovered(MouseEvent mouseEvent) {
+    public void onRegisterHovered (MouseEvent mouseEvent){
         registerButton.setStyle("-fx-background-color: #9d2929;");
     }
 
-    public void onClearButtonExitied(MouseEvent mouseEvent) {
+    public void onClearButtonExitied (MouseEvent mouseEvent){
         clearButton.setStyle("-fx-background-color: #313131;");
     }
 
-    public void onClearButtonHovered(MouseEvent mouseEvent) {
+    public void onClearButtonHovered (MouseEvent mouseEvent){
         clearButton.setStyle("-fx-background-color: #9d2929;");
     }
 
-    private boolean emailVaildaotr(String email) {
+    //all Validate Regex checks for field entries
+    private boolean emailVaildaotr (String email){
         // Regex pattern for emails
-        final String EMAIL_REGEX = "^[a-zA-Z][a-zA-Z0-9._-]*\\\\@\\\\w+(\\\\.)*\\\\w+\\\\.\\\\w+$";
+        final String EMAIL_REGEX = "^(.+)@(.+)$";
         Pattern pat = Pattern.compile(EMAIL_REGEX);
         Matcher match = pat.matcher(email);
-
         return match.matches();
     }
 
-
+    private boolean paswordValidator(String pass) {
+        final String PASS_REGEX = "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{4,20}$";
+        Pattern pt = Pattern.compile(PASS_REGEX);
+        Matcher match = pt.matcher(pass);
+        return match.matches();
+    }
+    private boolean DateValidator(String date) {
+        final String DATE_REGEX = "^[0-3]?[0-9]/[0-3]?[0-9]/(?:[0-9]{2})?[0-9]{2}$";
+        Pattern pt = Pattern.compile(DATE_REGEX);
+        Matcher match = pt.matcher(date);
+        return match.matches();
+    }
+    private boolean phoneValidator(String phone) {
+        final String PHONE_REGEX = "^(\\+\\d{1,3}( )?)?((\\(\\d{3}\\))|\\d{3})[- .]?\\d{3}[- .]?\\d{4}$"
+                + "|^(\\+\\d{1,3}( )?)?(\\d{3}[ ]?){2}\\d{3}$"
+                + "|^(\\+\\d{1,3}( )?)?(\\d{3}[ ]?)(\\d{2}[ ]?){2}\\d{2}$";
+        Pattern pt = Pattern.compile(PHONE_REGEX);
+        Matcher match = pt.matcher(phone);
+        return match.matches();
+    }
 }
+
 // 700 x 835
