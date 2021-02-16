@@ -74,7 +74,7 @@ public class ArraySet<T> implements ArraySetInterface<T> {
 
     @Override
     public boolean isEmpty() {
-        return set == null;
+        return size == 0;
     }
 
     @Override
