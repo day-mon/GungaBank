@@ -1,11 +1,11 @@
 package sample.util.operations;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
+import sample.Main;
+import sample.core.objects.User;
+
+import java.io.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 
 public class FileOperations {
@@ -73,6 +73,35 @@ public class FileOperations {
 
             }
         }
+    }
+
+    public static void loadInformation() {
+        try {
+            ArrayList<File> files = FileOperations.getAllFilesWithExt(new File("src\\sample\\files\\"), "ser");
+            int serFiles = 0;
+            try {
+                serFiles = files.size();
+            } catch (NullPointerException npex) {
+                System.out.println("No files exist and serializer input failed.");
+            }
+
+            for (int i = 0; i < serFiles; i++) {
+                FileInputStream fis = new FileInputStream(files.get(i).getAbsolutePath());
+                ObjectInputStream ois = new ObjectInputStream(fis);
+
+                String fileName = files.get(i).getName().split("\\.")[0];
+
+                switch (fileName) {
+                    case "users":
+                        Main.users = (HashMap<String, User>) ois.readObject();
+                        break;
+                    default:
+                        throw new IllegalStateException("Unexpected value: " + fileName);
+                }
+
+
+            }
+        } catch (IOException | ClassNotFoundException e) {};
     }
 
 }

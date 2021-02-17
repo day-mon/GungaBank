@@ -4,10 +4,6 @@
 
 package sample.gui;
 
-import java.io.IOException;
-import java.net.URL;
-import java.util.Date;
-import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -19,8 +15,14 @@ import javafx.scene.text.Text;
 import javafx.stage.StageStyle;
 import sample.Main;
 import sample.core.objects.User;
-import sample.util.operations.StringOperations;
 import sample.util.ArrayList;
+import sample.util.operations.AlertOperations;
+import sample.util.operations.StringOperations;
+
+import java.io.IOException;
+import java.net.URL;
+import java.util.Date;
+import java.util.ResourceBundle;
 
 public class LoginPageController {
 
@@ -59,15 +61,8 @@ public class LoginPageController {
     @FXML
         // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
-        /**
-         * Dont want to init a new alert each time I want to use one.
-         * Index 0: Confirmation
-         * Index 1: Error
-         */
-        alerts.add(new Alert(Alert.AlertType.CONFIRMATION));
-        alerts.add(new Alert(Alert.AlertType.ERROR));
-    }
 
+    }
     /**
      * When the login button is hovered over by a mouse it will change to a different color
      * @param event
@@ -103,14 +98,13 @@ public class LoginPageController {
     public void onLoginClick(ActionEvent actionEvent) {
 
         String login = usernameTextField.getText();
-        String password = passwordField.getText();
-        Alert good = alerts.get(0);
-        Alert bad = alerts.get(1);
+        String password = StringOperations.hashPassword(passwordField.getText());
+
 
 
 
         if (login.length() < 0) {
-
+        AlertOperations.AlertShortner("bad", "Missing text!", "Login field is empty!");
 
         } else {
             if (Main.users.containsKey(login)) {
@@ -121,11 +115,25 @@ public class LoginPageController {
                     s1.append("Welcome " + userToLogin.getFirstName() + "!" + "\n" +
                               "Your last login was: " + userToLogin.getLastLogin() == null ?  "Never!" : userToLogin.getLastLogin());
                     userToLogin.setLastLogin(new Date());
-                    good.setTitle("Login success!");
-                    good.setContentText(s1.toString());
-                    good.show();
+                    AlertOperations.AlertShortner("good", "Login success!", s1.toString());
 
+                    try {
+                        Main.setRoot("gui/dashboard", 1200, 800, false, StageStyle.UTILITY, 0);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                } else {
+                    /**
+                     * Dont state if a user has the correct email due to the fact that we dont want a threat actor knowing if that email exist
+                     */
+                    AlertOperations.AlertShortner("bad", "Incorrect login!", "Your password or email may be incorrect!");
                 }
+            } else {
+                /**
+                 * Probably a better way to do this, then use it twice.
+                 */
+                AlertOperations.AlertShortner("bad", "Incorrect login!", "Your password or email may be incorrect!");
             }
         }
 

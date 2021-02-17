@@ -4,16 +4,6 @@
 
 package sample.gui;
 
-import java.io.IOException;
-import java.net.URL;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.ResourceBundle;
-import java.util.Set;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -25,6 +15,16 @@ import sample.Main;
 import sample.core.objects.User;
 import sample.util.operations.FileOperations;
 import sample.util.operations.StringOperations;
+
+import java.io.IOException;
+import java.net.URL;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.ResourceBundle;
+import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class RegisterPageController {
 
@@ -73,7 +73,7 @@ public class RegisterPageController {
         textFields.add(firstNameTextField);
         textFields.add(lastNameTextField);
         textFields.add(emailTextField);
-        textFields.add( (TextField) passwordField ) ;
+        textFields.add(passwordField) ;
         textFields.add(dobTextField);
         textFields.add(phoneNumberTextField);
         textFields.add(ssnTextField);
@@ -82,8 +82,6 @@ public class RegisterPageController {
 
     @FXML
     void clearButtonClicked(ActionEvent event) {
-
-
         for (TextField fieldsToClear : textFields) {
             if (!fieldsToClear.getText().equals("")) {
                 fieldsToClear.setText("");
