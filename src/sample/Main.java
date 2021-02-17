@@ -14,7 +14,6 @@ import sample.core.objects.User;
 import sample.util.operations.FileOperations;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -43,24 +42,25 @@ import java.util.HashMap;
 
 public class Main extends Application {
     private static Scene scene;
-    public static java.util.ArrayList<Stage> stages;
+    public static HashMap<String, Stage> stages;
     public static HashMap<String, User> users = new HashMap<>();
 
-    public static void setRoot(String fxml, int l, int w, boolean resize, StageStyle style, int index) throws IOException {
-        scene = new Scene(loadFXML(fxml), l, w);
-        stages.get(index).hide();
+    public static void setRoot(String fxmlHide, String fxmlSwitch, int l, int w, boolean resize, StageStyle style) throws IOException {
+        scene = new Scene(loadFXML(fxmlSwitch), l, w);
+        stages.get(fxmlHide).hide();
         Stage stg = new Stage();
         stg.setScene(scene);
         stg.setResizable(resize);
         stg.initStyle(style);
         stg.show();
-        stages.add(stg);
+        stages.putIfAbsent(fxmlSwitch, stg);
 
     }
 
     public static void setRoot(String fxml) throws IOException {
         scene.setRoot(loadFXML(fxml));
     }
+
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -71,14 +71,15 @@ public class Main extends Application {
       FileOperations.loadInformation();
 
 
-        stages = new ArrayList<>();
+        stages = new HashMap<>();
         scene = new Scene(loadFXML("gui/loginpage"), 700, 500);
         primaryStage.setTitle("Gunga fart");
         primaryStage.setScene(scene);
         primaryStage.initStyle(StageStyle.UTILITY);
         primaryStage.setResizable(false);
         primaryStage.show();
-        stages.add(primaryStage);
+        stages.put("gui/loginpage", primaryStage);
+
 
     }
 

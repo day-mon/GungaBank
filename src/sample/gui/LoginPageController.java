@@ -87,7 +87,7 @@ public class LoginPageController {
     public void onRegisterButtonClick(ActionEvent actionEvent) {
         if (!registerPageOpened) {
             try {
-               Main.setRoot("gui/registerpage", 700, 835, false, StageStyle.UTILITY, 0);
+               Main.setRoot("gui/loginpage", "gui/registerpage", 700, 835, false, StageStyle.UTILITY);
                 registerPageOpened = true;
             } catch (IOException e) {
                 e.printStackTrace();
@@ -118,7 +118,7 @@ public class LoginPageController {
                     AlertOperations.AlertShortner("good", "Login success!", s1.toString());
 
                     try {
-                        Main.setRoot("gui/dashboard", 1200, 800, false, StageStyle.UTILITY, 0);
+                        Main.setRoot("gui/loginpage", "gui/dashboard", 1200, 800, false, StageStyle.UTILITY);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }

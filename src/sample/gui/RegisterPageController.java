@@ -11,6 +11,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.StageStyle;
 import sample.Main;
 import sample.core.objects.User;
 import sample.util.operations.FileOperations;
@@ -229,7 +230,7 @@ public class RegisterPageController {
                         FileOperations.writeToFile(FileOperations.users, Main.users);
 
                         // CREATES users
-                        Main.setRoot("gui/loginpage");
+                        Main.setRoot("gui/registerpage", "gui/loginpage", 700, 500, false, StageStyle.UTILITY);
                     }
             }
         }
