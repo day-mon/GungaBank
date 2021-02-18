@@ -108,9 +108,8 @@ public class LoginPageController {
 
         } else {
             if (Main.users.containsKey(login)) {
-                String hashedPassword = StringOperations.hashPassword(password);
                 User userToLogin = Main.users.get(login);
-                if (userToLogin.gethashedPass().equals(hashedPassword) && userToLogin.getEmail().equals(login)) {
+                if (userToLogin.gethashedPass().equals(password) && userToLogin.getEmail().equals(login)) {
                     StringBuilder s1 = new StringBuilder();
                     s1.append("Welcome " + userToLogin.getFirstName() + "!" + "\n" +
                               "Your last login was: " + userToLogin.getLastLogin() == null ?  "Never!" : userToLogin.getLastLogin());
@@ -118,6 +117,7 @@ public class LoginPageController {
                     AlertOperations.AlertShortner("good", "Login success!", s1.toString());
 
                     try {
+                        Main.userLoggedIn = userToLogin;
                         Main.setRoot("gui/loginpage", "gui/dashboard", 1200, 800, false, StageStyle.UTILITY);
                     } catch (IOException e) {
                         e.printStackTrace();

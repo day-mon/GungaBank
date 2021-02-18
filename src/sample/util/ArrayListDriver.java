@@ -1,9 +1,6 @@
 package sample.util;
 
-import java.sql.SQLOutput;
-import java.util.Iterator;
-
-public class arrayListDriver {
+public class ArrayListDriver {
 
     public static void main(String[] args) {
         ArrayList<Integer> list = new ArrayList<Integer>();

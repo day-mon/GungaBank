@@ -44,6 +44,7 @@ public class Main extends Application {
     private static Scene scene;
     public static HashMap<String, Stage> stages;
     public static HashMap<String, User> users = new HashMap<>();
+    public static User userLoggedIn;
 
     public static void setRoot(String fxmlHide, String fxmlSwitch, int l, int w, boolean resize, StageStyle style) throws IOException {
         scene = new Scene(loadFXML(fxmlSwitch), l, w);
