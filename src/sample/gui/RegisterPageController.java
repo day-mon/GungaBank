@@ -1,9 +1,8 @@
 /**
  * Sample Skeleton for 'registerpage.fxml' Controller Class
  */
-
 package sample.gui;
-
+import java.util.Scanner;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -17,12 +16,16 @@ import sample.core.objects.User;
 import sample.util.operations.FileOperations;
 import sample.util.operations.StringOperations;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.ResourceBundle;
+import java.util.Scanner;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -151,12 +154,19 @@ public class RegisterPageController {
                     } else if(!emailVaildaotr(currentField.getText())){
                             errorReasons.put(currentErrors++, "Your email field is wrong!");
                     }
+                    if(checkEmail(currentField.getText())){
+                        errorReasons.put(currentErrors++, "email already exists!");
+                        Main.setRoot("gui/registerpage", "gui/loginpage", 700, 500,false,  StageStyle.UTILITY);
+                        break;
+                    }
                     continue;
 
                 // error checks Password field
                 case 3:
                     currentField = textFields.get(i);
+                    if(checkEmail(currentField.getText())){
 
+                    }
                     if (currentField.getText().equals("")) {
                         errorReasons.put(currentErrors++, "Your Password field is empty!");
                     } else if(!paswordValidator(currentField.getText())){
@@ -282,7 +292,9 @@ public class RegisterPageController {
         Matcher match = pt.matcher(phone);
         return match.matches();
     }
-
+    private boolean checkEmail(String email) throws IOException {
+       return Main.users.containsKey(email);
+    }
 
 }
 

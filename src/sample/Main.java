@@ -26,7 +26,7 @@ import java.util.HashMap;
  */
 
 /**
- * TODO: 1. In RegisterPageController, check to see if email exist and if it does direct them to the login page
+ * TODO: 1. In RegisterPageController, check to see if email exist and if it does direct them to the login page -------------------
  *       2. LoginPageController add logic for logging in. With error checking, also check to see if a user has bank accounts before logging them in. If they dont redirect them (I will make the UI for that when I wake up)
  *       3. Check to see if both data structures are <br> FULLY </br> working. If they are replace the them where we are using the Java ones
  *       4. Someone learn how to make it so we can effectively hide Scenes.

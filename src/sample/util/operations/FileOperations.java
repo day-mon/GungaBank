@@ -77,7 +77,7 @@ public class FileOperations {
 
     public static void loadInformation() {
         try {
-            ArrayList<File> files = FileOperations.getAllFilesWithExt(new File("src\\sample\\files\\"), "ser");
+            ArrayList<File> files = getAllFilesWithExt(new File("src\\sample\\files\\"), "ser");
             int serFiles = 0;
             try {
                 serFiles = files.size();
