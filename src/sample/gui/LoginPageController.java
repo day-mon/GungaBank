@@ -118,7 +118,11 @@ public class LoginPageController {
 
                     try {
                         Main.userLoggedIn = userToLogin;
-                        Main.setRoot("gui/loginpage", "gui/dashboard", 1200, 800, false, StageStyle.UTILITY);
+                        if (userToLogin.getBankAccounts().size() <= 0) {
+                            Main.setRoot("gui/loginpage", "gui/bankaccount", 1200, 800, false, StageStyle.UTILITY);
+                        } else {
+                            Main.setRoot("gui/loginpage", "gui/dashboard", 1200, 800, false, StageStyle.UTILITY);
+                        }
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
