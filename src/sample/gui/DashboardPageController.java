@@ -6,12 +6,14 @@ package sample.gui;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeTableColumn;
 import javafx.scene.control.TreeTableView;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import sample.Main;
+import sample.core.objects.Transaction;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -71,9 +73,13 @@ public class DashboardPageController {
 
     @FXML // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
-        if (Main.userLoggedIn.getBankAccounts().size() <= 0) {
+        /*if (Main.userLoggedIn.getBankAccounts().size() <= 0) {
 
-        }
+        }*/
+        //TODO: Figure out how to add stuff to treetablecolumns so we can load each transactionn on the dashboard
+        /*for (Transaction t : Main.userLoggedIn.getBankAccounts().get(0).getTransactions()) {
+
+        }*/
 
         String replaced = nameText.getText().replace("%{name}", Main.userLoggedIn.getFirstName());
         nameText.setText(replaced);

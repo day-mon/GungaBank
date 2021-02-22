@@ -14,6 +14,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import javafx.stage.StageStyle;
 import sample.Main;
+import sample.core.objects.BankAccount;
 import sample.core.objects.User;
 import sample.util.ArrayList;
 import sample.util.operations.AlertOperations;
@@ -119,10 +120,9 @@ public class LoginPageController {
                     try {
                         Main.userLoggedIn = userToLogin;
                         if (userToLogin.getBankAccounts().size() <= 0) {
-                            Main.setRoot("gui/loginpage", "gui/bankaccount", 1200, 800, false, StageStyle.UTILITY);
-                        } else {
-                            Main.setRoot("gui/loginpage", "gui/dashboard", 1200, 800, false, StageStyle.UTILITY);
+                            userToLogin.getBankAccounts().add(new BankAccount(userToLogin, BankAccount.AccountTypes.CHECKING));
                         }
+                        Main.setRoot("gui/loginpage", "gui/dashboard", 1200, 800, false, StageStyle.UTILITY);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }

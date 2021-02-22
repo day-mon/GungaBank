@@ -81,8 +81,6 @@ public class Main extends Application {
         primaryStage.setResizable(false);
         primaryStage.show();
         stages.put("gui/loginpage", primaryStage);
-
-
     }
 
     public static Parent loadFXML(String fxml) throws IOException {
