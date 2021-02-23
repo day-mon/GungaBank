@@ -152,6 +152,7 @@ public class RegisterPageController {
                     } else if(!emailVaildaotr(currentField.getText())){
                             errorReasons.put(currentErrors++, "Your email field is wrong!");
                     }
+                    continue;
                     /*
                     if(checkEmail(currentField.getText())){
 
