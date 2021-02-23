@@ -77,8 +77,6 @@ public class RegisterPageController {
         textFields.add(dobTextField);
         textFields.add(phoneNumberTextField);
         textFields.add(ssnTextField);
-
-
     }
 
 
@@ -152,6 +150,13 @@ public class RegisterPageController {
                     } else if(!emailVaildaotr(currentField.getText())){
                             errorReasons.put(currentErrors++, "Your email field is wrong!");
                     }
+
+                    for (User u : Main.users.values()) {
+                        if (u.getEmail().equals(currentField)) {
+                            errorReasons.put(currentErrors++, "This email is already registered!");
+                        }
+                    }
+
                     continue;
                     /*
                     if(checkEmail(currentField.getText())){
@@ -242,8 +247,11 @@ public class RegisterPageController {
 
                         FileOperations.writeToFile(FileOperations.users, Main.users);
 
+                        for (TextField tf : textFields) {
+                            tf.clear();
+                        }
                         // CREATES users
-                        Main.setRoot("gui/registerpage", "gui/loginpage", 700, 500, false, StageStyle.UTILITY);
+                        Main.open("loginpage");
                     }
             }
         }

@@ -5,6 +5,7 @@ package sample;
  */
 
 import javafx.application.Application;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -15,6 +16,7 @@ import sample.util.operations.FileOperations;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.concurrent.Phaser;
 
 /**
  * Self Imports
@@ -29,8 +31,7 @@ import java.util.HashMap;
  * TODO: 1. In RegisterPageController, check to see if email exist and if it does direct them to the login page -------------------
  *       *Done* 2. LoginPageController add logic for logging in. With error checking, also check to see if a user has bank accounts before logging them in. If they dont redirect them (I will make the UI for that when I wake up)
  *       3. Check to see if both data structures are <br> FULLY </br> working. If they are replace the them where we are using the Java ones
- *       4. Someone learn how to make it so we can effectively hide Scenes.
- *          - setRoot(String fxml, int l, int w, boolean resize, StageStyle style, int index) @ line 84 this is bad someone fix.
+ *       *Done* 4. Someone learn how to make it so we can effectively hide Scenes.
  *       5. Delete useless files in sample/dependencies
  *       6. Double check all files in sample/core/objects
  *       7. Find a way to clean up the start method @ line 39.
@@ -46,7 +47,9 @@ public class Main extends Application {
     public static HashMap<String, Stage> stages;
     public static HashMap<String, User> users = new HashMap<>();
     public static User userLoggedIn;
+    public static HashMap<String, Stage> forms = new HashMap<>();
 
+    /*
     public static void setRoot(String fxmlHide, String fxmlSwitch, int l, int w, boolean resize, StageStyle style) throws IOException {
         scene = new Scene(loadFXML(fxmlSwitch), l, w);
         stages.get(fxmlHide).hide();
@@ -64,14 +67,16 @@ public class Main extends Application {
     }
 
 
+
+ */
+    /*
     @Override
     public void start(Stage primaryStage) throws Exception {
 
-        /**
-         * On start load all of things we had before.
-         */
-      FileOperations.loadInformation();
 
+         //On start load all of things we had before.
+
+      FileOperations.loadInformation();
 
         stages = new HashMap<>();
         scene = new Scene(loadFXML("gui/loginpage"), 700, 500);
@@ -83,9 +88,49 @@ public class Main extends Application {
         stages.put("gui/loginpage", primaryStage);
     }
 
+
+
     public static Parent loadFXML(String fxml) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource(fxml + ".fxml"));
         return fxmlLoader.load();
+    }
+    */
+    @Override
+    public void start(Stage stage) throws Exception {
+            FileOperations.loadInformation();
+            scene = new Scene(loadFXML("loginpage"), 700, 500);
+            stage.setTitle("Gunga Bank");
+            stage.setScene(scene);
+            stage.initStyle(StageStyle.UTILITY);
+            stage.setResizable(false);
+            stage.show();
+            forms.put("loginpage", stage);
+    }
+
+    public static Parent loadFXML(String title) throws IOException {
+        return new FXMLLoader(Main.class.getResource("gui/" + title + ".fxml")).load();
+    }
+
+    public static void open(String toOpen) {
+        for (Stage s : forms.values()) {
+            if (s.isShowing()) {
+                s.hide();
+                forms.get(toOpen).show();
+                break;
+            }
+        }
+    }
+
+    public static void open(String toOpen, int length, int width, StageStyle style) throws IOException {
+        if (!forms.containsKey(toOpen)) {
+            scene = new Scene(loadFXML(toOpen), length, width);
+            Stage stg = new Stage();
+            stg.setScene(scene);
+            stg.setResizable(false);
+            stg.initStyle(style);
+            forms.put(toOpen, stg);
+        }
+        open(toOpen);
     }
 
 
