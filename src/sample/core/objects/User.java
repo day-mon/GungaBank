@@ -4,6 +4,7 @@ import sample.util.ArrayList;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
 public class User implements Serializable {
@@ -47,6 +48,10 @@ public class User implements Serializable {
     /**
      *
      */
+    private ArrayList<Card> cards;
+    /**
+     *
+     */
     private Date lastLogin;
 
 
@@ -69,6 +74,8 @@ public class User implements Serializable {
         this.ssn = ssn;
         this.hashedPass = hashedPass;
         dateOfCreation = new Date();
+        cards = new ArrayList<>();
+        bankAccounts = new ArrayList();
     }
 
     public Date getDateOfCreation() {
@@ -147,6 +154,14 @@ public class User implements Serializable {
         return lastLogin;
     }
 
+    public ArrayList<Card> getCards() {
+        return cards;
+    }
+
+    public void setCards(ArrayList<Card> cards) {
+        this.cards = cards;
+    }
+
     public void setLastLogin(Date lastLogin) {
         this.lastLogin = lastLogin;
     }
@@ -171,4 +186,5 @@ public class User implements Serializable {
         return Objects.hash(dateOfCreation, firstName, lastName, email, dateOfBirth, phoneNumber, ssn, hashedPass);
 
     }
+
 }

@@ -1,5 +1,7 @@
 package sample.core.objects;
 
+import java.math.BigDecimal;
+
 public class Card {
 
     private User cardHolder;
@@ -7,17 +9,19 @@ public class Card {
     private int cvc;
     private String expDate;
     private CardType cardType;
+    private BigDecimal Balance;
 
     public Card(User cardHolder) {
 
     }
 
-    public Card(User _cardHolder, long _num, int _cvc, String _exp, CardType _type) {
-        cardHolder = _cardHolder;
-        number = _num;
-        cvc = _cvc;
-        expDate = _exp;
-        cardType = _type;
+    public Card(User cardHolder, long num, int cvc, String exp, CardType type, BigDecimal Balance) {
+        this.cardHolder = cardHolder;
+        this.number = num;
+        this.cvc = cvc;
+        this.expDate = exp;
+        this.cardType = type;
+        this.Balance = Balance;
     }
 
     public User getCardHolder() {
@@ -58,6 +62,13 @@ public class Card {
 
     public void setCardType(CardType cardType) {
         this.cardType = cardType;
+    }
+
+    public BigDecimal getBalance(){
+        return this.Balance;
+    }
+    public void setBalance(BigDecimal lBalance){
+        this.Balance = Balance;
     }
 
     enum CardType {

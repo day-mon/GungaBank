@@ -5,6 +5,8 @@
 package sample.gui;
 
 import javafx.fxml.FXML;
+import java.text.FieldPosition;
+import java.text.Format;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeTableColumn;
@@ -84,5 +86,8 @@ public class DashboardPageController {
         String replaced = nameText.getText().replace("%{name}", Main.userLoggedIn.getFirstName());
         nameText.setText(replaced);
         nameText.setTextAlignment(TextAlignment.CENTER);
+        creditCardBalance.getText().replace("{balance_1}", String.valueOf(Main.userLoggedIn.getCards().get(0).getBalance()));
+
+
     }
 }
