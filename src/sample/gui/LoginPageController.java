@@ -51,7 +51,6 @@ public class LoginPageController {
     /**
      *
      */
-    private boolean registerPageOpened = false;
 
     /**
      *
@@ -86,14 +85,11 @@ public class LoginPageController {
     }
 
     public void onRegisterButtonClick(ActionEvent actionEvent) {
-        if (!registerPageOpened) {
             try {
-               Main.setRoot("gui/loginpage", "gui/registerpage", 700, 835, false, StageStyle.UTILITY);
-                registerPageOpened = true;
+               Main.open("registerpage", 700, 835, StageStyle.UTILITY);
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        }
     }
 
     public void onLoginClick(ActionEvent actionEvent) {
@@ -122,7 +118,7 @@ public class LoginPageController {
                         if (userToLogin.getBankAccounts().size() <= 0) {
                             userToLogin.getBankAccounts().add(new BankAccount(userToLogin, BankAccount.AccountTypes.CHECKING));
                         }
-                        Main.setRoot("gui/loginpage", "gui/dashboard", 1200, 800, false, StageStyle.UTILITY);
+                        Main.open("dashboard", 1200, 800, StageStyle.UTILITY);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
