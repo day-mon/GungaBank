@@ -22,10 +22,13 @@ public class AlertOperations {
             default:
                 alertToSend = new Alert(Alert.AlertType.NONE);
         }
+
         alertToSend.setTitle(title);
         alertToSend.setHeaderText(headerText);
         alertToSend.setContentText(description);
         alertToSend.show();
+
+
 
     }
 
