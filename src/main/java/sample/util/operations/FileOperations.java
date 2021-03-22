@@ -10,7 +10,7 @@ import java.util.HashMap;
 
 
 public class FileOperations {
-    public static final File users = new File("src/sample/files/users.ser");
+    public static final File users = new File("src/main/java/sample/files/users.ser");
 
     public static ArrayList<File> getAllFilesWithExt(File dir, String ext) {
         ArrayList<File> filesWithExt = new ArrayList<>();
@@ -78,7 +78,7 @@ public class FileOperations {
 
     public static void loadInformation() {
         try {
-            ArrayList<File> files = getAllFilesWithExt(new File("src/sample/files/"), "ser");
+            ArrayList<File> files = getAllFilesWithExt(new File("src/main/java/sample/files/"), "ser");
             int serFiles = 0;
             try {
                 serFiles = files.size();

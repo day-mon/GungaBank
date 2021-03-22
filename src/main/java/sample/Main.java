@@ -13,6 +13,7 @@ import javafx.stage.StageStyle;
 import sample.core.objects.User;
 import sample.util.operations.FileOperations;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 
@@ -106,7 +107,12 @@ public class Main extends Application {
     }
 
     public static Parent loadFXML(String title) throws IOException {
-        return new FXMLLoader(Main.class.getResource("gui/" + title + ".fxml")).load();
+        File n = new File(
+                "src/main/java/sample/gui/" + title + ".fxml"
+        );
+
+        System.out.println(n.exists() + " " + n.isFile());
+        return new FXMLLoader(Main.class.getResource("src/main/java/sample/gui/" + title + ".fxml")).load();
     }
 
     public static void open(String toOpen) {
