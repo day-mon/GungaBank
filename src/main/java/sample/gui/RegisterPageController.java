@@ -250,8 +250,7 @@ public class RegisterPageController {
                         for (TextField tf : textFields) {
                             tf.clear();
                         }
-                        // CREATES users
-                        Main.open("loginpage");
+                        Main.open("/loginpage");
                     }
             }
         }

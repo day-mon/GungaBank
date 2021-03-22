@@ -85,12 +85,15 @@ public class LoginPageController {
     }
 
     public void onRegisterButtonClick(ActionEvent actionEvent) {
+
             try {
-               Main.open("registerpage", 700, 835, StageStyle.UTILITY);
+               Main.open("/registerpage", 700, 835, StageStyle.UTILITY);
             } catch (IOException e) {
                 e.printStackTrace();
             }
+
     }
+
 
     public void onLoginClick(ActionEvent actionEvent) {
 
@@ -118,8 +121,8 @@ public class LoginPageController {
                         if (userToLogin.getBankAccounts().size() <= 0) {
                             userToLogin.getBankAccounts().add(new BankAccount(userToLogin, BankAccount.AccountTypes.CHECKING));
                         }
-                        Main.open("dashboard", 1200, 800, StageStyle.UTILITY);
-                    } catch (IOException e) {
+                    Main.open("/dashboard", 1200, 800, StageStyle.UTILITY);
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
 

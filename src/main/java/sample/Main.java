@@ -15,6 +15,7 @@ import sample.util.operations.FileOperations;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.HashMap;
 
 /**
@@ -96,23 +97,19 @@ public class Main extends Application {
     */
     @Override
     public void start(Stage stage) throws Exception {
-            FileOperations.loadInformation();
-            scene = new Scene(loadFXML("loginpage"), 700, 500);
-            stage.setTitle("Gunga Bank");
-            stage.setScene(scene);
-            stage.initStyle(StageStyle.UTILITY);
-            stage.setResizable(false);
-            stage.show();
-            forms.put("loginpage", stage);
+        FileOperations.loadInformation();
+        scene = new Scene(loadFXML("/loginpage"), 700, 500);
+        stage.setTitle("Gunga Bank");
+        stage.setScene(scene);
+        stage.initStyle(StageStyle.UTILITY);
+        stage.setResizable(false);
+        stage.show();
+        forms.put("/loginpage", stage);
     }
 
     public static Parent loadFXML(String title) throws IOException {
-        File n = new File(
-                "src/main/java/sample/gui/" + title + ".fxml"
-        );
 
-        System.out.println(n.exists() + " " + n.isFile());
-        return new FXMLLoader(Main.class.getResource("src/main/java/sample/gui/" + title + ".fxml")).load();
+        return new FXMLLoader(Main.class.getResource(title + ".fxml")).load();
     }
 
     public static void open(String toOpen) {
@@ -142,7 +139,7 @@ public class Main extends Application {
 
 
 
-            launch(args);
+        launch(args);
 
     }
 }
