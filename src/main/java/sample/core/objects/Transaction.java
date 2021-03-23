@@ -1,5 +1,7 @@
 package sample.core.objects;
 
+import javafx.beans.property.SimpleStringProperty;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
@@ -54,5 +56,15 @@ public class Transaction implements Serializable {
 
     public void setDepositOrWithdraw(String depositOrWithdraw) {
         this.depositOrWithdraw = depositOrWithdraw;
+    }
+
+    public SimpleStringProperty getDateStringProperty()
+    {
+        return new SimpleStringProperty(date.toString());
+    }
+
+    public SimpleStringProperty getAmountStringProperty()
+    {
+        return new SimpleStringProperty(Long.toString(amount.longValue()));
     }
 }

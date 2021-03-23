@@ -94,7 +94,7 @@ public class FileOperations {
 
                 switch (fileName) {
                     case "users":
-                       // Main.users = (HashMap<String, User>) ois.readObject();
+                       Main.users = (HashMap<String, User>) ois.readObject();
                         break;
                     default:
                         throw new IllegalStateException("Unexpected value: " + fileName);
@@ -102,7 +102,7 @@ public class FileOperations {
 
 
             }
-        } catch (IOException e /*ClassNotFoundException e*/) {};
+        } catch (IOException | ClassNotFoundException e) {};
     }
 
 }

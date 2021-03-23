@@ -28,39 +28,35 @@ import java.util.regex.Pattern;
 
 public class RegisterPageController {
 
-    public PasswordField passwordField;
-    @FXML // ResourceBundle that was given to the FXMLLoader
-    private ResourceBundle resources;
+    @FXML
+    private TextField firstNameTextField;
 
-    @FXML // URL location of the FXML file that was given to the FXMLLoader
-    private URL location;
+    @FXML
+    private TextField lastNameTextField;
 
-    @FXML // fx:id="clearButton"
-    private Button clearButton; // Value injected by FXMLLoader
+    @FXML
+    private TextField emailTextField;
 
-    @FXML // fx:id="firstNameTextField"
-    private TextField firstNameTextField; // Value injected by FXMLLoader
+    @FXML
+    private PasswordField passwordField;
 
-    @FXML // fx:id="lastNameTextField"
-    private TextField lastNameTextField; // Value injected by FXMLLoader
+    @FXML
+    private TextField dobTextField;
 
-    @FXML // fx:id="emailTextField"
-    private TextField emailTextField; // Value injected by FXMLLoader
+    @FXML
+    private TextField phoneNumberTextField;
 
-    @FXML // fx:id="passwordTextField"
-    private TextField passwordTextField; // Value injected by FXMLLoader
+    @FXML
+    private TextField ssnTextField;
 
-    @FXML // fx:id="dobTextField"
-    private TextField dobTextField; // Value injected by FXMLLoader
+    @FXML
+    private Button clearButton;
 
-    @FXML // fx:id="phoneNumberTextField"
-    private TextField phoneNumberTextField; // Value injected by FXMLLoader
+    @FXML
+    private Button registerButton;
 
-    @FXML // fx:id="ssnTextField"
-    private TextField ssnTextField; // Value injected by FXMLLoader
-
-    @FXML // fx:id="registerButton"
-    private Button registerButton; // Value injected by FXMLLoader
+    @FXML
+    private Button backButton;
 
     // TODO: Something wrong with our arraylist?? we need to fix epic poggers :O
     private java.util.ArrayList<TextField> textFields;
@@ -82,6 +78,9 @@ public class RegisterPageController {
 
     @FXML
     void clearButtonClicked(ActionEvent event) {
+
+
+
         for (TextField fieldsToClear : textFields) {
             if (!fieldsToClear.getText().equals("")) {
                 fieldsToClear.setText("");
@@ -255,7 +254,22 @@ public class RegisterPageController {
             }
         }
 
+    @FXML
+    void backButtonPressed(ActionEvent event) {
 
+    }
+
+    @FXML
+    void onBackExitied(MouseEvent event)
+    {
+        backButton.setStyle("-fx-background-color: #313131;");
+    }
+
+    @FXML
+    void onBackHovered(MouseEvent event)
+    {
+        backButton.setStyle("-fx-background-color: #9d2929;");
+    }
 
     public void onRegisterExitied (MouseEvent mouseEvent){
         registerButton.setStyle("-fx-background-color: #313131;");

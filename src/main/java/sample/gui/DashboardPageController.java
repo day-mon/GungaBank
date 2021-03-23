@@ -1,93 +1,99 @@
-/**
- * Sample Skeleton for 'dashboard.fxml' Controller Class
- */
-
 package sample.gui;
 
+import java.math.BigDecimal;
+import java.net.URL;
+import java.util.Date;
+import java.util.ResourceBundle;
+
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import java.text.FieldPosition;
-import java.text.Format;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.TreeItem;
-import javafx.scene.control.TreeTableColumn;
-import javafx.scene.control.TreeTableView;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import sample.Main;
 import sample.core.objects.Transaction;
 
-import java.net.URL;
-import java.util.ResourceBundle;
-
 public class DashboardPageController {
 
-    @FXML // ResourceBundle that was given to the FXMLLoader
+    @FXML
     private ResourceBundle resources;
 
-    @FXML // URL location of the FXML file that was given to the FXMLLoader
+    @FXML
     private URL location;
 
-    @FXML // fx:id="homeIcon"
-    private ImageView homeIcon; // Value injected by FXMLLoader
+    @FXML
+    private ImageView homeIcon;
 
-    @FXML // fx:id="transferIcon"
-    private ImageView transferIcon; // Value injected by FXMLLoader
+    @FXML
+    private ImageView transferIcon;
 
-    @FXML // fx:id="creditCardIcon"
-    private ImageView creditCardIcon; // Value injected by FXMLLoader
+    @FXML
+    private ImageView creditCardIcon;
 
-    @FXML // fx:id="profileIcon"
-    private ImageView profileIcon; // Value injected by FXMLLoader
+    @FXML
+    private ImageView profileIcon;
 
-    @FXML // fx:id="logoutIcon"
-    private ImageView logoutIcon; // Value injected by FXMLLoader
+    @FXML
+    private ImageView logoutIcon;
 
-    @FXML // fx:id="nameText"
-    private Text nameText; // Value injected by FXMLLoader
+    @FXML
+    private Text bankAccountBalance;
 
-    @FXML // fx:id="bankAccountBalance"
-    private Text bankAccountBalance; // Value injected by FXMLLoader
+    @FXML
+    private ComboBox<?> bankAccountScollable;
 
-    @FXML // fx:id="bankAccountScollable"
-    private ComboBox<?> bankAccountScollable; // Value injected by FXMLLoader
+    @FXML
+    private Text creditCardBalance;
 
-    @FXML // fx:id="transactionsTable"
-    private TreeTableView<?> transactionsTable; // Value injected by FXMLLoader
+    @FXML
+    private ComboBox<?> creditCardScrollable;
 
-    @FXML // fx:id="dateColumn"
-    private TreeTableColumn<?, ?> dateColumn; // Value injected by FXMLLoader
+    @FXML
+    private TableView<Transaction> transactionTable;
 
-    @FXML // fx:id="accountNumberColumn"
-    private TreeTableColumn<?, ?> accountNumberColumn; // Value injected by FXMLLoader
+    @FXML
+    private TableColumn<Transaction, String> dateColumn;
 
-    @FXML // fx:id="transactionAmountColumn"
-    private TreeTableColumn<?, ?> transactionAmountColumn; // Value injected by FXMLLoader
+    @FXML
+    private TableColumn<Transaction, String> accountColumn;
 
-    @FXML // fx:id="debitOrWithdrawColumn"
-    private TreeTableColumn<?, ?> debitOrWithdrawColumn; // Value injected by FXMLLoader
+    @FXML
+    private TableColumn<Transaction, String> ammountColumn;
 
-    @FXML // fx:id="creditCardBalance"
-    private Text creditCardBalance; // Value injected by FXMLLoader
+    @FXML
+    private TableColumn<Transaction, String> wOrDColumn;
 
-    @FXML // fx:id="creditCardScrollable"
-    private ComboBox<?> creditCardScrollable; // Value injected by FXMLLoader
+    @FXML
+    private Text nameText;
 
-    @FXML // This method is called by the FXMLLoader when initialization is complete
+    @FXML
     void initialize() {
-        /*if (Main.userLoggedIn.getBankAccounts().size() <= 0) {
-
-        }*/
-        //TODO: Figure out how to add stuff to treetablecolumns so we can load each transactionn on the dashboard
-        /*for (Transaction t : Main.userLoggedIn.getBankAccounts().get(0).getTransactions()) {
-
-        }*/
-
         String replaced = nameText.getText().replace("%{name}", Main.userLoggedIn.getFirstName());
         nameText.setText(replaced);
         nameText.setTextAlignment(TextAlignment.CENTER);
-        creditCardBalance.getText().replace("{balance_1}", String.valueOf(Main.userLoggedIn.getCards().get(0).getBalance()));
+
+
+        ObservableList<Transaction> s = FXCollections.observableArrayList();
+        Transaction trans1 = new Transaction(new BigDecimal(".32"), 232323, new Date(), "+");
+        Transaction trans2 = new Transaction(new BigDecimal(".3"), 232311123, new Date(), "+");
+        Transaction trans3 = new Transaction(new BigDecimal(".2"), 222, new Date(), "+");
+        s.addAll(trans1, trans2, trans3);
+
+        dateColumn.setCellValueFactory(new PropertyValueFactory<Transaction, String>("Date"));
+        accountColumn.setCellValueFactory(new PropertyValueFactory<Transaction, String>("Account #"));
+        ammountColumn.setCellValueFactory(new PropertyValueFactory<Transaction, String>("Amount"));
+        wOrDColumn.setCellValueFactory(new PropertyValueFactory<Transaction, String>("+/-"));
+        transactionTable.setItems(s);
+
 
 
     }
 }
+
+
+

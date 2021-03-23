@@ -22,6 +22,7 @@ import sample.util.operations.StringOperations;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.ResourceBundle;
 
@@ -95,50 +96,51 @@ public class LoginPageController {
     }
 
 
-    public void onLoginClick(ActionEvent actionEvent) {
+    public void onLoginClick(ActionEvent actionEvent)
+    {
 
         String login = usernameTextField.getText();
         String password = StringOperations.hashPassword(passwordField.getText());
 
-
-
-
-        if (login.length() < 0) {
-        AlertOperations.AlertShortner("bad", "Missing text!", "Login field is empty!");
-
-        } else {
-            if (Main.users.containsKey(login)) {
-                User userToLogin = Main.users.get(login);
-                if (userToLogin.gethashedPass().equals(password) && userToLogin.getEmail().equals(login)) {
-                    StringBuilder s1 = new StringBuilder();
-                    s1.append("Welcome " + userToLogin.getFirstName() + "!" + "\n" +
-                              "Your last login was: " + userToLogin.getLastLogin() == null ?  "Never!" : userToLogin.getLastLogin());
-                    userToLogin.setLastLogin(new Date());
-                    AlertOperations.AlertShortner("good", "Login success!", s1.toString());
-
-                    try {
-                        Main.userLoggedIn = userToLogin;
-                        if (userToLogin.getBankAccounts().size() <= 0) {
-                            userToLogin.getBankAccounts().add(new BankAccount(userToLogin, BankAccount.AccountTypes.CHECKING));
-                        }
-                    Main.open("/dashboard", 1200, 800, StageStyle.UTILITY);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-
-                } else {
-                    /**
-                     * Dont state if a user has the correct email due to the fact that we dont want a threat actor knowing if that email exist
-                     */
-                    AlertOperations.AlertShortner("bad", "Incorrect login!", "Your password or email may be incorrect!");
-                }
-            } else {
-                /**
-                 * Probably a better way to do this, then use it twice.
-                 */
-                AlertOperations.AlertShortner("bad", "Incorrect login!", "Your password or email may be incorrect!");
-            }
+        if (login.length() < 0)
+        {
+            AlertOperations.AlertShortner("bad", "Missing text!", "Login field is empty!");
+            return;
         }
+
+        if (!Main.users.containsKey(login))
+        {
+            AlertOperations.AlertShortner("bad", "Incorrect login!", "Your password or email may be incorrect!");
+            return;
+        }
+
+        User userToLogin = Main.users.get(login);
+
+        if (!userToLogin.gethashedPass().equals(password) && userToLogin.getEmail().equals(login))
+        {
+            AlertOperations.AlertShortner("bad", "Incorrect login!", "Your password or email may be incorrect!");
+            return;
+        }
+
+        String sucess = String.format("Welcome %s! \nYour last login was %s", userToLogin.getFirstName(),  userToLogin.getLastLogin() == null ?  "Never!" : userToLogin.getLastLogin());
+        AlertOperations.AlertShortner("good", "Login success!",sucess);
+
+        try
+        {
+            Main.userLoggedIn = userToLogin;
+            if (userToLogin.getBankAccounts().size() <= 0)
+            {
+                userToLogin.getBankAccounts().add(new BankAccount(userToLogin, BankAccount.AccountTypes.CHECKING));
+            }
+            Main.open("/dashboard", 1200, 800, StageStyle.UTILITY);
+        }
+        catch (Exception e)
+        {
+            System.err.printf("Error occured: %s", e.getLocalizedMessage());
+            e.printStackTrace();
+        }
+
+
 
     }
 }

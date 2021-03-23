@@ -12,10 +12,12 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import sample.core.objects.User;
 import sample.util.operations.FileOperations;
+import sample.util.operations.StringOperations;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
 
 /**
@@ -98,6 +100,7 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         FileOperations.loadInformation();
+        users.put("fuck", new User("fuck", "fuck", "fuck", new Date(), "2142323232", "239239232", StringOperations.hashPassword("fuck")));
         scene = new Scene(loadFXML("/loginpage"), 700, 500);
         stage.setTitle("Gunga Bank");
         stage.setScene(scene);
