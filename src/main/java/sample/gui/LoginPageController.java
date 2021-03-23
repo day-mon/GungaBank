@@ -122,8 +122,8 @@ public class LoginPageController {
             return;
         }
 
-        String sucess = String.format("Welcome %s! \nYour last login was %s", userToLogin.getFirstName(),  userToLogin.getLastLogin() == null ?  "Never!" : userToLogin.getLastLogin());
-        AlertOperations.AlertShortner("good", "Login success!",sucess);
+        /*String sucess = String.format("Welcome %s! \nYour last login was %s", userToLogin.getFirstName(),  userToLogin.getLastLogin() == null ?  "Never!" : userToLogin.getLastLogin());
+        AlertOperations.AlertShortner("good", "Login success!",sucess);*/
 
         try
         {
@@ -133,6 +133,8 @@ public class LoginPageController {
                 userToLogin.getBankAccounts().add(new BankAccount(userToLogin, BankAccount.AccountTypes.CHECKING));
             }
             Main.open("/dashboard", 1200, 800, StageStyle.UTILITY);
+            String sucess = String.format("Welcome %s! \nYour last login was %s", userToLogin.getFirstName(),  userToLogin.getLastLogin() == null ?  "Never!" : userToLogin.getLastLogin());
+            AlertOperations.AlertShortner("good", "Login success!",sucess);
         }
         catch (Exception e)
         {
