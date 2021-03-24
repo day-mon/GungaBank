@@ -1,11 +1,12 @@
 package sample.util.operations;
 
 import sample.Main;
+import sample.util.ArrayList;
 import sample.core.objects.User;
+import sample.util.HashDictionary;
 
 
 import java.io.*;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 
@@ -94,7 +95,7 @@ public class FileOperations {
 
                 switch (fileName) {
                     case "users":
-                       Main.users = (HashMap<String, User>) ois.readObject();
+                       Main.users = (HashDictionary<String, User>) ois.readObject();
                         break;
                     default:
                         throw new IllegalStateException("Unexpected value: " + fileName);

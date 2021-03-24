@@ -1,6 +1,8 @@
 package sample.util;
 
-public class ArraySetDriver {
+import java.io.Serializable;
+
+public class ArraySetDriver implements Serializable {
     public static void main(String[] args) {
         ArraySet arraySet = new ArraySet(10);
         for (int i = 0; i < 15; i++) {

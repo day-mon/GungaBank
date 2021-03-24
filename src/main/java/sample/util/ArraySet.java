@@ -3,9 +3,12 @@ package sample.util;
 
 import sample.util.interfaces.Set;
 
+import java.io.Serializable;
 import java.util.Arrays;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
 
-public class ArraySet<T> implements Set<T> {
+public class ArraySet<T> implements Serializable, Set<T> {
     private static final int defaultCap = 25;
     private Object[] set;
     private int size;
@@ -16,13 +19,41 @@ public class ArraySet<T> implements Set<T> {
      *
      */
 
+
+
     public ArraySet(){
         this(defaultCap);
     }
 
+
+
     public ArraySet(int capacity) {
         this.capacity = capacity;
         this.set = new Object[capacity];
+    }
+
+
+    public Iterator<T> iterator()
+    {
+        return new Iterator<T>()
+        {
+            private int position = 0;
+
+            @Override
+            public boolean hasNext() {
+                return (position < size);
+            }
+
+            @Override
+            public T next()
+            {
+                if (!hasNext())
+                {
+                    throw new NoSuchElementException();
+                }
+                return (T)set[position++];
+            }
+        };
     }
 
     @Override

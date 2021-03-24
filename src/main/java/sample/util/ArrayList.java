@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.ListIterator;
+import java.util.NoSuchElementException;
+
 import sample.util.interfaces.ListInterface;
 
 /**
@@ -49,21 +51,25 @@ public class ArrayList<E> implements ListInterface<E>, Serializable, Iterable<E>
   }
 
   @Override
-  public Iterator<E> iterator() {
-    return new Iterator<E>() {
+  public Iterator<E> iterator()
+  {
+    return new Iterator<E>()
+    {
       private int position = 0;
 
       @Override
       public boolean hasNext() {
-        return (position < list.length);
+        return (position < size);
       }
 
       @Override
-      public E next() {
-        if (hasNext()) {
-          return (E) list[position++];
+      public E next()
+      {
+        if (!hasNext())
+        {
+          throw new NoSuchElementException();
         }
-        return null;
+        return (E)list[position++];
       }
     };
   }

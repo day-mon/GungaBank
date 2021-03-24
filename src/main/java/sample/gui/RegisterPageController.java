@@ -5,24 +5,23 @@ package sample.gui;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.StageStyle;
 import sample.Main;
 import sample.core.objects.User;
+import sample.util.ArrayList;
+import sample.util.ArraySet;
+import sample.util.HashDictionary;
 import sample.util.operations.FileOperations;
 import sample.util.operations.StringOperations;
 
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.ResourceBundle;
-import java.util.Set;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -59,13 +58,13 @@ public class RegisterPageController {
     private Button backButton;
 
     // TODO: Something wrong with our arraylist?? we need to fix epic poggers :O
-    private java.util.ArrayList<TextField> textFields;
+    private ArrayList<TextField> textFields;
 
 
     @FXML
         // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
-        textFields = new java.util.ArrayList<TextField>();
+        textFields = new ArrayList<TextField>();
         textFields.add(firstNameTextField);
         textFields.add(lastNameTextField);
         textFields.add(emailTextField);
@@ -79,8 +78,6 @@ public class RegisterPageController {
     @FXML
     void clearButtonClicked(ActionEvent event) {
 
-
-
         for (TextField fieldsToClear : textFields) {
             if (!fieldsToClear.getText().equals("")) {
                 fieldsToClear.setText("");
@@ -91,14 +88,16 @@ public class RegisterPageController {
 
     @FXML
     void registerButtonClicked(ActionEvent event) throws IOException, InterruptedException, ParseException {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        java.util.HashMap<Integer, String> errorReasons = new java.util.HashMap<>();
-        Date date = null;
+        HashDictionary<Integer, String> errorReasons = new HashDictionary<>();
         int currentErrors = 0;
-        for (int i = 0; i < textFields.size(); i++) {
+        for (int i = 0; i < textFields.size(); i++)
+        {
             // Jesus this is horrible :(
             TextField currentField;
-            switch (i) {
+
+
+            switch (i)
+            {
 
                 // error checks First name field
                 case 0:
@@ -120,7 +119,7 @@ public class RegisterPageController {
                     }
                     continue;
 
-                // error checks Last name field
+                    // error checks Last name field
                 case 1:
                     currentField = textFields.get(i);
 
@@ -138,57 +137,64 @@ public class RegisterPageController {
                     }
                     continue;
 
-                // error checks email field
+                    // error checks email field
                 case 2:
                     currentField = textFields.get(i);
                     /**
                      * For emails we will do a regex pattern checker
                      */
-                    if (currentField.getText().equals("")) {
+                    if (currentField.getText().equals(""))
+                    {
                         errorReasons.put(currentErrors++, "Your email field is empty!");
-                    } else if(!emailVaildaotr(currentField.getText())){
-                            errorReasons.put(currentErrors++, "Your email field is wrong!");
+                    }
+                    else if (!emailVaildaotr(currentField.getText()))
+                    {
+                        errorReasons.put(currentErrors++, "Your email field is wrong!");
                     }
 
-                    for (User u : Main.users.values()) {
-                        if (u.getEmail().equals(currentField)) {
-                            errorReasons.put(currentErrors++, "This email is already registered!");
+                    if (checkEmail(currentField.getText()))
+                    {
+                        Alert s =  new Alert(Alert.AlertType.WARNING, "User found\nWould you like to goto the login page",
+                                new ButtonType("Back"),
+                                new ButtonType("Continue"));
+
+                        Optional<ButtonType> a = s.showAndWait();
+
+                        if (a.get().getText().equals("Back"))
+                        {
+                            Main.open("/loginpage");
+                            return;
                         }
+                        return;
                     }
 
                     continue;
-                    /*
-                    if(checkEmail(currentField.getText())){
 
-                       // AlertOperations.AlertShortner("info", "User found!", "Duplicate email", "That email is already in our database!");
-                        Main.setRoot("gui/registerpage", "gui/loginpage", 700, 500,false,  StageStyle.UTILITY);
-                        break;
-                    }
-                    continue;
 
-                     */
-
-                // error checks Password field
+                    // error checks Password field
                 case 3:
                     currentField = textFields.get(i);
-                    if(checkEmail(currentField.getText())){
 
-                    }
-                    if (currentField.getText().equals("")) {
+                    if (currentField.getText().equals(""))
+                    {
                         errorReasons.put(currentErrors++, "Your Password field is empty!");
-                    } else if(!paswordValidator(currentField.getText())){
-                     errorReasons.put(currentErrors++, "Password field must be contain a digit (4-20), a number, special char, upper and lower case letter at least once!");
-
-                     }
+                    }
+                    else if(!paswordValidator(currentField.getText()))
+                    {
+                        errorReasons.put(currentErrors++, "Password field must be contain a digit (4-20), a number, special char, upper and lower case letter at least once!");
+                    }
 
                     continue;
 
                 // error checks Date field
                 case 4:
                     currentField = textFields.get(i);
-                    if (currentField.getText().equals("")) {
+                    if (currentField.getText().equals(""))
+                    {
                         errorReasons.put(currentErrors++, "Your Date field is empty!");
-                    } else if(!DateValidator(currentField.getText())){
+                    }
+                    else if(!DateValidator(currentField.getText()))
+                    {
                         errorReasons.put(currentErrors++, "Date is invalid must be (mm/dd/yyyy)!");
                     }
 
@@ -198,9 +204,12 @@ public class RegisterPageController {
                 // error checks Number field
                 case 5:
                     currentField = textFields.get(i);
-                    if (currentField.getText().equals("")) {
+                    if (currentField.getText().equals(""))
+                    {
                         errorReasons.put(currentErrors++, "Your number field is empty!");
-                    } else if(!phoneValidator(currentField.getText())){
+                    }
+                    else if(!phoneValidator(currentField.getText()))
+                    {
                         errorReasons.put(currentErrors++, "Phone number is wrong!");
                     }
                     continue;
@@ -219,44 +228,80 @@ public class RegisterPageController {
             }
 
                     //Creates map of error messages to throw when a field is wrong
-                  Set<Integer> keySet = errorReasons.keySet();
-                    if (keySet.size() > 0) {
-                        System.out.println(keySet.size());
+                   ArraySet<Integer> keySet = errorReasons.keySet();
+                   Alert alert = new Alert(Alert.AlertType.WARNING);
+
+                    if (keySet.size() > 0)
+                    {
+
                         int errorAmount = keySet.size();
                         alert.setHeaderText("You have " + errorAmount + " errors!");
-                        StringBuilder errors = new StringBuilder("");
-                        for (int erroReasonsInts : keySet) {
-                            errors.append(errorReasons.get(erroReasonsInts) + "\n");
+
+                        String errors = "";
+
+                        Iterator<Integer> s = keySet.iterator();
+
+                        while (s.hasNext())
+                        {
+                            /**
+                             * Could use a stringbuilder but meh.
+                             */
+                            errors += (errorReasons.get(s.next()) + "\n");
                         }
 
-                        alert.setContentText(errors.toString());
+
+                        alert.setContentText(errors);
                         alert.show();
                         return;
-                    } else {
-                        alert = new Alert(Alert.AlertType.CONFIRMATION);
-                        alert.setContentText("You have successfully registered \n Sending you back to the login page");
+                    }
+
+                    alert = new Alert(Alert.AlertType.CONFIRMATION,
+                                "You have successfully registered \nSending you back to the login page");
+
+
                         SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyy");
-                        date = format.parse(dobTextField.getText());
+                        Date date = format.parse(dobTextField.getText());
 
 
 
-                        Main.users.put(emailTextField.getText().toString(),
-                                new User(firstNameTextField.getText(), lastNameTextField.getText(), emailTextField.getText(), date, phoneNumberTextField.getText(), ssnTextField.getText(), StringOperations.hashPassword(passwordField.getText())));
+                        Main.users.put(emailTextField.getText(),
+                                new User(
+                                        firstNameTextField.getText(),
+                                        lastNameTextField.getText(),
+                                        emailTextField.getText(),
+                                        date,
+                                        phoneNumberTextField.getText(),
+                                        ssnTextField.getText(),
+                                        StringOperations.hashPassword(passwordField.getText())
+                                        ));
 
 
                         FileOperations.writeToFile(FileOperations.users, Main.users);
 
-                        for (TextField tf : textFields) {
+                        for (TextField tf : textFields)
+                        {
                             tf.clear();
                         }
+
                         Main.open("/loginpage");
                     }
             }
-        }
+
+
+
+
 
     @FXML
-    void backButtonPressed(ActionEvent event) {
-
+    void backButtonPressed(ActionEvent event)
+    {
+        try
+        {
+            Main.open("/loginpage");
+        }
+        catch (Exception e)
+        {
+            System.err.printf("Error occured: %s ", e.getLocalizedMessage());
+        }
     }
 
     @FXML

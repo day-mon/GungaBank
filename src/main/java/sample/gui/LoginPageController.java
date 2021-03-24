@@ -87,9 +87,12 @@ public class LoginPageController {
 
     public void onRegisterButtonClick(ActionEvent actionEvent) {
 
-            try {
+            try
+            {
                Main.open("/registerpage", 700, 835, StageStyle.UTILITY);
-            } catch (IOException e) {
+            }
+            catch (IOException e)
+            {
                 e.printStackTrace();
             }
 
@@ -122,12 +125,13 @@ public class LoginPageController {
             return;
         }
 
-        /*String sucess = String.format("Welcome %s! \nYour last login was %s", userToLogin.getFirstName(),  userToLogin.getLastLogin() == null ?  "Never!" : userToLogin.getLastLogin());
-        AlertOperations.AlertShortner("good", "Login success!",sucess);*/
 
         try
         {
             Main.userLoggedIn = userToLogin;
+            System.out.println("Main.user: " + Main.userLoggedIn.getFirstName());
+            System.out.println("UserToLogin: " + userToLogin.getFirstName());
+
             if (userToLogin.getBankAccounts().size() <= 0)
             {
                 userToLogin.getBankAccounts().add(new BankAccount(userToLogin, BankAccount.AccountTypes.CHECKING));
