@@ -10,7 +10,7 @@ import java.util.ListIterator;
  * @author Damon L Montague Jr.
  * @author Shanes Wiles
  *
- * @see ArrayList
+ * @see sample.util.ArrayList
  *
  */
 

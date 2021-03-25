@@ -7,10 +7,10 @@ import java.util.*;
  * This is an implementation of a hash table using separate chaining. Entries in
  * the array contain Nodes, which form a chain of all key-value pairs with the
  * same key hash index.
- *
+ * <p>
  * There's no mechanism to resize the array here. There's also no real need, as
  * a table entry will contain a linked chain which may have multiple nodes.
- *
+ * <p>
  * Some things to think about: - How would you implement the iterators for this
  * collection? - What is the runtime complexity of the methods?
  *
@@ -18,66 +18,66 @@ import java.util.*;
  * @author YOUR NAME HERE
  */
 @SuppressWarnings("unchecked")
-public class HashDictionary<K, V> implements Serializable, Dictionary<K, V>  {
-
+public class HashDictionary<K, V> implements Serializable, Dictionary<K, V>
+{
     private Object[] entries; //array of Nodes
-    private ArraySet<K> keys;
-    private ArrayList<V> values;
     private int size;
     private static final int DEFAULT_CAPACITY = 17;
     private static final float LOAD_FACTOR = 0.75f;
     private float loadfactor;
 
-    public HashDictionary() {
+    public HashDictionary()
+    {
         this(DEFAULT_CAPACITY, LOAD_FACTOR);
     }
 
     //TODO
-    public HashDictionary(int initialCapacity, float factor) {
+    public HashDictionary(int initialCapacity, float factor)
+    {
         entries = new Object[initialCapacity];
-        keys = new ArraySet<>();
-        values = new ArrayList<>();
         loadfactor = factor;
         size = 0;
     }
 
-    public ArraySet<K> keySet()
-    {
-        return keys;
-    }
-
-    public ArrayList<V> values()
-    {
-        return values;
-    }
-
     //TODO
     @Override
-    public Iterator<K> keys() {
-        return new Iterator<K>() {
+    public Iterator<K> keys()
+    {
+        return new Iterator<K>()
+        {
             int count = 0;
             int c = 0;
             int next = 0;
+
             @Override
-            public boolean hasNext() {
+            public boolean hasNext()
+            {
                 return count < size;
             }
-            public K next() {
-                if (!hasNext()) {
+
+            public K next()
+            {
+                if (!hasNext())
+                {
                     throw new NoSuchElementException("End of collection");
                 }
-                Node n = (Node)entries[c];
-                while (n == null) {
-                    n = (Node)entries[++c];
+                Node n = (Node) entries[c];
+                while (n == null)
+                {
+                    n = (Node) entries[++c];
                 }
-                for (int i = 0; i < next; i++) {
+                for (int i = 0; i < next; i++)
+                {
                     n = n.getNext();
                 }
-                if (n.getNext() != null) {
+                if (n.getNext() != null)
+                {
                     next++;
-                } else {
+                }
+                else
+                {
                     ++c;
-                    next=0;
+                    next = 0;
                 }
                 count++;
                 return n.getKey();
@@ -87,31 +87,43 @@ public class HashDictionary<K, V> implements Serializable, Dictionary<K, V>  {
 
     //TODO
     @Override
-    public Iterator<V> elements() {
-        return new Iterator<V>() {
+    public Iterator<V> elements()
+    {
+        return new Iterator<V>()
+        {
             int count = 0;
             int c = 0;
             int next = 0;
+
             @Override
-            public boolean hasNext() {
+            public boolean hasNext()
+            {
                 return count < size;
             }
-            public V next() {
-                if (!hasNext()) {
+
+            public V next()
+            {
+                if (!hasNext())
+                {
                     throw new NoSuchElementException("End of collection");
                 }
-                Node n = (Node)entries[c];
-                while (n == null) {
-                    n=(Node)entries[++c];
+                Node n = (Node) entries[c];
+                while (n == null)
+                {
+                    n = (Node) entries[++c];
                 }
-                for (int i = 0; i < next; i++) {
+                for (int i = 0; i < next; i++)
+                {
                     n = n.getNext();
                 }
-                if (n.getNext() != null) {
+                if (n.getNext() != null)
+                {
                     next++;
-                } else {
+                }
+                else
+                {
                     ++c;
-                    next=0;
+                    next = 0;
                 }
                 count++;
                 return n.getValue();
@@ -122,30 +134,39 @@ public class HashDictionary<K, V> implements Serializable, Dictionary<K, V>  {
     //TODO
     @SuppressWarnings("unchecked")
     @Override
-    public V get(K key) {
+    public V get(K key)
+    {
         int index = getHashIndex(key);
-        Node n = (Node)entries[index];
-        while (n != null && !n.getKey().equals(key)) {
+        Node n = (Node) entries[index];
+        while (n != null && !n.getKey().equals(key))
+        {
             n = n.getNext();
         }
-        if (n == null) {
+        if (n == null)
+        {
             return null;
         }
         return n.getValue();
     }
 
-    private void rehash(int newCap) {
+    private void rehash(int newCap)
+    {
         Object[] arr = entries;
         entries = new Object[nextPrime(newCap)];
-        for (int i = 0; i < arr.length; i++) {
-            Node n = (Node)arr[i];
-            while (n != null) {
+        for (int i = 0; i < arr.length; i++)
+        {
+            Node n = (Node) arr[i];
+            while (n != null)
+            {
                 Node node = new Node(n.getKey(), n.getValue());
                 int index = getHashIndex(node.getKey());
-                if (entries[index] == null) {
+                if (entries[index] == null)
+                {
                     entries[index] = node;
-                } else {
-                    Node n2 = (Node)entries[index];
+                }
+                else
+                {
+                    Node n2 = (Node) entries[index];
                     node.setNext(n2);
                     entries[index] = node;
                 }
@@ -156,7 +177,8 @@ public class HashDictionary<K, V> implements Serializable, Dictionary<K, V>  {
 
     //TODO
     @Override
-    public V remove(K key) {
+    public V remove(K key)
+    {
         V ret = null;
         if (key == null || get(key) == null || size == 0)
         {
@@ -164,17 +186,17 @@ public class HashDictionary<K, V> implements Serializable, Dictionary<K, V>  {
         }
 
         int index = getHashIndex(key);
-        Node n = (Node)entries[index];
+        Node n = (Node) entries[index];
 
         if (n.getNext() == null)
         {
-            ret = (V)n.getValue();
+            ret = (V) n.getValue();
             entries[index] = null;
-            keys.remove(key); values.remove(ret);
             size--;
             return ret;
         }
-        else {
+        else
+        {
             Node prev = n;
             n = n.getNext();
             while (n != null)
@@ -186,7 +208,8 @@ public class HashDictionary<K, V> implements Serializable, Dictionary<K, V>  {
                     {
                         prev.setNext(null);
                     }
-                    else {
+                    else
+                    {
                         prev.setNext(n.getNext());
                     }
                     break;
@@ -195,7 +218,7 @@ public class HashDictionary<K, V> implements Serializable, Dictionary<K, V>  {
                 n = n.getNext();
             }
         }
-        keys.remove(key); values.remove(ret);
+
         size--;
         return ret;
     }
@@ -220,32 +243,31 @@ public class HashDictionary<K, V> implements Serializable, Dictionary<K, V>  {
         if (entries[index] == null)
         {
             entries[index] = new Node(key, value);
-            keys.add(key);  values.add(value);
-
             size++;
         }
 
-        else {
-            Node n = (Node)entries[index];
+        else
+        {
+            Node n = (Node) entries[index];
             while (n != null)
             {
                 if (key == n.getKey())
                 {
                     ret = n.getValue();
                     n.setValue(value);
-                    values.set(values.indexOf(ret), value);
                     break;
                 }
 
                 if (n.getNext() == null)
                 {
                     n.setNext(new Node(key, value));
-                    keys.add(key); values.add(value);
+
                     size++;
                     break;
                 }
 
-                else {
+                else
+                {
                     n = n.getNext();
                 }
             }
@@ -255,11 +277,17 @@ public class HashDictionary<K, V> implements Serializable, Dictionary<K, V>  {
 
     public boolean containsKey(K k)
     {
-        if (k == null) return false;
-        if (get(k) == null) return  false;
+        if (k == null)
+        {
+            return false;
+        }
+        if (get(k) == null)
+        {
+            return false;
+        }
         int index = getHashIndex(k);
 
-        Node n = (Node)entries[index];
+        Node n = (Node) entries[index];
 
         if (Objects.equals(k, n.key))
         {
@@ -289,38 +317,48 @@ public class HashDictionary<K, V> implements Serializable, Dictionary<K, V>  {
      * @param key
      * @return
      */
-    private int getHashIndex(K key) {
+    private int getHashIndex(K key)
+    {
         int capacity = entries.length;
         int index = key.hashCode() % capacity;
-        if (index < 0) {
+        if (index < 0)
+        {
             index += capacity;
         }
         return index;
     }
 
     @Override
-    public boolean isEmpty() {
+    public boolean isEmpty()
+    {
         return size == 0;
     }
 
     @Override
-    public int size() {
+    public int size()
+    {
         return size;
     }
 
-    private boolean isPrime(int n) {
-        if (n < 2) {
+    private boolean isPrime(int n)
+    {
+        if (n < 2)
+        {
             return false;
         }
-        if (n == 2 || n == 3) {
+        if (n == 2 || n == 3)
+        {
             return true;
         }
-        if (n % 2 == 0) {
+        if (n % 2 == 0)
+        {
             return false;
         }
 
-        for (int i = 3; i < (int) Math.sqrt(n) + 1; i += 2) {
-            if (n % i == 0) {
+        for (int i = 3; i < (int) Math.sqrt(n) + 1; i += 2)
+        {
+            if (n % i == 0)
+            {
                 return false;
             }
         }
@@ -328,46 +366,56 @@ public class HashDictionary<K, V> implements Serializable, Dictionary<K, V>  {
         return true;
     }
 
-    private int nextPrime(int n) {
+    private int nextPrime(int n)
+    {
         int p = n + 1;
-        while (!isPrime(p)) {
+        while (!isPrime(p))
+        {
             p++;
         }
         return p;
     }
 
-    private class Node implements Serializable {
+    private class Node implements Serializable
+    {
 
         private K key;
         private V value;
         private Node next;
 
-        public Node(K key, V value) {
+        public Node(K key, V value)
+        {
             this.key = key;
             this.value = value;
         }
 
-        public K getKey() {
+        public K getKey()
+        {
             return key;
         }
 
-        public void setKey(K key) {
+        public void setKey(K key)
+        {
             this.key = key;
         }
 
-        public V getValue() {
+        public V getValue()
+        {
             return value;
         }
 
-        public void setValue(V value) {
+        public void setValue(V value)
+        {
             this.value = value;
         }
 
-        public Node getNext() {
+        public Node getNext()
+        {
             return next;
         }
 
-        public void setNext(Node next) {
+        public void setNext(Node next)
+        {
             this.next = next;
         }
 

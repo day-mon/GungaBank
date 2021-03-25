@@ -136,6 +136,10 @@ public class LoginPageController {
             {
                 userToLogin.getBankAccounts().add(new BankAccount(userToLogin, BankAccount.AccountTypes.CHECKING));
             }
+
+            if (Main.forms.containsKey("/dashboard"))
+                Main.forms.remove("/dashboard");
+
             Main.open("/dashboard", 1200, 800, StageStyle.UTILITY);
             String sucess = String.format("Welcome %s! \nYour last login was %s", userToLogin.getFirstName(),  userToLogin.getLastLogin() == null ?  "Never!" : userToLogin.getLastLogin());
             AlertOperations.AlertShortner("good", "Login success!",sucess);

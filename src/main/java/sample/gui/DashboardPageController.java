@@ -21,9 +21,11 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.util.Duration;
 import sample.Main;
+import sample.core.objects.Card;
 import sample.core.objects.Transaction;
 
-public class DashboardPageController {
+public class DashboardPageController
+{
 
     @FXML
     private ResourceBundle resources;
@@ -86,15 +88,17 @@ public class DashboardPageController {
         nameText.setTextAlignment(TextAlignment.JUSTIFY);
 
         ObservableList<Transaction> s = FXCollections.observableArrayList();
+
         Random r = new Random();
         BigDecimal ssd = new BigDecimal("0");
+
         long val = 0;
-        for (int i = 0; i < 100; i ++)
+        for (int i = 0; i < 100; i++)
         {
 
-            int fs = r.nextInt(200000+i);
+            int fs = r.nextInt(200000 + i);
             int lrs = r.nextInt((999999999 - 100000000) + 1) + 100000000;
-            s.add(new Transaction(new BigDecimal("100").add(BigDecimal.valueOf(i+fs)), lrs, new Date(), "+"));
+            s.add(new Transaction(new BigDecimal("100").add(BigDecimal.valueOf(i + fs)), lrs, new Date(), "+"));
             System.out.println(val);
             val += i + fs;
         }
@@ -108,7 +112,6 @@ public class DashboardPageController {
 
         String replacedS = bankAccountBalance.getText().replace("{balance_1}", Long.toString(val));
         bankAccountBalance.setText(replacedS);
-
 
 
     }
@@ -128,10 +131,14 @@ public class DashboardPageController {
         }
     }
 
-    public void onCardIconClicked(MouseEvent mouseEvent) {
+    public void onCardIconClicked(MouseEvent mouseEvent)
+    {
+
     }
 
-    public void onProfileClicked(MouseEvent mouseEvent) {
+    public void onProfileClicked(MouseEvent mouseEvent)
+    {
+
     }
 
     public void onLogoutClicked(MouseEvent mouseEvent)
@@ -147,8 +154,10 @@ public class DashboardPageController {
             return;
         }
 
+
         PauseTransition delay = new PauseTransition(Duration.seconds(5.0));
-        delay.setOnFinished(event -> {
+        delay.setOnFinished(event ->
+        {
             try
             {
                 Main.userLoggedIn = null;

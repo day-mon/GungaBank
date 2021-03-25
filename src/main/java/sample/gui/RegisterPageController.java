@@ -228,28 +228,31 @@ public class RegisterPageController {
             }
 
                     //Creates map of error messages to throw when a field is wrong
-                   ArraySet<Integer> keySet = errorReasons.keySet();
+                   Iterator<Integer> keys = errorReasons.keys();
                    Alert alert = new Alert(Alert.AlertType.WARNING);
 
-                    if (keySet.size() > 0)
+
+
+                    if (/*keySet.size() > 0*/keys.hasNext())
                     {
 
-                        int errorAmount = keySet.size();
-                        alert.setHeaderText("You have " + errorAmount + " errors!");
+
 
                         String errors = "";
+                        int size = 0;
 
-                        Iterator<Integer> s = keySet.iterator();
 
-                        while (s.hasNext())
+                        while (keys.hasNext())
                         {
+                            int element = keys.next();
                             /**
                              * Could use a stringbuilder but meh.
                              */
-                            errors += (errorReasons.get(s.next()) + "\n");
+                            errors += (errorReasons.get(element) + "\n");
+                            size++;
                         }
 
-
+                        alert.setHeaderText("You have " + size + " errors!");
                         alert.setContentText(errors);
                         alert.show();
                         return;
