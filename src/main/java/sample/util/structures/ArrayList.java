@@ -1,16 +1,16 @@
-package sample.util;
+package sample.util.structures;
 
 import java.io.Serializable;
 import java.util.*;
 
-import sample.util.interfaces.ListInterface;
+import sample.util.structures.interfaces.ListInterface;
 
 /**
  * @param <E> type of data in this list
  * @author Damon l. Montague Jr
  * @author Ryan Leitenbeger
  * @author Shanes Wiles
- * @see ListInterface
+ * @see sample.util.structures.interfaces.ListInterface
  */
 
 public class ArrayList<E> implements ListInterface<E>, Serializable, Iterable<E>
@@ -149,10 +149,10 @@ public class ArrayList<E> implements ListInterface<E>, Serializable, Iterable<E>
     @Override
     public E remove(int index)
     {
-      if (index > capacity)
-      {
-        throw new IndexOutOfBoundsException();
-      }
+        if (index > capacity)
+        {
+            throw new IndexOutOfBoundsException();
+        }
         E element = get(index);
         return remove(list[index]) ? element : null;
     }
@@ -175,10 +175,10 @@ public class ArrayList<E> implements ListInterface<E>, Serializable, Iterable<E>
     @Override
     public int lastIndexOf(Object o)
     {
-      if (indexOf(o) < 0)
-      {
-        return -1;
-      }
+        if (indexOf(o) < 0)
+        {
+            return -1;
+        }
         int index = 0;
         for (int i = 0; i < list.length; i++)
         {

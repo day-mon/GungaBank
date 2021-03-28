@@ -4,7 +4,6 @@ package sample;
  * JavaFX Imports
  */
 
-import com.sun.javafx.stage.StageHelper;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -13,17 +12,12 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import sample.core.objects.User;
-import sample.util.ArrayList;
-import sample.util.HashDictionary;
+import sample.util.structures.HashDictionary;
 import sample.util.operations.FileOperations;
 import sample.util.operations.StringOperations;
 
-import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.Array;
-import java.util.Arrays;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Iterator;
 
 /**
@@ -57,7 +51,7 @@ public class Main extends Application
         stage.getIcons().add(new Image(Main.class.getResourceAsStream("/icons8_department_96px_2.png")));
         stage.setTitle("Gunga Bank");
         stage.setScene(scene);
-        stage.initStyle(StageStyle.UTILITY);
+        stage.initStyle(StageStyle.DECORATED);
         stage.setResizable(false);
         stage.show();
         forms.put("/loginpage", stage);

@@ -9,6 +9,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import sample.Main;
+import sample.util.operations.StageOperations;
 
 public class ProfilePageController
 {
@@ -64,19 +65,25 @@ public class ProfilePageController
     @FXML
     void onLogoutClicked(MouseEvent event)
     {
-
+        StageOperations.initLogoutSequence();
     }
 
     @FXML
     void onProfileClicked(MouseEvent event)
     {
-
+        return;
     }
 
     @FXML
     void onTransferIconClicked(MouseEvent event)
     {
+        StageOperations.switchToTransfersScene();
+    }
 
+    @FXML
+    void onDashboardClicked(MouseEvent event)
+    {
+        StageOperations.switchToDashboardScene();
     }
 
     @FXML
@@ -91,4 +98,6 @@ public class ProfilePageController
         numAccFill.setText(Integer.toString(Main.userLoggedIn.getBankAccounts().size()));
         numCardsFill.setText(Integer.toString(Main.userLoggedIn.getCards().size()));
     }
+
+
 }

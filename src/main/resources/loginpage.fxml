@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.gui.LoginPageController">
+   <left>
+      <AnchorPane prefHeight="500.0" prefWidth="300.0" style="-fx-background-color: #212121;" BorderPane.alignment="CENTER">
+         <children>
+            <Text id="gungaBankWord" fill="WHITE" layoutX="45.0" layoutY="262.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Gunga Bank" textAlignment="CENTER" wrappingWidth="210.013671875">
+               <font>
+                  <Font size="35.0" />
+               </font>
+            </Text>
+            <ImageView id="bankIcon" layoutX="99.0" layoutY="104.0">
+               <image>
+                  <Image url="@icons8_museum_96px_6.png" />
+               </image>
+            </ImageView>
+         </children>
+      </AnchorPane>
+   </left>
+   <right>
+      <AnchorPane prefHeight="496.0" prefWidth="409.0" BorderPane.alignment="CENTER">
+         <children>
+            <TextField id="usernameTextField" fx:id="usernameTextField" layoutX="126.0" layoutY="188.0" prefHeight="27.0" prefWidth="147.0" promptText="Username" style="-fx-border-width: 0px 0px 2px 0px; -fx-border-color: #212121; -fx-background-color: transparent;" />
+            <PasswordField id="passwordField" fx:id="passwordField" layoutX="128.0" layoutY="249.0" prefHeight="27.0" prefWidth="147.0" promptText="Password" style="-fx-background-color: transparent; -fx-border-color: #212121; -fx-border-width: 0px 0px 2px 0px;" />
+            <Button id="loginTextLabel" fx:id="loginTextLabel" layoutX="136.0" layoutY="297.0" mnemonicParsing="false" onAction="#onLoginClick" onMouseEntered="#onLoginHovered" onMouseExited="#onLoginHoveredExitied" prefHeight="34.0" prefWidth="115.0" style="-fx-background-color: #212121;" text="Login" textFill="WHITE" />
+            <Text fill="#212121" layoutX="170.0" layoutY="106.0" strokeType="OUTSIDE" strokeWidth="0.0" text="User Login" />
+            <Text id="forgotPasswordLabel" fx:id="forgotPasswordLabel" layoutX="138.0" layoutY="472.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Forget Your Password?" />
+            <Button id="registerButton" fx:id="registerButton" layoutX="154.0" layoutY="349.0" mnemonicParsing="false" onAction="#onRegisterButtonClick" onMouseEntered="#onRegisterHovered" onMouseExited="#onRegisterExitied" prefHeight="34.0" prefWidth="80.0" style="-fx-background-color: #212121;" text="Register" textFill="WHITE" />
+            <ImageView id="usersIcon" layoutX="165.0" layoutY="22.0">
+               <image>
+                  <Image url="@icons8_user_group_64px.png" />
+               </image>
+            </ImageView>
+            <ImageView id="usernameIcon" layoutX="94.0" layoutY="186.0">
+               <image>
+                  <Image url="@icons8_user_36px_4.png" />
+               </image>
+            </ImageView>
+            <ImageView id="passswordIcon" layoutX="94.0" layoutY="244.0">
+               <image>
+                  <Image url="@icons8_lock_36px_2.png" />
+               </image>
+            </ImageView>
+         </children>
+      </AnchorPane>
+   </right>
+</BorderPane>

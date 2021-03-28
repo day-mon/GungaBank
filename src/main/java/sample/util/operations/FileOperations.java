@@ -1,13 +1,12 @@
 package sample.util.operations;
 
 import sample.Main;
-import sample.util.ArrayList;
+import sample.util.structures.ArrayList;
 import sample.core.objects.User;
-import sample.util.HashDictionary;
+import sample.util.structures.HashDictionary;
 
 
 import java.io.*;
-import java.util.HashMap;
 
 
 public class FileOperations {

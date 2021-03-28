@@ -16,14 +16,13 @@ import javafx.stage.StageStyle;
 import sample.Main;
 import sample.core.objects.BankAccount;
 import sample.core.objects.User;
-import sample.util.ArrayList;
+import sample.util.structures.ArrayList;
 import sample.util.operations.AlertOperations;
 import sample.util.operations.FileOperations;
 import sample.util.operations.StringOperations;
 
 import java.io.IOException;
 import java.net.URL;
-import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.ResourceBundle;
 
@@ -141,7 +140,7 @@ public class LoginPageController {
             if (Main.forms.containsKey("/dashboard"))
                 Main.forms.remove("/dashboard");
 
-            Main.open("/dashboard", 1200, 800, StageStyle.UTILITY);
+            Main.open("/dashboard", 1200, 800, StageStyle.DECORATED);
             String sucess = String.format("Welcome %s! \nYour last login was %s", userToLogin.getFirstName(),  userToLogin.getLastLogin() == null ?  "Never!" : userToLogin.getLastLogin());
 
             Main.userLoggedIn.setLastLogin(new Date());

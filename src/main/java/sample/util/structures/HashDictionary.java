@@ -1,9 +1,11 @@
-package sample.util;
-
-import sample.util.interfaces.Dictionary;
+package sample.util.structures;
 
 import java.io.Serializable;
-import java.util.*;
+import sample.util.structures.interfaces.Dictionary;
+
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+import java.util.Objects;
 
 /**
  * This is an implementation of a hash table using separate chaining. Entries in

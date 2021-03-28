@@ -1,4 +1,4 @@
-package sample.util.interfaces;
+package sample.util.structures.interfaces;
 
 import java.util.Iterator;
 

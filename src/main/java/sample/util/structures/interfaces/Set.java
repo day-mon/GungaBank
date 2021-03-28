@@ -1,6 +1,7 @@
-package sample.util.interfaces;
+package sample.util.structures.interfaces;
 
-public interface Set<T> {
+public interface Set<T>
+{
     public boolean add(T obj);
 
     public void clear();

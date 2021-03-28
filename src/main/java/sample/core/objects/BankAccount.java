@@ -1,6 +1,6 @@
 package sample.core.objects;
 
-import sample.util.ArrayList;
+import sample.util.structures.ArrayList;
 
 import java.io.Serializable;
 import java.math.BigDecimal;

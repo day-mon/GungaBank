@@ -1,4 +1,6 @@
-package sample.util.interfaces;
+package sample.util.structures.interfaces;
+
+import sample.util.structures.ArrayList;
 
 import java.util.Iterator;
 import java.util.ListIterator;
@@ -10,7 +12,7 @@ import java.util.ListIterator;
  * @author Damon L Montague Jr.
  * @author Shanes Wiles
  *
- * @see sample.util.ArrayList
+ * @see ArrayList
  *
  */
 

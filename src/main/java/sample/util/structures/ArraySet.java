@@ -1,11 +1,10 @@
 //ok
-package sample.util;
+package sample.util.structures;
 
-import sample.util.interfaces.Set;
+import sample.util.structures.interfaces.*;
 
 import java.io.Serializable;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
