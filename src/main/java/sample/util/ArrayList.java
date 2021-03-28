@@ -1,10 +1,7 @@
 package sample.util;
 
 import java.io.Serializable;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.ListIterator;
-import java.util.NoSuchElementException;
+import java.util.*;
 
 import sample.util.interfaces.ListInterface;
 
@@ -224,6 +221,13 @@ public class ArrayList<E> implements ListInterface<E>, Serializable, Iterable<E>
             return true;
         }
         return false;
+    }
+
+    public boolean addAll(Collection<? extends E> e)
+    {
+        for (E ele : e)
+            add(ele);
+        return true;
     }
 
     @SuppressWarnings("unchecked")

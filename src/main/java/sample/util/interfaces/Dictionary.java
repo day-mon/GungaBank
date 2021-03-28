@@ -1,4 +1,4 @@
-package sample.util;
+package sample.util.interfaces;
 
 import java.util.Iterator;
 

@@ -18,6 +18,7 @@ import sample.core.objects.BankAccount;
 import sample.core.objects.User;
 import sample.util.ArrayList;
 import sample.util.operations.AlertOperations;
+import sample.util.operations.FileOperations;
 import sample.util.operations.StringOperations;
 
 import java.io.IOException;
@@ -142,6 +143,10 @@ public class LoginPageController {
 
             Main.open("/dashboard", 1200, 800, StageStyle.UTILITY);
             String sucess = String.format("Welcome %s! \nYour last login was %s", userToLogin.getFirstName(),  userToLogin.getLastLogin() == null ?  "Never!" : userToLogin.getLastLogin());
+
+            Main.userLoggedIn.setLastLogin(new Date());
+            FileOperations.writeToFile(FileOperations.users, Main.users);
+
             AlertOperations.AlertShortner("good", "Login success!",sucess);
         }
         catch (Exception e)

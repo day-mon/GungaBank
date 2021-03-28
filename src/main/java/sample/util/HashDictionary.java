@@ -1,5 +1,7 @@
 package sample.util;
 
+import sample.util.interfaces.Dictionary;
+
 import java.io.Serializable;
 import java.util.*;
 
@@ -295,7 +297,7 @@ public class HashDictionary<K, V> implements Serializable, Dictionary<K, V>
         }
         else
         {
-            while (n != null || Objects.equals(k, n.key))
+            while (n != null && !Objects.equals(k, n.key))
             {
                 n = n.next;
             }

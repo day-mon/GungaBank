@@ -5,6 +5,7 @@ import sample.util.interfaces.Set;
 
 import java.io.Serializable;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
@@ -112,6 +113,7 @@ public class ArraySet<T> implements Serializable, Set<T> {
     public boolean isEmpty() {
         return size == 0;
     }
+
 
     @Override
     public boolean resizeArray(int cap) {

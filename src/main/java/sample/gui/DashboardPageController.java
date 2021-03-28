@@ -19,10 +19,12 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
+import javafx.stage.StageStyle;
 import javafx.util.Duration;
 import sample.Main;
 import sample.core.objects.Card;
 import sample.core.objects.Transaction;
+import sample.util.operations.StageOperations;
 
 public class DashboardPageController
 {
@@ -81,8 +83,6 @@ public class DashboardPageController
     @FXML
     void initialize()
     {
-        System.out.println("Test : " + Main.ins++);
-        System.out.println("Main.user: " + Main.userLoggedIn.getFirstName());
         String replaced = nameText.getText().replace("%{name}", Main.userLoggedIn.getFirstName());
         nameText.setText(replaced);
         nameText.setTextAlignment(TextAlignment.JUSTIFY);
@@ -119,16 +119,7 @@ public class DashboardPageController
 
     public void onTransferIconClicked(MouseEvent mouseEvent)
     {
-        try
-        {
-            Main.open("/transfers");
-        }
-        catch (Exception e)
-        {
-            System.out.printf("Error occured: %s", e.getMessage());
-            e.printStackTrace();
-            e.getMessage();
-        }
+        StageOperations.switchToTransfersScene();
     }
 
     public void onCardIconClicked(MouseEvent mouseEvent)
@@ -138,18 +129,20 @@ public class DashboardPageController
 
     public void onProfileClicked(MouseEvent mouseEvent)
     {
-
+        StageOperations.switchToProfileScene();
     }
 
     public void onLogoutClicked(MouseEvent mouseEvent)
     {
-        ButtonType okay = new ButtonType("Okay!", ButtonBar.ButtonData.OK_DONE);
-        ButtonType abort = new ButtonType("Abort!", ButtonBar.ButtonData.CANCEL_CLOSE);
-        Alert alert = new Alert(Alert.AlertType.WARNING, "You have 5 seconds! To respond or you will be logged out!", okay, abort);
+
+        Alert alert = new Alert(Alert.AlertType.WARNING,
+                "You have 5 seconds! To respond or you will be logged out!",
+            new ButtonType("Abort!", ButtonBar.ButtonData.CANCEL_CLOSE),
+            new ButtonType("Okay!", ButtonBar.ButtonData.OK_DONE));
 
         Optional<ButtonType> result = alert.showAndWait();
 
-        if (result.get() == abort)
+        if (result.get().getText().equals("Abort!"))
         {
             return;
         }

@@ -25,7 +25,8 @@ import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class RegisterPageController {
+public class RegisterPageController
+{
 
     @FXML
     private TextField firstNameTextField;
@@ -63,12 +64,13 @@ public class RegisterPageController {
 
     @FXML
         // This method is called by the FXMLLoader when initialization is complete
-    void initialize() {
-        textFields = new ArrayList<TextField>();
+    void initialize()
+    {
+        textFields = new ArrayList <TextField>();
         textFields.add(firstNameTextField);
         textFields.add(lastNameTextField);
         textFields.add(emailTextField);
-        textFields.add(passwordField) ;
+        textFields.add(passwordField);
         textFields.add(dobTextField);
         textFields.add(phoneNumberTextField);
         textFields.add(ssnTextField);
@@ -76,18 +78,14 @@ public class RegisterPageController {
 
 
     @FXML
-    void clearButtonClicked(ActionEvent event) {
-
-        for (TextField fieldsToClear : textFields) {
-            if (!fieldsToClear.getText().equals("")) {
-                fieldsToClear.setText("");
-            }
-        }
-
+    void clearButtonClicked(ActionEvent event)
+    {
+        clearTextFields();
     }
 
     @FXML
-    void registerButtonClicked(ActionEvent event) throws IOException, InterruptedException, ParseException {
+    void registerButtonClicked(ActionEvent event) throws IOException, InterruptedException, ParseException
+    {
         HashDictionary<Integer, String> errorReasons = new HashDictionary<>();
         int currentErrors = 0;
         for (int i = 0; i < textFields.size(); i++)
@@ -103,18 +101,23 @@ public class RegisterPageController {
                 case 0:
                     currentField = textFields.get(i);
                     // Names could be 2 chars, usually asian names tho (Ki, Li, etc)
-                    if (currentField.equals("")) {
+                    if (currentField.equals(""))
+                    {
                         errorReasons.put(currentErrors++, "Your name field is empty!");
-                    } else if (currentField.getText().length() < 2) {
+                    }
+                    else if (currentField.getText().length() < 2)
+                    {
                         errorReasons.put(currentErrors++, "Your name is less then 2 characters");
                     }
-                    if (currentField.getText().length() >= 35) {
+                    if (currentField.getText().length() >= 35)
+                    {
                         errorReasons.put(currentErrors++, "Your name is too long? \n(UK Government data suggest that this is a unreasonable length for a first name) \n Source: https://webarchive.nationalarchives.gov.uk/20100407173424/http://www.cabinetoffice.gov.uk/govtalk/schemasstandards/e-gif/datastandards.aspx");
                     }
                     /**
                      * This checks if everything in the text file is a letter
                      */
-                    if (!textFields.get(i).getText().chars().allMatch(Character::isLetter)) {
+                    if (!textFields.get(i).getText().chars().allMatch(Character::isLetter))
+                    {
                         errorReasons.put(currentErrors++, "Your first name field contains non-alphabetic characters");
                     }
                     continue;
@@ -124,15 +127,21 @@ public class RegisterPageController {
                     currentField = textFields.get(i);
 
 
-                    if (currentField.equals("")) {
+                    if (currentField.equals(""))
+                    {
                         errorReasons.put(currentErrors++, "Your last name field is empty!");
-                    } else if (currentField.getText().length() < 2) {
+                    }
+                    else if (currentField.getText().length() < 2)
+                    {
                         errorReasons.put(currentErrors++, "Your last name field is less than 2 characters");
                     }
 
-                    if (currentField.getText().length() >= 45) {
+                    if (currentField.getText().length() >= 45)
+                    {
                         errorReasons.put(currentErrors++, "Your last name is too long!");
-                    } else if (currentField.getText().chars().anyMatch(Character::isDigit)) {
+                    }
+                    else if (currentField.getText().chars().anyMatch(Character::isDigit))
+                    {
                         errorReasons.put(currentErrors++, "Your last name contains numbers! ");
                     }
                     continue;
@@ -154,7 +163,7 @@ public class RegisterPageController {
 
                     if (checkEmail(currentField.getText()))
                     {
-                        Alert s =  new Alert(Alert.AlertType.WARNING, "User found\nWould you like to goto the login page",
+                        Alert s = new Alert(Alert.AlertType.WARNING, "User found\nWould you like to goto the login page",
                                 new ButtonType("Back"),
                                 new ButtonType("Continue"));
 
@@ -179,21 +188,21 @@ public class RegisterPageController {
                     {
                         errorReasons.put(currentErrors++, "Your Password field is empty!");
                     }
-                    else if(!paswordValidator(currentField.getText()))
+                    else if (!paswordValidator(currentField.getText()))
                     {
                         errorReasons.put(currentErrors++, "Password field must be contain a digit (4-20), a number, special char, upper and lower case letter at least once!");
                     }
 
                     continue;
 
-                // error checks Date field
+                    // error checks Date field
                 case 4:
                     currentField = textFields.get(i);
                     if (currentField.getText().equals(""))
                     {
                         errorReasons.put(currentErrors++, "Your Date field is empty!");
                     }
-                    else if(!DateValidator(currentField.getText()))
+                    else if (!DateValidator(currentField.getText()))
                     {
                         errorReasons.put(currentErrors++, "Date is invalid must be (mm/dd/yyyy)!");
                     }
@@ -201,97 +210,91 @@ public class RegisterPageController {
 
                     continue;
 
-                // error checks Number field
+                    // error checks Number field
                 case 5:
                     currentField = textFields.get(i);
                     if (currentField.getText().equals(""))
                     {
                         errorReasons.put(currentErrors++, "Your number field is empty!");
                     }
-                    else if(!phoneValidator(currentField.getText()))
+                    else if (!phoneValidator(currentField.getText()))
                     {
                         errorReasons.put(currentErrors++, "Phone number is wrong!");
                     }
                     continue;
 
-                // error checks SSN field
+                    // error checks SSN field
                 case 6:
                     currentField = textFields.get(i);
-                    if (currentField.getText().equals("")) {
+                    if (currentField.getText().equals(""))
+                    {
                         errorReasons.put(currentErrors++, "Your SSN field is empty!");
-                    } else if(currentField.getText().length() != 9 || currentField.getText().contains("[a-zA-Z]+") ){
+                    }
+                    else if (currentField.getText().length() != 9 || currentField.getText().contains("[a-zA-Z]+"))
+                    {
                         errorReasons.put(currentErrors++, "Not a valid SSN!");
                     }
-                     break;
+                    break;
 
 
             }
 
-                    //Creates map of error messages to throw when a field is wrong
-                   Iterator<Integer> keys = errorReasons.keys();
-                   Alert alert = new Alert(Alert.AlertType.WARNING);
+            //Creates map of error messages to throw when a field is wrong
+            Iterator<Integer> keys = errorReasons.keys();
+            Alert alert = new Alert(Alert.AlertType.WARNING);
 
 
-
-                    if (/*keySet.size() > 0*/keys.hasNext())
-                    {
-
+            if (keys.hasNext())
+            {
 
 
-                        String errors = "";
-                        int size = 0;
+                String errors = "";
+                int size = 0;
 
 
-                        while (keys.hasNext())
-                        {
-                            int element = keys.next();
-                            /**
-                             * Could use a stringbuilder but meh.
-                             */
-                            errors += (errorReasons.get(element) + "\n");
-                            size++;
-                        }
+                while (keys.hasNext())
+                {
+                    int element = keys.next();
+                    /**
+                     * Could use a stringbuilder but meh.
+                     */
+                    errors += (errorReasons.get(element) + "\n");
+                    size++;
+                }
 
-                        alert.setHeaderText("You have " + size + " errors!");
-                        alert.setContentText(errors);
-                        alert.show();
-                        return;
-                    }
-
-                    alert = new Alert(Alert.AlertType.CONFIRMATION,
-                                "You have successfully registered \nSending you back to the login page");
-
-
-                        SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyy");
-                        Date date = format.parse(dobTextField.getText());
-
-
-
-                        Main.users.put(emailTextField.getText(),
-                                new User(
-                                        firstNameTextField.getText(),
-                                        lastNameTextField.getText(),
-                                        emailTextField.getText(),
-                                        date,
-                                        phoneNumberTextField.getText(),
-                                        ssnTextField.getText(),
-                                        StringOperations.hashPassword(passwordField.getText())
-                                        ));
-
-
-                        FileOperations.writeToFile(FileOperations.users, Main.users);
-
-                        for (TextField tf : textFields)
-                        {
-                            tf.clear();
-                        }
-
-                        Main.open("/loginpage");
-                    }
+                alert.setHeaderText("You have " + size + " errors!");
+                alert.setContentText(errors);
+                alert.show();
+                return;
             }
 
+            alert = new Alert(Alert.AlertType.CONFIRMATION,
+                    "You have successfully registered \nSending you back to the login page");
 
 
+            SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyy");
+            Date date = format.parse(dobTextField.getText());
+
+
+            Main.users.put(emailTextField.getText(),
+                    new User(
+                            firstNameTextField.getText(),
+                            lastNameTextField.getText(),
+                            emailTextField.getText(),
+                            date,
+                            phoneNumberTextField.getText(),
+                            ssnTextField.getText(),
+                            StringOperations.hashPassword(passwordField.getText())
+                    ));
+
+
+            FileOperations.writeToFile(FileOperations.users, Main.users);
+
+            clearTextFields();
+
+            Main.open("/loginpage");
+        }
+    }
 
 
     @FXML
@@ -300,6 +303,7 @@ public class RegisterPageController {
         try
         {
             Main.open("/loginpage");
+            clearTextFields();
         }
         catch (Exception e)
         {
@@ -319,24 +323,34 @@ public class RegisterPageController {
         backButton.setStyle("-fx-background-color: #9d2929;");
     }
 
-    public void onRegisterExitied (MouseEvent mouseEvent){
+    public void onRegisterExitied(MouseEvent mouseEvent)
+    {
         registerButton.setStyle("-fx-background-color: #313131;");
     }
 
-    public void onRegisterHovered (MouseEvent mouseEvent){
+    public void onRegisterHovered(MouseEvent mouseEvent)
+    {
         registerButton.setStyle("-fx-background-color: #9d2929;");
     }
 
-    public void onClearButtonExitied (MouseEvent mouseEvent){
+    public void onClearButtonExitied(MouseEvent mouseEvent)
+    {
         clearButton.setStyle("-fx-background-color: #313131;");
     }
 
-    public void onClearButtonHovered (MouseEvent mouseEvent){
+    public void onClearButtonHovered(MouseEvent mouseEvent)
+    {
         clearButton.setStyle("-fx-background-color: #9d2929;");
     }
 
+    private void clearTextFields()
+    {
+        textFields.forEach(textField -> textField.setText(""));
+    }
+
     //all Validate Regex checks for field entries
-    private boolean emailVaildaotr (String email){
+    private boolean emailVaildaotr(String email)
+    {
         // Regex pattern for emails
         final String EMAIL_REGEX = "^(.+)@(.+)$";
         Pattern pat = Pattern.compile(EMAIL_REGEX);
@@ -344,19 +358,24 @@ public class RegisterPageController {
         return match.matches();
     }
 
-    private boolean paswordValidator(String pass) {
+    private boolean paswordValidator(String pass)
+    {
         final String PASS_REGEX = "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{4,20}$";
         Pattern pt = Pattern.compile(PASS_REGEX);
         Matcher match = pt.matcher(pass);
         return match.matches();
     }
-    private boolean DateValidator(String date) {
+
+    private boolean DateValidator(String date)
+    {
         final String DATE_REGEX = "^[0-3]?[0-9]/[0-3]?[0-9]/(?:[0-9]{2})?[0-9]{2}$";
         Pattern pt = Pattern.compile(DATE_REGEX);
         Matcher match = pt.matcher(date);
         return match.matches();
     }
-    private boolean phoneValidator(String phone) {
+
+    private boolean phoneValidator(String phone)
+    {
         final String PHONE_REGEX = "^(\\+\\d{1,3}( )?)?((\\(\\d{3}\\))|\\d{3})[- .]?\\d{3}[- .]?\\d{4}$"
                 + "|^(\\+\\d{1,3}( )?)?(\\d{3}[ ]?){2}\\d{3}$"
                 + "|^(\\+\\d{1,3}( )?)?(\\d{3}[ ]?)(\\d{2}[ ]?){2}\\d{2}$";
@@ -364,8 +383,10 @@ public class RegisterPageController {
         Matcher match = pt.matcher(phone);
         return match.matches();
     }
-    private boolean checkEmail(String email) throws IOException {
-       return Main.users.containsKey(email);
+
+    private boolean checkEmail(String email) throws IOException
+    {
+        return Main.users.containsKey(email);
     }
 
 }

@@ -4,6 +4,7 @@ package sample;
  * JavaFX Imports
  */
 
+import com.sun.javafx.stage.StageHelper;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -37,13 +38,13 @@ import java.util.Iterator;
 
 public class Main extends Application
 {
+    // static abuse :(
     public static int ins = 0;
     private static Scene scene;
     public static HashDictionary<String, Stage> stages;
     public static HashDictionary<String, User> users = new HashDictionary<>();
     public static User userLoggedIn;
     public static HashDictionary<String, Stage> forms = new HashDictionary<>();
-    public static HashDictionary<String, ArrayList<String>> fuck;
 
 
     @Override
@@ -51,7 +52,7 @@ public class Main extends Application
     {
         FileOperations.loadInformation();
 
-        users.put("fuck", new User("Josh", "Peck", "jpeck@gmail.com", new Date(), "2142323232", "239239232", StringOperations.hashPassword("fuck")));
+        users.put("123", new User("Josh", "Peck", "123", new Date(), "2142323232", "239239232", StringOperations.hashPassword("123")));
         scene = new Scene(loadFXML("/loginpage"), 700, 500);
         stage.getIcons().add(new Image(Main.class.getResourceAsStream("/icons8_department_96px_2.png")));
         stage.setTitle("Gunga Bank");
@@ -106,4 +107,5 @@ public class Main extends Application
     {
         launch(args);
     }
+
 }
