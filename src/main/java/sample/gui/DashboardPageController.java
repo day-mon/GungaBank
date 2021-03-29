@@ -1,5 +1,6 @@
 package sample.gui;
 
+import java.awt.*;
 import java.math.BigDecimal;
 import java.net.URL;
 import java.sql.Time;
@@ -14,16 +15,22 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Paint;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
 import sample.Main;
+import sample.core.objects.BankAccount;
 import sample.core.objects.Card;
 import sample.core.objects.Transaction;
+import sample.core.objects.User;
 import sample.util.operations.StageOperations;
 
 public class DashboardPageController
@@ -75,15 +82,21 @@ public class DashboardPageController
     private TableColumn<Transaction, String> ammountColumn;
 
     @FXML
-    private TableColumn<Transaction, String> wOrDColumn;
+    private TableColumn<Transaction, String> transactionColumn;
 
     @FXML
     private Text nameText;
 
+    private User user = Main.userLoggedIn;
+
+
     @FXML
     void initialize()
     {
-        String replaced = nameText.getText().replace("%{name}", Main.userLoggedIn.getFirstName());
+        BankAccount bankAccount = Main.userLoggedIn.getBankAccounts().get(0);
+        User user = Main.userLoggedIn;
+
+        String replaced = nameText.getText().replace("%{name}", user.getFirstName());
 
         nameText.setText(replaced);
         nameText.setTextAlignment(TextAlignment.JUSTIFY);
@@ -91,19 +104,17 @@ public class DashboardPageController
 
         ObservableList<Transaction> s = FXCollections.observableArrayList();
 
-        Main.userLoggedIn.getBankAccounts().get(0).getTransactions().forEach(transaction -> s.add(transaction));
+        bankAccount.getTransactions().forEach(transaction -> s.add(transaction));
 
 
         dateColumn.setCellValueFactory(new PropertyValueFactory<Transaction, String>("Date"));
         accountColumn.setCellValueFactory(new PropertyValueFactory<Transaction, String>("accountNumber"));
         ammountColumn.setCellValueFactory(new PropertyValueFactory<Transaction, String>("amount"));
-        wOrDColumn.setCellValueFactory(new PropertyValueFactory<Transaction, String>("depositOrWithdraw"));
+        transactionColumn.setCellValueFactory(new PropertyValueFactory<Transaction, String>("TransactionType"));
         transactionTable.setItems(s);
 
 
-
-
-        bankAccountBalance.setText(Main.userLoggedIn.getBankAccounts().get(0).getBalance()+"");
+        bankAccountBalance.setText(Main.userLoggedIn.getBankAccounts().get(0).getBalance() + "");
     }
 
 
@@ -114,6 +125,23 @@ public class DashboardPageController
 
     public void onCardIconClicked(MouseEvent mouseEvent)
     {
+        System.out.println("1");
+        System.out.println(user.getCards().size());
+        if (user.getCards().size() <= 0)
+        {
+
+            Alert popUp = new Alert(Alert.AlertType.WARNING,
+                    "You do not have any credit cards with us, Would you like to apply?",
+                    new ButtonType("Yes"),
+                    new ButtonType("No"));
+            Optional<ButtonType> result = popUp.showAndWait();
+
+            if (result.get().getText().equals("Yes"))
+            {
+               StageOperations.cardApplicationStage();
+            }
+            return;
+        }
 
     }
 
@@ -127,8 +155,8 @@ public class DashboardPageController
 
         Alert alert = new Alert(Alert.AlertType.WARNING,
                 "You have 5 seconds! To respond or you will be logged out!",
-            new ButtonType("Abort!", ButtonBar.ButtonData.CANCEL_CLOSE),
-            new ButtonType("Okay!", ButtonBar.ButtonData.OK_DONE));
+                new ButtonType("Abort!", ButtonBar.ButtonData.CANCEL_CLOSE),
+                new ButtonType("Okay!", ButtonBar.ButtonData.OK_DONE));
 
         Optional<ButtonType> result = alert.showAndWait();
 

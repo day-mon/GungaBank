@@ -35,12 +35,10 @@ import java.util.Iterator;
 public class Main extends Application
 {
     // static abuse :(
-    public static int ins = 0;
     private static Scene scene;
-    public static HashDictionary<String, Stage> stages;
     public static HashDictionary<String, User> users = new HashDictionary<>();
-    public static User userLoggedIn;
     public static HashDictionary<String, Stage> forms = new HashDictionary<>();
+    public static User userLoggedIn;
 
 
     @Override
@@ -50,7 +48,7 @@ public class Main extends Application
 
         users.put("123", new User("Josh", "Peck", "123", new Date(), "2142323232", "239239232", StringOperations.hashPassword("123")));
         scene = new Scene(loadFXML("/loginpage"), 700, 500);
-        stage.getIcons().add(new Image(Main.class.getResourceAsStream("/icons8_department_96px_2.png")));
+        stage.getIcons().add(new Image(Main.class.getResourceAsStream("/LOGO.PNG")));
         stage.setTitle("Gunga Bank");
         stage.setScene(scene);
         stage.initStyle(StageStyle.DECORATED);
@@ -61,7 +59,6 @@ public class Main extends Application
 
     public static Parent loadFXML(String title) throws IOException
     {
-
         return new FXMLLoader(Main.class.getResource(title + ".fxml")).load();
     }
 
@@ -84,12 +81,15 @@ public class Main extends Application
 
     }
 
-    public static void open(String toOpen, int length, int width, StageStyle style) throws IOException
+    public static void open(String toOpen, String title, int length, int width, StageStyle style) throws IOException
     {
         if (!forms.containsKey(toOpen))
         {
             scene = new Scene(loadFXML(toOpen), length, width);
             Stage stg = new Stage();
+            stg.getIcons().add(new Image(Main.class.getResourceAsStream("/LOGO.PNG")));
+            stg.initStyle(StageStyle.DECORATED);
+            stg.setTitle(title);
             stg.setScene(scene);
             stg.setResizable(false);
             stg.initStyle(style);

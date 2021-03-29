@@ -49,14 +49,8 @@ public class LoginPageController {
     @FXML // fx:id="registerButton"
     private Button registerButton; // Value injected by FXMLLoader
 
-    /**
-     *
-     */
 
-    /**
-     *
-     */
-    private ArrayList<Alert> alerts =  new ArrayList<>();
+
 
 
     @FXML
@@ -89,7 +83,7 @@ public class LoginPageController {
 
             try
             {
-               Main.open("/registerpage", 700, 835, StageStyle.UTILITY);
+               Main.open("/registerpage", "Register Page", 700, 835, StageStyle.UTILITY);
             }
             catch (IOException e)
             {
@@ -140,7 +134,7 @@ public class LoginPageController {
             if (Main.forms.containsKey("/dashboard"))
                 Main.forms.remove("/dashboard");
 
-            Main.open("/dashboard", 1200, 800, StageStyle.DECORATED);
+            Main.open("/dashboard", "Dashboard", 1200, 800, StageStyle.DECORATED);
             String sucess = String.format("Welcome %s! \nYour last login was %s", userToLogin.getFirstName(),  userToLogin.getLastLogin() == null ?  "Never!" : userToLogin.getLastLogin());
 
             Main.userLoggedIn.setLastLogin(new Date());

@@ -3,6 +3,8 @@ package sample.util.structures;
 import java.io.Serializable;
 import java.util.*;
 import java.util.function.Consumer;
+import java.util.function.Predicate;
+import java.util.stream.Stream;
 
 
 import sample.util.structures.interfaces.ListInterface;
@@ -86,6 +88,7 @@ public class ArrayList<E> implements ListInterface<E>, Serializable, Iterable<E>
         return this.list;
     }
 
+
     @Override
     public boolean add(E e)
     {
@@ -123,12 +126,21 @@ public class ArrayList<E> implements ListInterface<E>, Serializable, Iterable<E>
         return false;
     }
 
+
     @Override
     public void clear()
     {
         list = new Object[capacity];
         size = 0;
     }
+
+    public Stream<E> stream()
+    {
+        return Arrays.stream(toArray((E[]) list), 0, size);
+    }
+
+
+
 
     @Override
     public E get(int index)
@@ -233,6 +245,7 @@ public class ArrayList<E> implements ListInterface<E>, Serializable, Iterable<E>
             add(ele);
         return true;
     }
+
 
     /**
      * Allows expressions for shorter for loops

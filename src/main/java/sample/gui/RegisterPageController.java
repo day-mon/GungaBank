@@ -9,6 +9,7 @@ import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import sample.Main;
 import sample.core.objects.User;
+import sample.util.Checks;
 import sample.util.structures.ArrayList;
 import sample.util.structures.HashDictionary;
 import sample.util.operations.FileOperations;
@@ -62,7 +63,7 @@ public class RegisterPageController
         // This method is called by the FXMLLoader when initialization is complete
     void initialize()
     {
-        textFields = new ArrayList <TextField>();
+        textFields = new ArrayList<TextField>();
         textFields.add(firstNameTextField);
         textFields.add(lastNameTextField);
         textFields.add(emailTextField);
@@ -152,7 +153,7 @@ public class RegisterPageController
                     {
                         errorReasons.put(currentErrors++, "Your email field is empty!");
                     }
-                    else if (!emailVaildaotr(currentField.getText()))
+                    else if (!Checks.emailVaildaotr(currentField.getText()))
                     {
                         errorReasons.put(currentErrors++, "Your email field is wrong!");
                     }
@@ -184,7 +185,7 @@ public class RegisterPageController
                     {
                         errorReasons.put(currentErrors++, "Your Password field is empty!");
                     }
-                    else if (!paswordValidator(currentField.getText()))
+                    else if (!Checks.paswordValidator(currentField.getText()))
                     {
                         errorReasons.put(currentErrors++, "Password field must be contain a digit (4-20), a number, special char, upper and lower case letter at least once!");
                     }
@@ -198,7 +199,7 @@ public class RegisterPageController
                     {
                         errorReasons.put(currentErrors++, "Your Date field is empty!");
                     }
-                    else if (!DateValidator(currentField.getText()))
+                    else if (!Checks.dateValidator(currentField.getText()))
                     {
                         errorReasons.put(currentErrors++, "Date is invalid must be (mm/dd/yyyy)!");
                     }
@@ -213,7 +214,7 @@ public class RegisterPageController
                     {
                         errorReasons.put(currentErrors++, "Your number field is empty!");
                     }
-                    else if (!phoneValidator(currentField.getText()))
+                    else if (!Checks.phoneValidator(currentField.getText()))
                     {
                         errorReasons.put(currentErrors++, "Phone number is wrong!");
                     }
@@ -344,41 +345,14 @@ public class RegisterPageController
         textFields.forEach(textField -> textField.setText(""));
     }
 
-    //all Validate Regex checks for field entries
-    private boolean emailVaildaotr(String email)
-    {
-        // Regex pattern for emails
-        final String EMAIL_REGEX = "^(.+)@(.+)$";
-        Pattern pat = Pattern.compile(EMAIL_REGEX);
-        Matcher match = pat.matcher(email);
-        return match.matches();
-    }
+    //all Validate Checks checks for field entries
 
-    private boolean paswordValidator(String pass)
-    {
-        final String PASS_REGEX = "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{4,20}$";
-        Pattern pt = Pattern.compile(PASS_REGEX);
-        Matcher match = pt.matcher(pass);
-        return match.matches();
-    }
 
-    private boolean DateValidator(String date)
-    {
-        final String DATE_REGEX = "^[0-3]?[0-9]/[0-3]?[0-9]/(?:[0-9]{2})?[0-9]{2}$";
-        Pattern pt = Pattern.compile(DATE_REGEX);
-        Matcher match = pt.matcher(date);
-        return match.matches();
-    }
 
-    private boolean phoneValidator(String phone)
-    {
-        final String PHONE_REGEX = "^(\\+\\d{1,3}( )?)?((\\(\\d{3}\\))|\\d{3})[- .]?\\d{3}[- .]?\\d{4}$"
-                + "|^(\\+\\d{1,3}( )?)?(\\d{3}[ ]?){2}\\d{3}$"
-                + "|^(\\+\\d{1,3}( )?)?(\\d{3}[ ]?)(\\d{2}[ ]?){2}\\d{2}$";
-        Pattern pt = Pattern.compile(PHONE_REGEX);
-        Matcher match = pt.matcher(phone);
-        return match.matches();
-    }
+
+
+
+
 
     private boolean checkEmail(String email) throws IOException
     {

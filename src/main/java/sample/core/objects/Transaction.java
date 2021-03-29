@@ -1,12 +1,15 @@
 package sample.core.objects;
 
 import javafx.beans.property.SimpleStringProperty;
+import sample.gui.TransfersPageController;
 
+import java.awt.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
-public class Transaction implements Serializable {
+public class Transaction implements Serializable
+{
 
 
     /**
@@ -16,55 +19,84 @@ public class Transaction implements Serializable {
     private BigDecimal amount;
     private long accountNumber;
     private Date date;
-    private String depositOrWithdraw;
+    private TransactionType transactionType;
 
-    public Transaction(BigDecimal amount, long accountNumber, Date date, String depositOrWithdraw) {
+    public Transaction(BigDecimal amount, long accountNumber, Date date, TransactionType transactionType)
+    {
         this.accountNumber = accountNumber;
         this.amount = amount;
         this.date = date;
-        this.depositOrWithdraw = depositOrWithdraw;
-
+        this.transactionType = transactionType;
     }
 
-    public BigDecimal getAmount() {
+    public BigDecimal getAmount()
+    {
         return amount;
     }
 
-    public Date getDate() {
+    public Date getDate()
+    {
         return date;
     }
 
-    public long getAccountNumber() {
+    public long getAccountNumber()
+    {
         return accountNumber;
     }
 
-    public String getDepositOrWithdraw() {
-        return depositOrWithdraw;
+    public TransactionType getTransactionType()
+    {
+        return transactionType;
     }
 
-    public void setAccountNumber(long accountNumber) {
+    public void setTransactionType(TransactionType transactionType)
+    {
+        this.transactionType = transactionType;
+    }
+
+    public void setAccountNumber(long accountNumber)
+    {
         this.accountNumber = accountNumber;
     }
 
-    public void setAmount(BigDecimal amount) {
+    public void setAmount(BigDecimal amount)
+    {
         this.amount = amount;
     }
 
-    public void setDate(Date date) {
+    public void setDate(Date date)
+    {
         this.date = date;
     }
 
-    public void setDepositOrWithdraw(String depositOrWithdraw) {
-        this.depositOrWithdraw = depositOrWithdraw;
-    }
 
-    public SimpleStringProperty getDateStringProperty()
+    public enum TransactionType
     {
-        return new SimpleStringProperty(date.toString());
-    }
+        TRANSFER("TRANSFER", Color.RED),
+        WITHDRAW("WITHDRAW", Color.RED),
+        DEPOSIT("DEPOSIT", Color.GREEN),
+        CREDIT("CREDIT", Color.green);
 
-    public SimpleStringProperty getAmountStringProperty()
-    {
-        return new SimpleStringProperty(Long.toString(amount.longValue()));
+        private String transactionType;
+        private Color transactionColor;
+
+        TransactionType(String transactionType, Color transactionColor)
+        {
+            this.transactionColor = transactionColor;
+            this.transactionType = transactionType;
+        }
+
+
+
+
+        public Color getTransactionColor()
+        {
+            return transactionColor;
+        }
+
+        public String getTransactionType()
+        {
+            return transactionType;
+        }
     }
 }

@@ -72,7 +72,14 @@ public class Card {
         this.Balance = Balance;
     }
 
-    enum CardType {
-        Debit, Credit, Rewards
+    enum CardType
+    {
+        BRONZE,
+        SILVER,
+        GOLD,
+        PLATINUM,
+        DIAMOND,
+        BLACK,
+        GUNGA
     }
 }

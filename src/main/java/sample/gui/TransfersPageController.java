@@ -2,10 +2,12 @@ package sample.gui;
 
 import java.math.BigDecimal;
 import java.net.URL;
-import java.time.LocalDate;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -18,23 +20,22 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 import sample.Main;
+import sample.core.objects.BankAccount;
 import sample.core.objects.Transaction;
-import sample.util.Regex;
+import sample.core.objects.User;
+import sample.util.Checks;
 import sample.util.operations.AlertOperations;
+import sample.util.operations.FileOperations;
 import sample.util.operations.StageOperations;
 import sample.util.operations.StringOperations;
-
-import javax.imageio.stream.ImageInputStream;
+import sample.util.structures.ArrayList;
 
 public class TransfersPageController
 {
@@ -76,13 +77,17 @@ public class TransfersPageController
     private TableColumn<Transaction, String> ammountColumn;
 
     @FXML
-    private TableColumn<Transaction, String> wOrDColumn;
+    private TableColumn<Transaction, String> transactionColumn;
 
     @FXML
     private TextField amountToSend;
 
     @FXML
     private TextField accountNumberTF;
+
+    private BankAccount bankAccount = Main.userLoggedIn.getBankAccounts().get(0);
+
+    private User user = Main.userLoggedIn;
 
     @FXML
     void onCardIconClicked(MouseEvent event)
@@ -99,6 +104,8 @@ public class TransfersPageController
     @FXML
     void onProfileClicked(MouseEvent event)
     {
+        System.out.println("lol");
+
         StageOperations.switchToProfileScene();
     }
 
@@ -109,13 +116,31 @@ public class TransfersPageController
     }
 
     @FXML
-    void onHomeButtonClicked(MouseEvent event){ StageOperations.switchToDashboardScene(); };
+    void onHomeButtonClicked(MouseEvent event)
+    {
+        StageOperations.switchToDashboardScene();
+    }
+
 
 
 
     @FXML
     void initialize()
     {
+
+        List<Transaction> transactionsToDisplay = bankAccount
+                .getTransactions()
+                .stream()
+                .filter(transaction -> transaction.getTransactionType().getTransactionType().equals("TRANSFER"))
+                .collect(Collectors.toList());
+
+        s.addAll(transactionsToDisplay);
+
+        dateColumn.setCellValueFactory(new PropertyValueFactory<Transaction, String>("Date"));
+        accountColumn.setCellValueFactory(new PropertyValueFactory<Transaction, String>("accountNumber"));
+        ammountColumn.setCellValueFactory(new PropertyValueFactory<Transaction, String>("amount"));
+        transactionColumn.setCellValueFactory(new PropertyValueFactory<Transaction, String>("TransactionType"));
+        transactionTable.setItems(s);
 
     }
 
@@ -124,16 +149,12 @@ public class TransfersPageController
         String amountTosend = amountToSend.getText();
         String accountNumber = accountNumberTF.getText();
 
-        if (!Regex.number(amountTosend) && !Regex.number(accountNumber))
+        if (!Checks.number(amountTosend) && !Checks.number(accountNumber))
         {
             AlertOperations.AlertShortner("bad", "Invalid Number!", "Please only insert numbers in the sending field!");
             return;
         }
 
-        if (!accountNumber.startsWith("814")) {
-            AlertOperations.AlertShortner("bad", "Invalid Account Number!", "Please type in a valid account number!");
-            return;
-        }
 
         Stage primaryStage = new Stage();
         Button btn = new Button();
@@ -163,8 +184,9 @@ public class TransfersPageController
 
 
         double amt = Double.parseDouble(amountTosend);
-
-        if (Main.userLoggedIn.getBankAccounts().get(0).getBalance() < amt) {
+        long accNumber = Long.parseLong(amountTosend);
+        if (Main.userLoggedIn.getBankAccounts().get(0).getBalance() < amt)
+        {
             AlertOperations.AlertShortner("bad", "Not enough funds", "You do not have enough funds in your account to complete this transaction");
             return;
         }
@@ -182,8 +204,8 @@ public class TransfersPageController
                         {
                             if (Objects.equals(Main.userLoggedIn.gethashedPass(), StringOperations.hashPassword(passwordField.getText())))
                             {
-                                Transaction transaction = new Transaction(new BigDecimal(amt+""), 9999, new Date(), "-");
-                                Main.userLoggedIn.getBankAccounts().get(0).getTransactions().add(transaction);
+                                Transaction transaction = new Transaction(new BigDecimal(amt + ""), accNumber, new Date(), Transaction.TransactionType.TRANSFER);
+                                bankAccount.getTransactions().add(transaction);
 
                                 dialog.close();
 
@@ -191,12 +213,18 @@ public class TransfersPageController
                                 dateColumn.setCellValueFactory(new PropertyValueFactory<Transaction, String>("Date"));
                                 accountColumn.setCellValueFactory(new PropertyValueFactory<Transaction, String>("accountNumber"));
                                 ammountColumn.setCellValueFactory(new PropertyValueFactory<Transaction, String>("amount"));
-                                wOrDColumn.setCellValueFactory(new PropertyValueFactory<Transaction, String>("depositOrWithdraw"));
+                                transactionColumn.setCellValueFactory(new PropertyValueFactory<Transaction, String>("TransactionType"));
                                 transactionTable.setItems(s);
 
 
+                                bankAccount.removeToBalance(transaction.getAmount());
+
+                                FileOperations.writeToFile(FileOperations.users, Main.users);
+
+
                             }
-                            else {
+                            else
+                            {
                                 passwordField.setStyle("-fx-background-color: transparent; -fx-border-width: 0px 0px 2px 0px; -fx-border-color: #FF0000; -fx-text-fill: #FFFF");
                             }
                         }
@@ -204,4 +232,7 @@ public class TransfersPageController
             );
         }
     }
+
+
+
 }

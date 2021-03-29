@@ -52,6 +52,10 @@ public class User implements Serializable {
      *
      */
     private Date lastLogin;
+    /**
+     *
+     */
+    private long netWorth;
 
 
     /**
@@ -159,6 +163,16 @@ public class User implements Serializable {
 
     public void setCards(ArrayList<Card> cards) {
         this.cards = cards;
+    }
+
+    public void setNetWorth(long netWorth)
+    {
+        this.netWorth = netWorth;
+    }
+
+    public long getNetWorth()
+    {
+        return netWorth;
     }
 
     public void setLastLogin(Date lastLogin) {

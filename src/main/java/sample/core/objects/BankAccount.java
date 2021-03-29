@@ -8,7 +8,8 @@ import java.util.Objects;
 import java.util.Random;
 
 
-public class BankAccount implements Serializable {
+public class BankAccount implements Serializable
+{
 
     private final String ACC_NUM_PREFIX = "814";
 
@@ -17,62 +18,95 @@ public class BankAccount implements Serializable {
     private ArrayList<Transaction> transactions;
     private BigDecimal balance;
     private long accNum;
-    private Random r = new Random();
 
-    public BankAccount(User user, AccountTypes type) {
+    public BankAccount(User user, AccountTypes type)
+    {
         owner = user;
         accountType = type;
         accNum = generateAccNum();
         transactions = new ArrayList<>();
-        transactions.add(new Transaction(new BigDecimal(1000), accNum, owner.getDateOfCreation(), "+"));
+        transactions.add(new Transaction(new BigDecimal(1000), accNum, owner.getDateOfCreation(), Transaction.TransactionType.CREDIT));
         balance = new BigDecimal("1000");
     }
 
     private long generateAccNum()
     {
+        Random r = new Random();
+
         String num = ACC_NUM_PREFIX;
-        for (int i = 0; i < 10; i++){
+        for (int i = 0; i < 10; i++)
+        {
             num += r.nextInt(10);
         }
         return Long.parseLong(num);
     }
 
-    public long getAccountNumber() { return accNum; }
+    public long getAccountNumber()
+    {
+        return accNum;
+    }
 
-    public User getOwner() {
+    public User getOwner()
+    {
         return owner;
     }
 
-    public void addToBalance(BigDecimal addBal) { balance.add(addBal); }
+    public void addToBalance(BigDecimal addBal)
+    {
+        balance = balance.add(addBal);
+    }
 
-    public void setBalance(String value) { balance = new BigDecimal(value); }
+    public void removeToBalance(BigDecimal removBal)
+    {
+        balance = balance.subtract(removBal);
+    }
 
-    public double getBalance() { return balance.doubleValue(); }
+    public void setBalance(String value)
+    {
+        balance = new BigDecimal(value);
+    }
 
-    public void setOwner(User owner) {
+    public double getBalance()
+    {
+        return balance.doubleValue();
+    }
+
+    public void setOwner(User owner)
+    {
         this.owner = owner;
     }
 
-    public AccountTypes getAccountType() {
+    public AccountTypes getAccountType()
+    {
         return accountType;
     }
 
-    public void setAccountType(AccountTypes accountType) {
+    public void setAccountType(AccountTypes accountType)
+    {
         this.accountType = accountType;
     }
 
-    public ArrayList<Transaction> getTransactions() {
+    public ArrayList<Transaction> getTransactions()
+    {
         return transactions;
     }
 
-    public void setTransactions(ArrayList<Transaction> transactions) {
+    public void setTransactions(ArrayList<Transaction> transactions)
+    {
         this.transactions = transactions;
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+    public boolean equals(Object o)
+    {
+        if (this == o)
+        {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass())
+        {
+            return false;
+        }
         BankAccount that = (BankAccount) o;
         return Objects.equals(owner, that.owner) &&
                 accountType == that.accountType &&
@@ -80,11 +114,13 @@ public class BankAccount implements Serializable {
     }
 
     @Override
-    public int hashCode() {
+    public int hashCode()
+    {
         return Objects.hash(owner, accountType, transactions);
     }
 
-    public enum AccountTypes {
+    public enum AccountTypes
+    {
         CHECKING,
         SAVINGS
     }

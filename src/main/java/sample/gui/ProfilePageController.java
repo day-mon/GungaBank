@@ -4,12 +4,16 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import sample.Main;
+import sample.core.objects.BankAccount;
+import sample.core.objects.User;
 import sample.util.operations.StageOperations;
+import sample.util.structures.ArrayList;
 
 public class ProfilePageController
 {
@@ -59,10 +63,15 @@ public class ProfilePageController
     @FXML
     private Text ACCOUNT_NUMBER;
 
+    private User user = Main.userLoggedIn;
+
+    private BankAccount bankAccount = Main.userLoggedIn.getBankAccounts().get(0);
+
+
     @FXML
     void onCardIconClicked(MouseEvent event)
     {
-
+        return;
     }
 
     @FXML
@@ -92,15 +101,15 @@ public class ProfilePageController
     @FXML
     void initialize()
     {
-        FULL_NAME.setText(Main.userLoggedIn.getLastName() + ", " + Main.userLoggedIn.getFirstName());
+        FULL_NAME.setText(user.getLastName() + ", " + user.getFirstName());
         FULL_NAME.setTextAlignment(TextAlignment.CENTER);
-        FIRST_NAME.setText(Main.userLoggedIn.getFirstName());
-        LAST_NAME.setText(Main.userLoggedIn.getLastName());
-        LOGIN_ID.setText(Main.userLoggedIn.getEmail());
-        DATE_OF_BIRTH.setText(Main.userLoggedIn.getDateOfBirth().toString());
-        NUMBER_OF_ACCOUNTS.setText(Integer.toString(Main.userLoggedIn.getBankAccounts().size()));
-        NUMBER_OF_CARDS.setText(Integer.toString(Main.userLoggedIn.getCards().size()));
-        ACCOUNT_NUMBER.setText(Long.toString(Main.userLoggedIn.getBankAccounts().get(0).getAccountNumber()));
+        FIRST_NAME.setText(user.getFirstName());
+        LAST_NAME.setText(user.getLastName());
+        LOGIN_ID.setText(user.getEmail());
+        DATE_OF_BIRTH.setText(user.getDateOfBirth().toString());
+        NUMBER_OF_ACCOUNTS.setText(Integer.toString(user.getBankAccounts().size()));
+        NUMBER_OF_CARDS.setText(Integer.toString(user.getCards().size()));
+        ACCOUNT_NUMBER.setText(Long.toString(bankAccount.getAccountNumber()));
     }
 
 
