@@ -12,13 +12,14 @@ import java.util.Optional;
 
 public class StageOperations
 {
+
     public static void switchToProfileScene()
     {
         try
         {
             if (!Main.forms.containsKey("/profilepage"))
             {
-                Main.open("/profilepage", 1200, 800, StageStyle.UTILITY);
+                Main.open("/profilepage", 1200, 800, StageStyle.DECORATED);
                 return;
             }
             Main.open("/profilepage");
@@ -38,7 +39,7 @@ public class StageOperations
         {
             if (!Main.forms.containsKey("/transfers"))
             {
-                Main.open("/transfers", 1200, 800, StageStyle.UTILITY);
+                Main.open("/transfers", 1200, 800, StageStyle.DECORATED);
                 return;
             }
             Main.open("/transfers");
@@ -58,7 +59,7 @@ public class StageOperations
         {
             if (!Main.forms.containsKey("/dashboard"))
             {
-                Main.open("/dashboard", 1200, 800, StageStyle.UTILITY);
+                Main.open("/dashboard", 1200, 800, StageStyle.DECORATED);
                 return;
             }
             Main.open("/dashboard");
@@ -78,6 +79,7 @@ public class StageOperations
                 "You have 5 seconds! To respond or you will be logged out!",
                 new ButtonType("Abort!", ButtonBar.ButtonData.CANCEL_CLOSE),
                 new ButtonType("Okay!", ButtonBar.ButtonData.OK_DONE));
+
 
         Optional<ButtonType> result = alert.showAndWait();
 

@@ -11,7 +11,8 @@ public class Card {
     private CardType cardType;
     private BigDecimal Balance;
 
-    public Card(User cardHolder) {
+    public Card(User cardHolder)
+    {
 
     }
 

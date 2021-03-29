@@ -78,6 +78,11 @@ public class FileOperations {
 
     public static void loadInformation() {
         try {
+            File f = new File("src/main/java/sample/files");
+            if (!f.exists()) {
+                f.mkdir();
+                return;
+            }
             ArrayList<File> files = getAllFilesWithExt(new File("src/main/java/sample/files/"), "ser");
             int serFiles = 0;
             try {

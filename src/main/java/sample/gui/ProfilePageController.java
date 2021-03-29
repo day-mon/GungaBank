@@ -36,25 +36,28 @@ public class ProfilePageController
     private ImageView logoutIcon;
 
     @FXML
-    private Text fNameFill;
+    private Text FIRST_NAME;
 
     @FXML
-    private Text fullNameFill;
+    private Text FULL_NAME;
 
     @FXML
-    private Text lNameFill;
+    private Text LAST_NAME;
 
     @FXML
-    private Text LIDFill;
+    private Text LOGIN_ID;
 
     @FXML
-    private Text DOBFill;
+    private Text DATE_OF_BIRTH;
 
     @FXML
-    private Text numAccFill;
+    private Text NUMBER_OF_ACCOUNTS;
 
     @FXML
-    private Text numCardsFill;
+    private Text NUMBER_OF_CARDS;
+
+    @FXML
+    private Text ACCOUNT_NUMBER;
 
     @FXML
     void onCardIconClicked(MouseEvent event)
@@ -89,14 +92,15 @@ public class ProfilePageController
     @FXML
     void initialize()
     {
-        fullNameFill.setText(Main.userLoggedIn.getLastName() + ", " + Main.userLoggedIn.getFirstName());
-        fNameFill.setTextAlignment(TextAlignment.CENTER);
-        fNameFill.setText(Main.userLoggedIn.getFirstName());
-        lNameFill.setText(Main.userLoggedIn.getLastName());
-        LIDFill.setText(Main.userLoggedIn.getEmail());
-        DOBFill.setText(Main.userLoggedIn.getDateOfBirth().toString());
-        numAccFill.setText(Integer.toString(Main.userLoggedIn.getBankAccounts().size()));
-        numCardsFill.setText(Integer.toString(Main.userLoggedIn.getCards().size()));
+        FULL_NAME.setText(Main.userLoggedIn.getLastName() + ", " + Main.userLoggedIn.getFirstName());
+        FULL_NAME.setTextAlignment(TextAlignment.CENTER);
+        FIRST_NAME.setText(Main.userLoggedIn.getFirstName());
+        LAST_NAME.setText(Main.userLoggedIn.getLastName());
+        LOGIN_ID.setText(Main.userLoggedIn.getEmail());
+        DATE_OF_BIRTH.setText(Main.userLoggedIn.getDateOfBirth().toString());
+        NUMBER_OF_ACCOUNTS.setText(Integer.toString(Main.userLoggedIn.getBankAccounts().size()));
+        NUMBER_OF_CARDS.setText(Integer.toString(Main.userLoggedIn.getCards().size()));
+        ACCOUNT_NUMBER.setText(Long.toString(Main.userLoggedIn.getBankAccounts().get(0).getAccountNumber()));
     }
 
 

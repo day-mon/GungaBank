@@ -5,20 +5,39 @@ import sample.util.structures.ArrayList;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Objects;
+import java.util.Random;
 
 
 public class BankAccount implements Serializable {
+
+    private final String ACC_NUM_PREFIX = "814";
 
     private User owner;
     private AccountTypes accountType;
     private ArrayList<Transaction> transactions;
     private BigDecimal balance;
+    private long accNum;
+    private Random r = new Random();
 
     public BankAccount(User user, AccountTypes type) {
         owner = user;
         accountType = type;
-        balance = new BigDecimal("0");
+        accNum = generateAccNum();
+        transactions = new ArrayList<>();
+        transactions.add(new Transaction(new BigDecimal(1000), accNum, owner.getDateOfCreation(), "+"));
+        balance = new BigDecimal("1000");
     }
+
+    private long generateAccNum()
+    {
+        String num = ACC_NUM_PREFIX;
+        for (int i = 0; i < 10; i++){
+            num += r.nextInt(10);
+        }
+        return Long.parseLong(num);
+    }
+
+    public long getAccountNumber() { return accNum; }
 
     public User getOwner() {
         return owner;

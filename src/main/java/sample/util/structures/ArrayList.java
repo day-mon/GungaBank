@@ -2,6 +2,8 @@ package sample.util.structures;
 
 import java.io.Serializable;
 import java.util.*;
+import java.util.function.Consumer;
+
 
 import sample.util.structures.interfaces.ListInterface;
 
@@ -73,6 +75,8 @@ public class ArrayList<E> implements ListInterface<E>, Serializable, Iterable<E>
                 }
                 return (E) list[position++];
             }
+
+
         };
     }
 
@@ -229,6 +233,23 @@ public class ArrayList<E> implements ListInterface<E>, Serializable, Iterable<E>
             add(ele);
         return true;
     }
+
+    /**
+     * Allows expressions for shorter for loops
+     * @param action
+     */
+    public void forEach(Consumer<? super E> action)
+    {
+        Objects.requireNonNull(action);
+        for (int i = 0; i < size; i++)
+        {
+            action.accept((E)list[i]);
+        }
+    }
+
+
+
+
 
     @SuppressWarnings("unchecked")
     @Override

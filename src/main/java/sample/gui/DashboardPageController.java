@@ -84,24 +84,15 @@ public class DashboardPageController
     void initialize()
     {
         String replaced = nameText.getText().replace("%{name}", Main.userLoggedIn.getFirstName());
+
         nameText.setText(replaced);
         nameText.setTextAlignment(TextAlignment.JUSTIFY);
 
+
         ObservableList<Transaction> s = FXCollections.observableArrayList();
 
-        Random r = new Random();
-        BigDecimal ssd = new BigDecimal("0");
+        Main.userLoggedIn.getBankAccounts().get(0).getTransactions().forEach(transaction -> s.add(transaction));
 
-        long val = 0;
-        for (int i = 0; i < 100; i++)
-        {
-
-            int fs = r.nextInt(200000 + i);
-            int lrs = r.nextInt((999999999 - 100000000) + 1) + 100000000;
-            s.add(new Transaction(new BigDecimal("100").add(BigDecimal.valueOf(i + fs)), lrs, new Date(), "+"));
-            System.out.println(val);
-            val += i + fs;
-        }
 
         dateColumn.setCellValueFactory(new PropertyValueFactory<Transaction, String>("Date"));
         accountColumn.setCellValueFactory(new PropertyValueFactory<Transaction, String>("accountNumber"));
@@ -110,10 +101,9 @@ public class DashboardPageController
         transactionTable.setItems(s);
 
 
-        String replacedS = bankAccountBalance.getText().replace("{balance_1}", Long.toString(val));
-        bankAccountBalance.setText(replacedS);
 
 
+        bankAccountBalance.setText(Main.userLoggedIn.getBankAccounts().get(0).getBalance()+"");
     }
 
 

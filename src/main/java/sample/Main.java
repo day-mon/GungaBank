@@ -16,6 +16,8 @@ import sample.util.structures.HashDictionary;
 import sample.util.operations.FileOperations;
 import sample.util.operations.StringOperations;
 
+import java.awt.*;
+import java.awt.Desktop;
 import java.io.IOException;
 import java.util.Date;
 import java.util.Iterator;

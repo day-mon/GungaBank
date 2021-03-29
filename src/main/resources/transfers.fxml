@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.gui.TransfersPageController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.gui.TransfersPageController">
    <children>
       <AnchorPane prefHeight="800.0" prefWidth="86.0" style="-fx-background-color: #212121;">
          <children>
@@ -78,14 +78,14 @@
             </AnchorPane>
             <Pane layoutX="28.0" layoutY="90.0" prefHeight="559.0" prefWidth="483.0" style="-fx-background-color: #212121;">
                <children>
-                  <TextField layoutX="138.0" layoutY="178.0" prefHeight="25.0" prefWidth="208.0" promptText="Account #" style="-fx-background-color: transparent; -fx-border-width: 0px 0px 2px 0px; -fx-border-color: #FFFF; -fx-text-fill: #FFFF;" />
+                  <TextField fx:id="accountNumberTF" layoutX="138.0" layoutY="178.0" prefHeight="25.0" prefWidth="208.0" promptText="Account #" style="-fx-background-color: transparent; -fx-border-width: 0px 0px 2px 0px; -fx-border-color: #FFFF; -fx-text-fill: #FFFF;" />
                   <Text fill="WHITE" layoutX="120.0" layoutY="83.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Gunga Pay">
                      <font>
                         <Font name="Berlin Sans FB Demi Bold" size="48.0" />
                      </font>
                   </Text>
                   <Button fx:id="transferMoneyButton" layoutX="142.0" layoutY="417.0" mnemonicParsing="false" onAction="#transferMoneyButtonClicked" prefHeight="50.0" prefWidth="199.0" style="-fx-background-color: #313131;" text="Transfer" textFill="WHITE" />
-                  <TextField layoutX="138.0" layoutY="306.0" prefHeight="25.0" prefWidth="208.0" promptText="Amount" style="-fx-background-color: transparent; -fx-border-width: 0px 0px 2px 0px; -fx-border-color: #FFFF; -fx-text-fill: #FFFF;" />
+                  <TextField fx:id="amountToSend" layoutX="138.0" layoutY="306.0" prefHeight="25.0" prefWidth="208.0" promptText="Amount" style="-fx-background-color: transparent; -fx-border-width: 0px 0px 2px 0px; -fx-border-color: #FFFF; -fx-text-fill: #FFFF;" />
                   <Text fill="WHITE" layoutX="110.0" layoutY="321.0" strokeType="OUTSIDE" strokeWidth="0.0" text="\$">
                      <font>
                         <Font name="Berlin Sans FB Demi Bold" size="43.0" />

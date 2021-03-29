@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.shape.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.gui.ProfilePageController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.gui.ProfilePageController">
    <children>
       <AnchorPane prefHeight="800.0" prefWidth="86.0" style="-fx-background-color: #212121;">
          <children>
@@ -52,80 +56,94 @@
          <children>
             <Pane layoutX="70.0" layoutY="28.0" prefHeight="663.0" prefWidth="952.0" style="-fx-background-color: #313131;">
                <children>
-                  <Text fx:id="fNameFill" fill="WHITE" layoutX="516.0" layoutY="228.0" strokeType="OUTSIDE" strokeWidth="0.0" text="fName">
+                  <Text fx:id="FIRST_NAME" fill="WHITE" layoutX="489.0" layoutY="200.0" strokeType="OUTSIDE" strokeWidth="0.0" text="fName">
                      <font>
                         <Font name="Berlin Sans FB Demi Bold" size="24.0" />
                      </font>
                   </Text>
-                  <ImageView layoutX="436.0" layoutY="35.0">
+                  <ImageView layoutX="394.0" layoutY="14.0">
                      <image>
                         <Image url="@icons8_male_user_80px_1.png" />
                      </image>
                   </ImageView>
-                  <Line endX="218.0" layoutX="496.0" layoutY="177.0" startX="-240.0" stroke="WHITE" style="-fx-fill: #FFFF;" />
-                  <Text fx:id="fullNameFill" fill="WHITE" layoutX="444.0" layoutY="150.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Name">
+                  <Line endX="218.0" layoutX="530.0" layoutY="148.0" startX="-359.0" stroke="WHITE" style="-fx-fill: #FFFF;" />
+                  <Text fill="WHITE" layoutX="164.0" layoutY="200.0" strokeType="OUTSIDE" strokeWidth="0.0" text="First name:">
                      <font>
                         <Font name="Berlin Sans FB Demi Bold" size="24.0" />
                      </font>
                   </Text>
-                  <Text fill="WHITE" layoutX="256.0" layoutY="228.0" strokeType="OUTSIDE" strokeWidth="0.0" text="First name:">
+                  <Text fill="WHITE" layoutX="165.0" layoutY="255.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Last name:">
                      <font>
                         <Font name="Berlin Sans FB Demi Bold" size="24.0" />
                      </font>
                   </Text>
-                  <Text fill="WHITE" layoutX="257.0" layoutY="281.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Last name:">
+                  <Text fill="WHITE" layoutX="167.0" layoutY="308.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Login ID:">
                      <font>
                         <Font name="Berlin Sans FB Demi Bold" size="24.0" />
                      </font>
                   </Text>
-                  <Text fill="WHITE" layoutX="257.0" layoutY="340.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Login ID:">
+                  <Text fill="WHITE" layoutX="167.0" layoutY="362.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Date of Birth:">
                      <font>
                         <Font name="Berlin Sans FB Demi Bold" size="24.0" />
                      </font>
                   </Text>
-                  <Text fill="WHITE" layoutX="256.0" layoutY="396.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Date of Birth:">
+                  <Text fill="WHITE" layoutX="167.0" layoutY="415.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Account Number:">
                      <font>
                         <Font name="Berlin Sans FB Demi Bold" size="24.0" />
                      </font>
                   </Text>
-                  <Text fill="WHITE" layoutX="256.0" layoutY="447.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Number of Accounts:">
+                  <Text fill="WHITE" layoutX="167.0" layoutY="520.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Number of Cards:">
                      <font>
                         <Font name="Berlin Sans FB Demi Bold" size="24.0" />
                      </font>
                   </Text>
-                  <Text fill="WHITE" layoutX="256.0" layoutY="501.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Number of Cards:">
+                  <Text fx:id="LAST_NAME" fill="WHITE" layoutX="490.0" layoutY="255.0" strokeType="OUTSIDE" strokeWidth="0.0" text="lName">
                      <font>
                         <Font name="Berlin Sans FB Demi Bold" size="24.0" />
                      </font>
                   </Text>
-                  <Text fx:id="lNameFill" fill="WHITE" layoutX="517.0" layoutY="281.0" strokeType="OUTSIDE" strokeWidth="0.0" text="lName">
+                  <Text fx:id="LOGIN_ID" fill="WHITE" layoutX="490.0" layoutY="308.0" strokeType="OUTSIDE" strokeWidth="0.0" text="LID">
                      <font>
                         <Font name="Berlin Sans FB Demi Bold" size="24.0" />
                      </font>
                   </Text>
-                  <Text fx:id="LIDFill" fill="WHITE" layoutX="516.0" layoutY="340.0" strokeType="OUTSIDE" strokeWidth="0.0" text="LID">
+                  <Text fx:id="DATE_OF_BIRTH" fill="WHITE" layoutX="491.0" layoutY="361.0" strokeType="OUTSIDE" strokeWidth="0.0" text="DOB">
                      <font>
                         <Font name="Berlin Sans FB Demi Bold" size="24.0" />
                      </font>
                   </Text>
-                  <Text fx:id="DOBFill" fill="WHITE" layoutX="516.0" layoutY="396.0" strokeType="OUTSIDE" strokeWidth="0.0" text="DOB">
+                  <Text fx:id="ACCOUNT_NUMBER" fill="WHITE" layoutX="491.0" layoutY="416.0" strokeType="OUTSIDE" strokeWidth="0.0" text="numAcc">
                      <font>
                         <Font name="Berlin Sans FB Demi Bold" size="24.0" />
                      </font>
                   </Text>
-                  <Text fx:id="numAccFill" fill="WHITE" layoutX="516.0" layoutY="447.0" strokeType="OUTSIDE" strokeWidth="0.0" text="numAcc">
+                  <Text fx:id="NUMBER_OF_CARDS" fill="WHITE" layoutX="491.0" layoutY="520.0" strokeType="OUTSIDE" strokeWidth="0.0" text="numCards">
                      <font>
                         <Font name="Berlin Sans FB Demi Bold" size="24.0" />
                      </font>
                   </Text>
-                  <Text fx:id="numCardsFill" fill="WHITE" layoutX="517.0" layoutY="501.0" strokeType="OUTSIDE" strokeWidth="0.0" text="numCards">
-                     <font>
-                        <Font name="Berlin Sans FB Demi Bold" size="24.0" />
-                     </font>
-                  </Text>
-                  <Text fill="WHITE" layoutX="238.0" layoutY="590.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Any issues: support@gungabank.com">
+                  <Text fill="WHITE" layoutX="196.0" layoutY="584.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Any issues: support@gungabank.com">
                      <font>
                         <Font name="Berlin Sans FB Demi Bold" size="29.0" />
+                     </font>
+                  </Text>
+                  <VBox alignment="BOTTOM_CENTER" layoutX="205.0" layoutY="63.0" prefHeight="62.0" prefWidth="459.0">
+                     <children>
+                        <Text fx:id="FULL_NAME" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Name">
+                           <font>
+                              <Font name="Berlin Sans FB Demi Bold" size="24.0" />
+                           </font>
+                        </Text>
+                     </children>
+                  </VBox>
+                  <Text fill="WHITE" layoutX="167.0" layoutY="467.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Number of Accounts:">
+                     <font>
+                        <Font name="Berlin Sans FB Demi Bold" size="24.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="NUMBER_OF_ACCOUNTS" fill="WHITE" layoutX="491.0" layoutY="467.0" strokeType="OUTSIDE" strokeWidth="0.0" text="numCards">
+                     <font>
+                        <Font name="Berlin Sans FB Demi Bold" size="24.0" />
                      </font>
                   </Text>
                </children>
