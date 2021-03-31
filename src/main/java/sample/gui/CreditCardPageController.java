@@ -1,18 +1,29 @@
 package sample.gui;
 
-import java.net.URL;
-import java.util.ResourceBundle;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.PasswordField;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
+import sample.Main;
+import sample.core.objects.Card;
+import sample.core.objects.User;
+import sample.core.other.GungaObject;
+import sample.util.operations.FileOperations;
+import sample.util.operations.StageOperations;
+import sample.util.structures.ArrayList;
+import sample.util.structures.HashDictionary;
+
+import java.net.URL;
+import java.time.format.DateTimeFormatter;
+import java.util.Iterator;
+import java.util.Optional;
+import java.util.ResourceBundle;
 
 public class CreditCardPageController
 {
+
 
     @FXML
     private ResourceBundle resources;
@@ -63,6 +74,15 @@ public class CreditCardPageController
     private Text CREDIT_CARD_BALANCE;
 
     @FXML
+    public Text EXPR_DATE;
+
+    @FXML
+    public Text CARD_ENABLED;
+
+    @FXML
+    public Text CREDIT_CARD_LIMIT;
+
+    @FXML
     private PasswordField PIN_TEXT_FIELD;
 
     @FXML
@@ -83,76 +103,171 @@ public class CreditCardPageController
     @FXML
     private Button LIMIT_INCREASE;
 
+    @GungaObject
+    private User user = Main.userLoggedIn;
+
+    @GungaObject
+    private Card card = user.getCards().get(0);
+
+    @GungaObject
+    private ArrayList<TextField> pinPasswordFields = new ArrayList<>();
+
+
     @FXML
-    void onApplyCardExited(MouseEvent event)
+    void initialize()
     {
+        pinPasswordFields.add(PIN_TEXT_FIELD);
+        pinPasswordFields.add(CONFIRM_PIN_TEXT_FIELD);
+
+
+        FULL_NAME_IN_CARD.setText(user.getFirstName().toUpperCase() + " " + user.getLastName().toUpperCase());
+        CARD_NUMBER_IN_CARD.setText(user.getCards().get(0).getCardNumber());
+        CREDIT_CARD_NUMBER.setText(card.getCardNumber());
+        APR.setText(card.getApr());
+        CREDIT_CARD_BALANCE.setText(card.getBalance().toString());
+        CREDIT_CARD_TYPE.setText(card.getCardType().toString());
+        CVV_NUMBER.setText(card.getCID());
+        CREDIT_CARD_TYPE.setText(card.getCardType().toString());
+        CARD_ISSUED_DATE.setText(card.getDateIssued().format(DateTimeFormatter.ofPattern("MM/yyyy")));
+        CARD_EXPIRY_DATE.setText(card.getExperationDate().format(DateTimeFormatter.ofPattern("MM/yyyy")));
+        EXPR_DATE.setText(card.getExperationDate().format(DateTimeFormatter.ofPattern("MM/yyyy")));
+        CARD_ENABLED.setText(card.isDisabled() ? "No" : "Yes");
+        DISABLE_CARD.setText(card.isDisabled() ? "Enable Card" : DISABLE_CARD.getText());
+        CREDIT_CARD_LIMIT.setText(card.getLimit().toPlainString());
 
     }
+
+    // ===================================== ON HOVER =====================================
+
 
     @FXML
     void onApplyCardHovered(MouseEvent event)
     {
-
-    }
-
-    @FXML
-    void onApplyCardUpgradeClick(ActionEvent event)
-    {
-
-    }
-
-    @FXML
-    void onCardIconClicked(MouseEvent event)
-    {
-
-    }
-
-    @FXML
-    void onConfirmedButtonExitied(MouseEvent event)
-    {
-
+        CARD_UPGRADE.setStyle("-fx-background-color: #9d2929;");
     }
 
     @FXML
     void onConfirmedButtonHovered(MouseEvent event)
     {
-
-    }
-
-    @FXML
-    void onDisableCardClick(ActionEvent event)
-    {
-
-    }
-
-    @FXML
-    void onDisabledCardExited(MouseEvent event)
-    {
-
+        PIN_CONFIRM.setStyle("-fx-background-color: #9d2929;");
     }
 
     @FXML
     void onDisabledCardHovered(MouseEvent event)
     {
-
+        DISABLE_CARD.setStyle("-fx-background-color: #9d2929;");
     }
 
     @FXML
-    void onGenerateCardClick(ActionEvent event)
+    void onLimitIncreaseHovered(MouseEvent event)
     {
+        LIMIT_INCREASE.setStyle("-fx-background-color: #9d2929;");
+    }
 
+
+    @FXML
+    void onGenerateCardHovered(MouseEvent event)
+    {
+        GENERATE_CARD_NUMBER.setStyle("-fx-background-color: #9d2929;");
+    }
+
+    @FXML
+    void onApplyCardExited(MouseEvent event)
+    {
+        CARD_UPGRADE.setStyle("-fx-background-color: #212121;");
+    }
+
+    @FXML
+    void onConfirmedButtonExitied(MouseEvent event)
+    {
+        PIN_CONFIRM.setStyle("-fx-background-color: #212121;");
+    }
+
+    @FXML
+    void onDisabledCardExited(MouseEvent event)
+    {
+        DISABLE_CARD.setStyle("-fx-background-color: #212121;");
     }
 
     @FXML
     void onGenerateCardExited(MouseEvent event)
     {
-
+        GENERATE_CARD_NUMBER.setStyle("-fx-background-color: #212121;");
     }
 
     @FXML
-    void onGenerateCardHovered(MouseEvent event)
+    void onLimitIncreaseExited(MouseEvent event)
+    {
+        LIMIT_INCREASE.setStyle("-fx-background-color: #212121;");
+    }
+
+    // ===================================== ON CLICKS (BUTTON) =====================================
+
+    @FXML
+    void onGenerateCardClick(ActionEvent event)
     {
 
+        Alert genNewCard = new Alert(Alert.AlertType.INFORMATION, "Would you like to generate your card?",
+                new ButtonType("Yes"),
+                new ButtonType("No"));
+        Optional<ButtonType> def = genNewCard.showAndWait();
+
+        if (def.get().getText().equals("Yes") && !card.isDisabled())
+        {
+            card.generateNewCard();
+            CARD_NUMBER_IN_CARD.setText(card.getCardNumber());
+            CREDIT_CARD_NUMBER.setText(card.getCardNumber());
+            CVV_NUMBER.setText(card.getCID());
+            CREDIT_CARD_TYPE.setText(card.getCardType().toString());
+            CARD_ISSUED_DATE.setText(card.getDateIssued().format(DateTimeFormatter.ofPattern("MM/yyyy")));
+            CARD_EXPIRY_DATE.setText(card.getExperationDate().format(DateTimeFormatter.ofPattern("MM/yyyy")));
+            EXPR_DATE.setText(card.getExperationDate().format(DateTimeFormatter.ofPattern("MM/yyyy")));
+            FileOperations.writeToFile(FileOperations.users, Main.users);
+        }
+
+        if (card.isDisabled())
+        {
+            genNewCard.setContentText("You cannot make edits to a card that is disabled!");
+            genNewCard.show();
+        }
+        return;
+
+    }
+
+
+    @FXML
+    void onDisableCardClick(ActionEvent event)
+    {
+        Alert cardDisOrEn;
+        if (!card.isDisabled())
+        {
+            cardDisOrEn = new Alert(Alert.AlertType.INFORMATION, "Would you like to enable your card?",
+                                    new ButtonType("Yes"),
+                                    new ButtonType("No"));
+            Optional<ButtonType> s = cardDisOrEn.showAndWait();
+
+            if (s.get().getText().equals("Yes"))
+            {
+                card.setDisabled(true);
+                CARD_ENABLED.setText("Yes");
+                DISABLE_CARD.setText("Disable Card");
+            }
+        }
+        else
+        {
+            cardDisOrEn = new Alert(Alert.AlertType.INFORMATION, "Would you like to disable your card?",
+                    new ButtonType("Yes"),
+                    new ButtonType("No"));
+            Optional<ButtonType> s = cardDisOrEn.showAndWait();
+
+            if (s.get().getText().equals("Yes"))
+            {
+                card.setDisabled(false);
+                CARD_ENABLED.setText("No");
+                DISABLE_CARD.setText("Enable Card");
+            }
+        }
+        FileOperations.writeToFile(FileOperations.users, Main.users);
     }
 
     @FXML
@@ -162,65 +277,125 @@ public class CreditCardPageController
     }
 
     @FXML
-    void onLimitIncreaseExited(MouseEvent event)
+    void onPinConfirmedClick(ActionEvent event)
+    {
+        int currentErrors = 0;
+        HashDictionary<Integer, String> errorReasons = new HashDictionary<>();
+        for (int i = 0; i < pinPasswordFields.size(); i++)
+        {
+            TextField currentField;
+            switch (i)
+            {
+                case 0:
+                    currentField = pinPasswordFields.get(i);
+                    if (currentField.getText().equals(""))
+                    {
+                        errorReasons.put(currentErrors++, "Pin Field is empty!");
+                    }
+
+                    if (!currentField.getText().chars().allMatch(Character::isDigit))
+                    {
+                        errorReasons.put(currentErrors++, "Your pin can only contain numbers!");
+                    }
+
+                    if (currentField.getText().length() > 4)
+                    {
+                        errorReasons.put(currentErrors++, "Your pin cannot be longer than 4 numbers!");
+                    }
+                    continue;
+                case 1:
+                    currentField = pinPasswordFields.get(i);
+                    String otherTextFielData = pinPasswordFields.get(i-1).getText();
+                    if (!(currentField.getText().equals(otherTextFielData)))
+                    {
+                        errorReasons.put(currentErrors++, "Your pins dont match");
+                    }
+                    break;
+            }
+
+            Iterator<Integer> keys = errorReasons.keys();
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+
+
+            if (keys.hasNext())
+            {
+
+
+                String errors = "";
+                int size = 0;
+
+
+                while (keys.hasNext())
+                {
+                    int element = keys.next();
+                    /**
+                     * Could use a stringbuilder but meh.
+                     */
+                    errors += (errorReasons.get(element) + "\n");
+                    size++;
+                }
+
+                alert.setHeaderText("You have " + size + " errors!");
+                alert.setContentText(errors);
+                alert.show();
+                return;
+            }
+
+            ButtonType exitButton = new ButtonType("Okay!", ButtonBar.ButtonData.CANCEL_CLOSE);
+            Alert successfullPin = new Alert(Alert.AlertType.NONE,
+                    "Pin changed!", exitButton);
+            successfullPin.show();
+            card.setPin(PIN_CONFIRM.getText());
+
+            FileOperations.writeToFile(FileOperations.users, Main.users);
+
+            pinPasswordFields.forEach(field -> field.setText(""));
+            return;
+
+
+        }
+    }
+
+
+    @FXML
+    void onApplyCardUpgradeClick(ActionEvent event)
     {
 
     }
 
-    @FXML
-    void onLimitIncreaseHovered(MouseEvent event)
-    {
 
+    // ===================================== ON CLICKS (SWITCH SCENES) =====================================
+
+    @FXML
+    public void onCardIconClicked(MouseEvent event)
+    {
+        return;
+    }
+
+    @FXML
+    void onDashboardClicked(MouseEvent event)
+    {
+        StageOperations.switchToDashboardScene();
+    }
+
+
+    @FXML
+    void onProfileClicked(MouseEvent event)
+    {
+        StageOperations.switchToProfileScene();
     }
 
     @FXML
     void onLogoutClicked(MouseEvent event)
     {
-
-    }
-
-    @FXML
-    void onPinConfirmedClick(ActionEvent event)
-    {
-
-    }
-
-    @FXML
-    void onProfileClicked(MouseEvent event)
-    {
-
+        StageOperations.initLogoutSequence();
     }
 
     @FXML
     void onTransferIconClicked(MouseEvent event)
     {
-
+        StageOperations.switchToTransfersScene();
     }
 
-    @FXML
-    void initialize()
-    {
-        assert homeIcon != null : "fx:id=\"homeIcon\" was not injected: check your FXML file 'dashboard.fxml'.";
-        assert transferIcon != null : "fx:id=\"transferIcon\" was not injected: check your FXML file 'dashboard.fxml'.";
-        assert creditCardIcon != null : "fx:id=\"creditCardIcon\" was not injected: check your FXML file 'dashboard.fxml'.";
-        assert profileIcon != null : "fx:id=\"profileIcon\" was not injected: check your FXML file 'dashboard.fxml'.";
-        assert logoutIcon != null : "fx:id=\"logoutIcon\" was not injected: check your FXML file 'dashboard.fxml'.";
-        assert FULL_NAME_IN_CARD != null : "fx:id=\"FULL_NAME_IN_CARD\" was not injected: check your FXML file 'dashboard.fxml'.";
-        assert CARD_NUMBER_IN_CARD != null : "fx:id=\"CARD_NUMBER_IN_CARD\" was not injected: check your FXML file 'dashboard.fxml'.";
-        assert CREDIT_CARD_TYPE != null : "fx:id=\"CREDIT_CARD_TYPE\" was not injected: check your FXML file 'dashboard.fxml'.";
-        assert CREDIT_CARD_NUMBER != null : "fx:id=\"CREDIT_CARD_NUMBER\" was not injected: check your FXML file 'dashboard.fxml'.";
-        assert CVV_NUMBER != null : "fx:id=\"CVV_NUMBER\" was not injected: check your FXML file 'dashboard.fxml'.";
-        assert CARD_ISSUED_DATE != null : "fx:id=\"CARD_ISSUED_DATE\" was not injected: check your FXML file 'dashboard.fxml'.";
-        assert CARD_EXPIRY_DATE != null : "fx:id=\"CARD_EXPIRY_DATE\" was not injected: check your FXML file 'dashboard.fxml'.";
-        assert APR != null : "fx:id=\"APR\" was not injected: check your FXML file 'dashboard.fxml'.";
-        assert CREDIT_CARD_BALANCE != null : "fx:id=\"CREDIT_CARD_BALANCE\" was not injected: check your FXML file 'dashboard.fxml'.";
-        assert PIN_TEXT_FIELD != null : "fx:id=\"PIN_TEXT_FIELD\" was not injected: check your FXML file 'dashboard.fxml'.";
-        assert CONFIRM_PIN_TEXT_FIELD != null : "fx:id=\"CONFIRM_PIN_TEXT_FIELD\" was not injected: check your FXML file 'dashboard.fxml'.";
-        assert PIN_CONFIRM != null : "fx:id=\"PIN_CONFIRM\" was not injected: check your FXML file 'dashboard.fxml'.";
-        assert DISABLE_CARD != null : "fx:id=\"DISABLE_CARD\" was not injected: check your FXML file 'dashboard.fxml'.";
-        assert GENERATE_CARD_NUMBER != null : "fx:id=\"GENERATE_CARD_NUMBER\" was not injected: check your FXML file 'dashboard.fxml'.";
-        assert CARD_UPGRADE != null : "fx:id=\"CARD_UPGRADE\" was not injected: check your FXML file 'dashboard.fxml'.";
-        assert LIMIT_INCREASE != null : "fx:id=\"LIMIT_INCREASE\" was not injected: check your FXML file 'dashboard.fxml'.";
 
-    }
 }

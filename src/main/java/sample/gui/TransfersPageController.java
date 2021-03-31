@@ -1,14 +1,5 @@
 package sample.gui;
 
-import java.math.BigDecimal;
-import java.net.URL;
-import java.util.Date;
-import java.util.List;
-import java.util.Objects;
-import java.util.ResourceBundle;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -30,12 +21,20 @@ import sample.Main;
 import sample.core.objects.BankAccount;
 import sample.core.objects.Transaction;
 import sample.core.objects.User;
+import sample.core.other.GungaObject;
 import sample.util.Checks;
 import sample.util.operations.AlertOperations;
 import sample.util.operations.FileOperations;
 import sample.util.operations.StageOperations;
 import sample.util.operations.StringOperations;
-import sample.util.structures.ArrayList;
+
+import java.math.BigDecimal;
+import java.net.URL;
+import java.util.Date;
+import java.util.List;
+import java.util.Objects;
+import java.util.ResourceBundle;
+import java.util.stream.Collectors;
 
 public class TransfersPageController
 {
@@ -85,8 +84,10 @@ public class TransfersPageController
     @FXML
     private TextField accountNumberTF;
 
+    @GungaObject
     private BankAccount bankAccount = Main.userLoggedIn.getBankAccounts().get(0);
 
+    @GungaObject
     private User user = Main.userLoggedIn;
 
     @FXML
@@ -104,8 +105,6 @@ public class TransfersPageController
     @FXML
     void onProfileClicked(MouseEvent event)
     {
-        System.out.println("lol");
-
         StageOperations.switchToProfileScene();
     }
 

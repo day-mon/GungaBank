@@ -10,12 +10,16 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
 import sample.Main;
-import sample.core.objects.User;
 
 import java.util.Optional;
 
 public class StageOperations
 {
+    private final static int LENGTH_FOR_MAIN = 1190;
+    private final static int WIDTH_FOR_MAIN = 790;
+    private final static StageStyle DEFAULT_STAGE_STYLE = StageStyle.DECORATED;
+
+
     public static void cardApplicationStage()
     {
         try
@@ -25,7 +29,7 @@ public class StageOperations
             creditAppStage.setTitle("Credit Card Application") ;
             creditAppStage.setResizable(false);
             creditAppStage.getIcons().add(new Image(Main.class.getResourceAsStream("/LOGO.PNG")));
-            creditAppStage.initStyle(StageStyle.DECORATED);
+            creditAppStage.initStyle(DEFAULT_STAGE_STYLE);
             creditAppStage.setX(454);
             creditAppStage.setY(700);
             creditAppStage.setScene(scene);
@@ -37,6 +41,26 @@ public class StageOperations
         }
     }
 
+    public static void creditCardStage()
+    {
+        try
+        {
+            if (Main.forms.containsKey("/cardpage"))
+            {
+                Main.forms.remove("/cardpage");
+                Main.open("/cardpage", "Dashboard", LENGTH_FOR_MAIN, WIDTH_FOR_MAIN, DEFAULT_STAGE_STYLE);
+                return;
+            }
+            Main.open("/cardpage", "Dashboard", LENGTH_FOR_MAIN, WIDTH_FOR_MAIN, DEFAULT_STAGE_STYLE);
+
+        }
+        catch (Exception e)
+        {
+            System.out.printf("Error occured: %s", e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
     public static void switchToProfileScene()
     {
         try
@@ -44,10 +68,10 @@ public class StageOperations
             if (Main.forms.containsKey("/profilepage"))
             {
                 Main.forms.remove("/profilepage");
-                Main.open("/profilepage", "Dashboard", 1200, 800, StageStyle.DECORATED);
+                Main.open("/profilepage", "Dashboard", LENGTH_FOR_MAIN, WIDTH_FOR_MAIN, DEFAULT_STAGE_STYLE);
                 return;
             }
-            Main.open("/profilepage", "Dashboard", 1200, 800, StageStyle.DECORATED);
+            Main.open("/profilepage", "Dashboard", LENGTH_FOR_MAIN, WIDTH_FOR_MAIN, DEFAULT_STAGE_STYLE);
 
         }
         catch (Exception e)
@@ -64,10 +88,10 @@ public class StageOperations
             if (Main.forms.containsKey("/transfers"))
             {
                 Main.forms.remove("/transfers");
-                Main.open("/transfers", "Transfers", 1200, 800, StageStyle.DECORATED);
+                Main.open("/transfers", "Transfers", LENGTH_FOR_MAIN, WIDTH_FOR_MAIN, DEFAULT_STAGE_STYLE);
                 return;
             }
-            Main.open("/transfers", "Transfers", 1200, 800, StageStyle.DECORATED);
+            Main.open("/transfers", "Transfers", LENGTH_FOR_MAIN, WIDTH_FOR_MAIN,DEFAULT_STAGE_STYLE);
 
         }
         catch (Exception e)
@@ -85,10 +109,10 @@ public class StageOperations
             if (Main.forms.containsKey("/dashboard"))
             {
                 Main.forms.remove("/dashboard");
-                Main.open("/dashboard", "Dashboard", 1200, 800, StageStyle.DECORATED);
+                Main.open("/dashboard", "Dashboard", LENGTH_FOR_MAIN, WIDTH_FOR_MAIN, DEFAULT_STAGE_STYLE);
                 return;
             }
-            Main.open("/dashboard", "Dashboard", 1200, 800, StageStyle.DECORATED);
+            Main.open("/dashboard", "Dashboard", LENGTH_FOR_MAIN, WIDTH_FOR_MAIN, DEFAULT_STAGE_STYLE);
 
         }
         catch (Exception e)

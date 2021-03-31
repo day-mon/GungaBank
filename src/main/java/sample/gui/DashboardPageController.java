@@ -1,37 +1,26 @@
 package sample.gui;
 
-import java.awt.*;
-import java.math.BigDecimal;
-import java.net.URL;
-import java.sql.Time;
-import java.util.Date;
-import java.util.Optional;
-import java.util.Random;
-import java.util.ResourceBundle;
-
 import javafx.animation.PauseTransition;
-import javafx.animation.Timeline;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.control.Button;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.paint.Paint;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 import javafx.util.Duration;
 import sample.Main;
 import sample.core.objects.BankAccount;
-import sample.core.objects.Card;
 import sample.core.objects.Transaction;
 import sample.core.objects.User;
+import sample.core.other.GungaObject;
 import sample.util.operations.StageOperations;
+
+import java.net.URL;
+import java.util.Optional;
+import java.util.ResourceBundle;
 
 public class DashboardPageController
 {
@@ -87,6 +76,7 @@ public class DashboardPageController
     @FXML
     private Text nameText;
 
+    @GungaObject
     private User user = Main.userLoggedIn;
 
 
@@ -99,7 +89,9 @@ public class DashboardPageController
         String replaced = nameText.getText().replace("%{name}", user.getFirstName());
 
         nameText.setText(replaced);
-        nameText.setTextAlignment(TextAlignment.JUSTIFY);
+        nameText.setTextAlignment(TextAlignment.CENTER);
+        creditCardBalance.setText(user.getCards().size() <= 0  ? "N/A" : user.getCards().get(0).getBalance().doubleValue() +"");
+
 
 
         ObservableList<Transaction> s = FXCollections.observableArrayList();
@@ -142,6 +134,7 @@ public class DashboardPageController
             }
             return;
         }
+        StageOperations.creditCardStage();
 
     }
 

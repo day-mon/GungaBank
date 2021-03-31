@@ -6,7 +6,6 @@ package sample.gui;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -16,7 +15,6 @@ import javafx.stage.StageStyle;
 import sample.Main;
 import sample.core.objects.BankAccount;
 import sample.core.objects.User;
-import sample.util.structures.ArrayList;
 import sample.util.operations.AlertOperations;
 import sample.util.operations.FileOperations;
 import sample.util.operations.StringOperations;
@@ -134,7 +132,7 @@ public class LoginPageController {
             if (Main.forms.containsKey("/dashboard"))
                 Main.forms.remove("/dashboard");
 
-            Main.open("/dashboard", "Dashboard", 1200, 800, StageStyle.DECORATED);
+            Main.open("/dashboard", "Dashboard", 1190, 790, StageStyle.DECORATED);
             String sucess = String.format("Welcome %s! \nYour last login was %s", userToLogin.getFirstName(),  userToLogin.getLastLogin() == null ?  "Never!" : userToLogin.getLastLogin());
 
             Main.userLoggedIn.setLastLogin(new Date());

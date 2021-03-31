@@ -1,8 +1,5 @@
 package sample.core.objects;
 
-import javafx.beans.property.SimpleStringProperty;
-import sample.gui.TransfersPageController;
-
 import java.awt.*;
 import java.io.Serializable;
 import java.math.BigDecimal;

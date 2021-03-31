@@ -12,12 +12,10 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import sample.core.objects.User;
-import sample.util.structures.HashDictionary;
 import sample.util.operations.FileOperations;
 import sample.util.operations.StringOperations;
+import sample.util.structures.HashDictionary;
 
-import java.awt.*;
-import java.awt.Desktop;
 import java.io.IOException;
 import java.util.Date;
 import java.util.Iterator;
@@ -101,6 +99,9 @@ public class Main extends Application
 
     public static void main(String[] args)
     {
+
+        System.out.println();
+
         launch(args);
     }
 

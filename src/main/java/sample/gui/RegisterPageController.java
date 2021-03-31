@@ -10,17 +10,17 @@ import javafx.scene.input.MouseEvent;
 import sample.Main;
 import sample.core.objects.User;
 import sample.util.Checks;
-import sample.util.structures.ArrayList;
-import sample.util.structures.HashDictionary;
 import sample.util.operations.FileOperations;
 import sample.util.operations.StringOperations;
+import sample.util.structures.ArrayList;
+import sample.util.structures.HashDictionary;
 
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.util.Date;
+import java.util.Iterator;
+import java.util.Optional;
 
 public class RegisterPageController
 {

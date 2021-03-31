@@ -1,13 +1,11 @@
 package sample.util.structures;
 
+import sample.util.structures.interfaces.ListInterface;
+
 import java.io.Serializable;
 import java.util.*;
 import java.util.function.Consumer;
-import java.util.function.Predicate;
 import java.util.stream.Stream;
-
-
-import sample.util.structures.interfaces.ListInterface;
 
 /**
  * @param <E> type of data in this list

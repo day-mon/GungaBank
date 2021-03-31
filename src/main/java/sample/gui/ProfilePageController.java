@@ -1,10 +1,6 @@
 package sample.gui;
 
-import java.net.URL;
-import java.util.ResourceBundle;
-
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
@@ -12,8 +8,11 @@ import javafx.scene.text.TextAlignment;
 import sample.Main;
 import sample.core.objects.BankAccount;
 import sample.core.objects.User;
+import sample.core.other.GungaObject;
 import sample.util.operations.StageOperations;
-import sample.util.structures.ArrayList;
+
+import java.net.URL;
+import java.util.ResourceBundle;
 
 public class ProfilePageController
 {
@@ -63,8 +62,10 @@ public class ProfilePageController
     @FXML
     private Text ACCOUNT_NUMBER;
 
+    @GungaObject
     private User user = Main.userLoggedIn;
 
+    @GungaObject
     private BankAccount bankAccount = Main.userLoggedIn.getBankAccounts().get(0);
 
 
