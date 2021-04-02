@@ -195,12 +195,26 @@ public class Card implements Serializable
 
     public enum CardType
     {
-        BRONZE,
-        SILVER,
-        GOLD,
-        PLATINUM,
-        DIAMOND,
-        BLACK,
-        GUNGA
+        BRONZE(250, 500),
+        SILVER(500, 1000),
+        GOLD(1000, 10000),
+        PLATINUM(10000, 50000),
+        GUNGA(-1, -1);
+
+        private int lowerLimit = 0;
+        private int upperLimit = 0;
+
+        CardType(int lower, int upper) {
+            lowerLimit = lower;
+            upperLimit = upper;
+        }
+
+        public String getLowerLimit() {
+            return String.valueOf(lowerLimit);
+        }
+
+        public String getUpperLimit() {
+            return String.valueOf(upperLimit);
+        }
     }
 }
