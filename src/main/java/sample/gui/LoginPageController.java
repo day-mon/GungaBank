@@ -12,6 +12,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import javafx.stage.StageStyle;
+import sample.GungaBankConstants;
 import sample.Main;
 import sample.core.objects.BankAccount;
 import sample.core.objects.User;
@@ -62,19 +63,19 @@ public class LoginPageController {
      */
     @FXML
     void onLoginHovered(MouseEvent event) {
-        loginTextLabel.setStyle("-fx-background-color: #9d2929;");
+        loginTextLabel.setStyle(GungaBankConstants.BUTTON_HOVER_COLOR_STYLE);
     }
 
-    public void onLoginHoveredExitied(MouseEvent mouseEvent) {
-        loginTextLabel.setStyle("-fx-background-color: #212121;");
+    public void onLoginHoveredExited(MouseEvent mouseEvent) {
+        loginTextLabel.setStyle(GungaBankConstants.BUTTON_COLOR_STYLE);
     }
 
     public void onRegisterHovered(MouseEvent mouseEvent) {
-        registerButton.setStyle("-fx-background-color: #9d2929;");
+        registerButton.setStyle(GungaBankConstants.BUTTON_HOVER_COLOR_STYLE);
     }
 
-    public void onRegisterExitied(MouseEvent mouseEvent) {
-        registerButton.setStyle("-fx-background-color: #212121;");
+    public void onRegisterExited(MouseEvent mouseEvent) {
+        registerButton.setStyle(GungaBankConstants.BUTTON_COLOR_STYLE);
     }
 
     public void onRegisterButtonClick(ActionEvent actionEvent) {

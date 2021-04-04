@@ -7,6 +7,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
+import sample.GungaBankConstants;
 import sample.Main;
 import sample.core.objects.User;
 import sample.util.Checks;
@@ -245,7 +246,7 @@ public class RegisterPageController
             {
 
 
-                String errors = "";
+                StringBuilder errors = new StringBuilder();
                 int size = 0;
 
 
@@ -255,12 +256,12 @@ public class RegisterPageController
                     /**
                      * Could use a stringbuilder but meh.
                      */
-                    errors += (errorReasons.get(element) + "\n");
+                    errors.append(errorReasons.get(element)).append("\n");
                     size++;
                 }
 
                 alert.setHeaderText("You have " + size + " errors!");
-                alert.setContentText(errors);
+                alert.setContentText(errors.toString());
                 alert.show();
                 return;
             }
@@ -309,7 +310,7 @@ public class RegisterPageController
     }
 
     @FXML
-    void onBackExitied(MouseEvent event)
+    void onBackExited(MouseEvent event)
     {
         backButton.setStyle("-fx-background-color: #313131;");
     }
@@ -317,27 +318,27 @@ public class RegisterPageController
     @FXML
     void onBackHovered(MouseEvent event)
     {
-        backButton.setStyle("-fx-background-color: #9d2929;");
+        backButton.setStyle(GungaBankConstants.BUTTON_HOVER_COLOR_STYLE);
     }
 
-    public void onRegisterExitied(MouseEvent mouseEvent)
+    public void onRegisterExited(MouseEvent mouseEvent)
     {
         registerButton.setStyle("-fx-background-color: #313131;");
     }
 
     public void onRegisterHovered(MouseEvent mouseEvent)
     {
-        registerButton.setStyle("-fx-background-color: #9d2929;");
+        registerButton.setStyle(GungaBankConstants.BUTTON_HOVER_COLOR_STYLE);
     }
 
-    public void onClearButtonExitied(MouseEvent mouseEvent)
+    public void onClearButtonExited(MouseEvent mouseEvent)
     {
         clearButton.setStyle("-fx-background-color: #313131;");
     }
 
     public void onClearButtonHovered(MouseEvent mouseEvent)
     {
-        clearButton.setStyle("-fx-background-color: #9d2929;");
+        clearButton.setStyle(GungaBankConstants.BUTTON_HOVER_COLOR_STYLE);
     }
 
     private void clearTextFields()
@@ -358,6 +359,7 @@ public class RegisterPageController
     {
         return Main.users.containsKey(email);
     }
+
 
 }
 

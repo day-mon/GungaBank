@@ -4,9 +4,9 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
+import sample.GungaBankConstants;
 import sample.Main;
 import sample.core.objects.Card;
 import sample.core.objects.User;
@@ -230,25 +230,25 @@ public class CardApplicationController
     @FXML
     void onApplyHovered(MouseEvent event)
     {
-        APPLY_BUTTON.setStyle("-fx-background-color: #9d2929;");
+        APPLY_BUTTON.setStyle(GungaBankConstants.BUTTON_HOVER_COLOR_STYLE);
     }
 
     @FXML
-    void onClearButtonExitied(MouseEvent event)
+    void onClearButtonExited(MouseEvent event)
     {
-        clearButton.setStyle("-fx-background-color: #212121;");
+        clearButton.setStyle(GungaBankConstants.BUTTON_COLOR_STYLE);
     }
 
     @FXML
     void onClearButtonHovered(MouseEvent event)
     {
-        clearButton.setStyle("-fx-background-color: #9d2929;");
+        clearButton.setStyle(GungaBankConstants.BUTTON_HOVER_COLOR_STYLE);
     }
 
     @FXML
-    void onRegisterExitied(MouseEvent event)
+    void onRegisterExited(MouseEvent event)
     {
-        APPLY_BUTTON.setStyle("-fx-background-color: #212121;");
+        APPLY_BUTTON.setStyle(GungaBankConstants.BUTTON_COLOR_STYLE);
     }
 
 

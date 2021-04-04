@@ -1,15 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.PasswordField?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
-
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.gui.CreditCardPageController">
    <children>
       <AnchorPane prefHeight="800.0" prefWidth="86.0" style="-fx-background-color: #212121;">
@@ -215,7 +209,7 @@
                   </Text>
                   <PasswordField fx:id="PIN_TEXT_FIELD" layoutX="193.0" layoutY="93.0" style="-fx-border-width: 0px 0px 2px 0px; -fx-border-color: #FFFF; -fx-background-color: transparent; -fx-text-fill: #FFFF;" />
                   <PasswordField fx:id="CONFIRM_PIN_TEXT_FIELD" layoutX="207.0" layoutY="185.0" style="-fx-border-width: 0px 0px 2px 0px; -fx-border-color: #FFFF; -fx-background-color: transparent; -fx-text-fill: #FFFF;" />
-                  <Button fx:id="PIN_CONFIRM" layoutX="152.0" layoutY="243.0" mnemonicParsing="false" onAction="#onPinConfirmedClick" onMouseEntered="#onConfirmedButtonHovered" onMouseExited="#onConfirmedButtonExitied" style="-fx-background-color: #212121;" text="Confirm" textFill="WHITE" />
+                  <Button fx:id="PIN_CONFIRM" layoutX="152.0" layoutY="243.0" mnemonicParsing="false" onAction="#onPinConfirmedClick" onMouseEntered="#onConfirmedButtonHovered" onMouseExited="#onConfirmedButtonExited" style="-fx-background-color: #212121;" text="Confirm" textFill="WHITE" />
                </children>
             </Pane>
             <Pane layoutX="674.0" layoutY="392.0" prefHeight="316.0" prefWidth="385.0" style="-fx-background-color: #313131;">

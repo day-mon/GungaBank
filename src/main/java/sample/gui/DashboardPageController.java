@@ -96,7 +96,7 @@ public class DashboardPageController
 
         ObservableList<Transaction> s = FXCollections.observableArrayList();
 
-        bankAccount.getTransactions().forEach(transaction -> s.add(transaction));
+        bankAccount.getTransactions().forEach(s::add);
 
 
         dateColumn.setCellValueFactory(new PropertyValueFactory<Transaction, String>("Date"));
@@ -117,25 +117,7 @@ public class DashboardPageController
 
     public void onCardIconClicked(MouseEvent mouseEvent)
     {
-        System.out.println("1");
-        System.out.println(user.getCards().size());
-        if (user.getCards().size() <= 0)
-        {
-
-            Alert popUp = new Alert(Alert.AlertType.WARNING,
-                    "You do not have any credit cards with us, Would you like to apply?",
-                    new ButtonType("Yes"),
-                    new ButtonType("No"));
-            Optional<ButtonType> result = popUp.showAndWait();
-
-            if (result.get().getText().equals("Yes"))
-            {
-               StageOperations.cardApplicationStage();
-            }
-            return;
-        }
-        StageOperations.creditCardStage();
-
+        StageOperations.switchToCardPage(user);
     }
 
     public void onProfileClicked(MouseEvent mouseEvent)

@@ -93,13 +93,13 @@ public class TransfersPageController
     @FXML
     void onCardIconClicked(MouseEvent event)
     {
-
+        StageOperations.switchToCardPage(user);
     }
 
     @FXML
     void onLogoutClicked(MouseEvent event)
     {
-
+        StageOperations.initLogoutSequence();
     }
 
     @FXML

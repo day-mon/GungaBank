@@ -72,7 +72,7 @@ public class ProfilePageController
     @FXML
     void onCardIconClicked(MouseEvent event)
     {
-        return;
+        StageOperations.switchToCardPage(user);
     }
 
     @FXML

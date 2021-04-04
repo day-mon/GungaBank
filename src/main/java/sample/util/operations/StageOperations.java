@@ -10,6 +10,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
 import sample.Main;
+import sample.core.objects.User;
 
 import java.util.Optional;
 
@@ -153,6 +154,26 @@ public class StageOperations
             }
         });
         delay.play();
+    }
+
+    public static void switchToCardPage(User user)
+    {
+        if (user.getCards().size() <= 0)
+        {
+
+            Alert popUp = new Alert(Alert.AlertType.WARNING,
+                    "You do not have any credit cards with us, Would you like to apply?",
+                    new ButtonType("Yes"),
+                    new ButtonType("No"));
+            Optional<ButtonType> result = popUp.showAndWait();
+
+            if (result.get().getText().equals("Yes"))
+            {
+                StageOperations.cardApplicationStage();
+            }
+            return;
+        }
+        StageOperations.creditCardStage();
     }
 
 }

@@ -6,6 +6,7 @@ import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
+import sample.GungaBankConstants;
 import sample.Main;
 import sample.core.objects.Card;
 import sample.core.objects.User;
@@ -143,62 +144,62 @@ public class CreditCardPageController
     @FXML
     void onApplyCardHovered(MouseEvent event)
     {
-        CARD_UPGRADE.setStyle("-fx-background-color: #9d2929;");
+        CARD_UPGRADE.setStyle(GungaBankConstants.BUTTON_HOVER_COLOR_STYLE);
     }
 
     @FXML
     void onConfirmedButtonHovered(MouseEvent event)
     {
-        PIN_CONFIRM.setStyle("-fx-background-color: #9d2929;");
+        PIN_CONFIRM.setStyle(GungaBankConstants.BUTTON_HOVER_COLOR_STYLE);
     }
 
     @FXML
     void onDisabledCardHovered(MouseEvent event)
     {
-        DISABLE_CARD.setStyle("-fx-background-color: #9d2929;");
+        DISABLE_CARD.setStyle(GungaBankConstants.BUTTON_HOVER_COLOR_STYLE);
     }
 
     @FXML
     void onLimitIncreaseHovered(MouseEvent event)
     {
-        LIMIT_INCREASE.setStyle("-fx-background-color: #9d2929;");
+        LIMIT_INCREASE.setStyle(GungaBankConstants.BUTTON_HOVER_COLOR_STYLE);
     }
 
 
     @FXML
     void onGenerateCardHovered(MouseEvent event)
     {
-        GENERATE_CARD_NUMBER.setStyle("-fx-background-color: #9d2929;");
+        GENERATE_CARD_NUMBER.setStyle(GungaBankConstants.BUTTON_HOVER_COLOR_STYLE);
     }
 
     @FXML
     void onApplyCardExited(MouseEvent event)
     {
-        CARD_UPGRADE.setStyle("-fx-background-color: #212121;");
+        CARD_UPGRADE.setStyle(GungaBankConstants.BUTTON_COLOR_STYLE);
     }
 
     @FXML
-    void onConfirmedButtonExitied(MouseEvent event)
+    void onConfirmedButtonExited(MouseEvent event)
     {
-        PIN_CONFIRM.setStyle("-fx-background-color: #212121;");
+        PIN_CONFIRM.setStyle(GungaBankConstants.BUTTON_COLOR_STYLE);
     }
 
     @FXML
     void onDisabledCardExited(MouseEvent event)
     {
-        DISABLE_CARD.setStyle("-fx-background-color: #212121;");
+        DISABLE_CARD.setStyle(GungaBankConstants.BUTTON_COLOR_STYLE);
     }
 
     @FXML
     void onGenerateCardExited(MouseEvent event)
     {
-        GENERATE_CARD_NUMBER.setStyle("-fx-background-color: #212121;");
+        GENERATE_CARD_NUMBER.setStyle(GungaBankConstants.BUTTON_COLOR_STYLE);
     }
 
     @FXML
     void onLimitIncreaseExited(MouseEvent event)
     {
-        LIMIT_INCREASE.setStyle("-fx-background-color: #212121;");
+        LIMIT_INCREASE.setStyle(GungaBankConstants.BUTTON_COLOR_STYLE);
     }
 
     // ===================================== ON CLICKS (BUTTON) =====================================
