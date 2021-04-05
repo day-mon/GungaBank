@@ -8,6 +8,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.util.Duration;
@@ -24,6 +25,8 @@ import java.util.ResourceBundle;
 
 public class DashboardPageController
 {
+    @FXML
+    public AnchorPane ap;
 
     @FXML
     private ResourceBundle resources;
@@ -77,36 +80,44 @@ public class DashboardPageController
     private Text nameText;
 
     @GungaObject
-    private User user = Main.userLoggedIn;
+    private User user;
+
+    private boolean showing = false;
+
+
 
 
     @FXML
     void initialize()
     {
-        BankAccount bankAccount = Main.userLoggedIn.getBankAccounts().get(0);
-        User user = Main.userLoggedIn;
-
-        String replaced = nameText.getText().replace("%{name}", user.getFirstName());
-
-        nameText.setText(replaced);
-        nameText.setTextAlignment(TextAlignment.CENTER);
-        creditCardBalance.setText(user.getCards().size() <= 0  ? "N/A" : user.getCards().get(0).getBalance().doubleValue() +"");
 
 
 
-        ObservableList<Transaction> s = FXCollections.observableArrayList();
-
-        bankAccount.getTransactions().forEach(s::add);
+            BankAccount bankAccount = user.getBankAccounts().get(0);
 
 
-        dateColumn.setCellValueFactory(new PropertyValueFactory<Transaction, String>("Date"));
-        accountColumn.setCellValueFactory(new PropertyValueFactory<Transaction, String>("accountNumber"));
-        ammountColumn.setCellValueFactory(new PropertyValueFactory<Transaction, String>("amount"));
-        transactionColumn.setCellValueFactory(new PropertyValueFactory<Transaction, String>("TransactionType"));
-        transactionTable.setItems(s);
+            String replaced = nameText.getText().replace("%{name}", user.getFirstName());
+
+            nameText.setText(replaced);
+            nameText.setTextAlignment(TextAlignment.CENTER);
+            creditCardBalance.setText(user.getCards().size() <= 0 ? "N/A" : user.getCards().get(0).getBalance().doubleValue() + "");
 
 
-        bankAccountBalance.setText(Main.userLoggedIn.getBankAccounts().get(0).getBalance() + "");
+            ObservableList<Transaction> s = FXCollections.observableArrayList();
+
+            bankAccount.getTransactions().forEach(s::add);
+
+
+            dateColumn.setCellValueFactory(new PropertyValueFactory<Transaction, String>("Date"));
+            accountColumn.setCellValueFactory(new PropertyValueFactory<Transaction, String>("accountNumber"));
+            ammountColumn.setCellValueFactory(new PropertyValueFactory<Transaction, String>("amount"));
+            transactionColumn.setCellValueFactory(new PropertyValueFactory<Transaction, String>("TransactionType"));
+            transactionTable.setItems(s);
+
+
+            bankAccountBalance.setText(user.getBankAccounts().get(0).getBalance() + "");
+
+
     }
 
 
@@ -155,6 +166,21 @@ public class DashboardPageController
             }
         });
         delay.play();
+    }
+
+    public void setUser(User user)
+    {
+        this.user = user;
+    }
+
+    public User getUser()
+    {
+        return user;
+    }
+
+    public void setShowing(boolean showing)
+    {
+        this.showing = showing;
     }
 }
 

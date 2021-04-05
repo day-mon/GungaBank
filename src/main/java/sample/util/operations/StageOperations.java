@@ -25,16 +25,20 @@ public class StageOperations
     {
         try
         {
-            Scene scene = new Scene(Main.loadFXML("/creditcardapp"));
-            Stage creditAppStage = new Stage();
-            creditAppStage.setTitle("Credit Card Application") ;
-            creditAppStage.setResizable(false);
-            creditAppStage.getIcons().add(new Image(Main.class.getResourceAsStream("/LOGO.PNG")));
-            creditAppStage.initStyle(DEFAULT_STAGE_STYLE);
-            creditAppStage.setX(454);
-            creditAppStage.setY(700);
-            creditAppStage.setScene(scene);
-            creditAppStage.show();
+            if (Main.forms.containsKey("/creditcardapp"))
+            {
+                Scene scene = new Scene(Main.loadFXML("/creditcardapp"));
+                Stage creditAppStage = new Stage();
+                creditAppStage.setTitle("Credit Card Application");
+                creditAppStage.setResizable(false);
+                creditAppStage.getIcons().add(new Image(Main.class.getResourceAsStream("/LOGO.PNG")));
+                creditAppStage.initStyle(DEFAULT_STAGE_STYLE);
+                creditAppStage.setX(454);
+                creditAppStage.setY(700);
+                creditAppStage.setScene(scene);
+                Main.forms.put("/creditcardapp", creditAppStage);
+                creditAppStage.show();
+            }
         }
         catch (Exception e)
         {

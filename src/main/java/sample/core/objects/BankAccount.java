@@ -18,7 +18,6 @@ public class BankAccount implements Serializable
     private ArrayList<Transaction> transactions;
     private BigDecimal balance;
     private long accNum;
-
     public BankAccount(User user, AccountTypes type)
     {
         owner = user;
@@ -33,12 +32,12 @@ public class BankAccount implements Serializable
     {
         Random r = new Random();
 
-        String num = ACC_NUM_PREFIX;
+        StringBuilder num = new StringBuilder(ACC_NUM_PREFIX);
         for (int i = 0; i < 10; i++)
         {
-            num += r.nextInt(10);
+            num.append(r.nextInt(10));
         }
-        return Long.parseLong(num);
+        return Long.parseLong(num.toString());
     }
 
     public long getAccountNumber()

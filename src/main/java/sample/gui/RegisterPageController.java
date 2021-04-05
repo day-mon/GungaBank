@@ -10,6 +10,7 @@ import javafx.scene.input.MouseEvent;
 import sample.GungaBankConstants;
 import sample.Main;
 import sample.core.objects.User;
+import sample.core.other.GungaObject;
 import sample.util.Checks;
 import sample.util.operations.FileOperations;
 import sample.util.operations.StringOperations;
@@ -56,7 +57,7 @@ public class RegisterPageController
     @FXML
     private Button backButton;
 
-    // TODO: Something wrong with our arraylist?? we need to fix epic poggers :O
+    @GungaObject
     private ArrayList<TextField> textFields;
 
 
@@ -154,7 +155,7 @@ public class RegisterPageController
                     {
                         errorReasons.put(currentErrors++, "Your email field is empty!");
                     }
-                    else if (!Checks.emailVaildaotr(currentField.getText()))
+                    else if (!Checks.emailValidator(currentField.getText()))
                     {
                         errorReasons.put(currentErrors++, "Your email field is wrong!");
                     }
@@ -186,7 +187,7 @@ public class RegisterPageController
                     {
                         errorReasons.put(currentErrors++, "Your Password field is empty!");
                     }
-                    else if (!Checks.paswordValidator(currentField.getText()))
+                    else if (!Checks.passwordValidator(currentField.getText()))
                     {
                         errorReasons.put(currentErrors++, "Password field must be contain a digit (4-20), a number, special char, upper and lower case letter at least once!");
                     }

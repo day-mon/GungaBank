@@ -113,5 +113,13 @@ public class ProfilePageController
         ACCOUNT_NUMBER.setText(Long.toString(bankAccount.getAccountNumber()));
     }
 
+    public void setUser(User user)
+    {
+        this.user = user;
+    }
 
+    public User getUser()
+    {
+        return user;
+    }
 }

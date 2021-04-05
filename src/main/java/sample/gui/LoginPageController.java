@@ -6,6 +6,8 @@ package sample.gui;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -16,6 +18,7 @@ import sample.GungaBankConstants;
 import sample.Main;
 import sample.core.objects.BankAccount;
 import sample.core.objects.User;
+import sample.core.other.GungaObject;
 import sample.util.operations.AlertOperations;
 import sample.util.operations.FileOperations;
 import sample.util.operations.StringOperations;
@@ -25,7 +28,8 @@ import java.net.URL;
 import java.util.Date;
 import java.util.ResourceBundle;
 
-public class LoginPageController {
+public class LoginPageController
+{
 
     @FXML // ResourceBundle that was given to the FXMLLoader
     private ResourceBundle resources;
@@ -48,46 +52,55 @@ public class LoginPageController {
     @FXML // fx:id="registerButton"
     private Button registerButton; // Value injected by FXMLLoader
 
-
+    @GungaObject
+    private User user;
 
 
 
     @FXML
         // This method is called by the FXMLLoader when initialization is complete
-    void initialize() {
+    void initialize()
+    {
 
     }
+
     /**
      * When the login button is hovered over by a mouse it will change to a different color
+     *
      * @param event
      */
     @FXML
-    void onLoginHovered(MouseEvent event) {
+    void onLoginHovered(MouseEvent event)
+    {
         loginTextLabel.setStyle(GungaBankConstants.BUTTON_HOVER_COLOR_STYLE);
     }
 
-    public void onLoginHoveredExited(MouseEvent mouseEvent) {
+    public void onLoginHoveredExited(MouseEvent mouseEvent)
+    {
         loginTextLabel.setStyle(GungaBankConstants.BUTTON_COLOR_STYLE);
     }
 
-    public void onRegisterHovered(MouseEvent mouseEvent) {
+    public void onRegisterHovered(MouseEvent mouseEvent)
+    {
         registerButton.setStyle(GungaBankConstants.BUTTON_HOVER_COLOR_STYLE);
     }
 
-    public void onRegisterExited(MouseEvent mouseEvent) {
+    public void onRegisterExited(MouseEvent mouseEvent)
+    {
         registerButton.setStyle(GungaBankConstants.BUTTON_COLOR_STYLE);
     }
 
-    public void onRegisterButtonClick(ActionEvent actionEvent) {
+    public void onRegisterButtonClick(ActionEvent actionEvent)
+    {
 
-            try
-            {
-               Main.open("/registerpage", "Register Page", 700, 835, StageStyle.UTILITY);
-            }
-            catch (IOException e)
-            {
-                e.printStackTrace();
-            }
+        try
+        {
+            Main.open("/registerpage", "Register Page", 700, 835, StageStyle.UTILITY);
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
 
     }
 
@@ -121,9 +134,14 @@ public class LoginPageController {
 
         try
         {
-            Main.userLoggedIn = userToLogin;
-            System.out.println("Main.user: " + Main.userLoggedIn.getFirstName());
-            System.out.println("UserToLogin: " + userToLogin.getFirstName());
+            FXMLLoader loader = new FXMLLoader(Main.class.getResource("/dashboard.fxml"));
+            Parent root = loader.load();
+
+            DashboardPageController dashboardPageController = loader.getController();
+            dashboardPageController.setUser(userToLogin);
+            System.out.println(dashboardPageController.getUser());
+
+
 
             if (userToLogin.getBankAccounts().size() <= 0)
             {
@@ -132,14 +150,14 @@ public class LoginPageController {
 
             if (Main.forms.containsKey("/dashboard"))
                 Main.forms.remove("/dashboard");
-
+            dashboardPageController.setShowing(true);
             Main.open("/dashboard", "Dashboard", 1190, 790, StageStyle.DECORATED);
-            String sucess = String.format("Welcome %s! \nYour last login was %s", userToLogin.getFirstName(),  userToLogin.getLastLogin() == null ?  "Never!" : userToLogin.getLastLogin());
+            String success = String.format("Welcome %s! \nYour last login was %s", userToLogin.getFirstName(), userToLogin.getLastLogin() == null ? "Never!" : userToLogin.getLastLogin());
 
-            Main.userLoggedIn.setLastLogin(new Date());
+            userToLogin.setLastLogin(new Date());
             FileOperations.writeToFile(FileOperations.users, Main.users);
 
-            AlertOperations.AlertShortner("good", "Login success!",sucess);
+            AlertOperations.AlertShortner("good", "Login success!", success);
         }
         catch (Exception e)
         {
@@ -148,6 +166,15 @@ public class LoginPageController {
         }
 
 
+    }
 
+    public void setUser(User user)
+    {
+        this.user = user;
+    }
+
+    public User getUser()
+    {
+        return user;
     }
 }

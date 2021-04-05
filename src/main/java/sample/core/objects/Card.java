@@ -8,8 +8,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Random;
 
-public class Card implements Serializable
-{
+public class Card implements Serializable {
 
     private User cardHolder;
     private String cardNumber;
@@ -25,8 +24,7 @@ public class Card implements Serializable
     private boolean isDisabled;
 
     @GungaObject
-    public Card(User cardHolder, String apr, String pin, CardType cardType, BigDecimal limit, BigDecimal balance)
-    {
+    public Card(User cardHolder, String apr, String pin, CardType cardType, BigDecimal limit, BigDecimal balance) {
         this.cardHolder = cardHolder;
         this.apr = apr;
         this.pin = pin;
@@ -41,118 +39,95 @@ public class Card implements Serializable
         this.isDisabled = false;
     }
 
-    public User getCardHolder()
-    {
+    public User getCardHolder() {
         return cardHolder;
     }
 
-    public void setCardHolder(User cardHolder)
-    {
+    public void setCardHolder(User cardHolder) {
         this.cardHolder = cardHolder;
     }
 
-    public String getCardNumber()
-    {
+    public String getCardNumber() {
         return cardNumber;
     }
 
-    public void setCardNumber(String cardNumber)
-    {
+    public void setCardNumber(String cardNumber) {
         this.cardNumber = cardNumber;
     }
 
-    public String getApr()
-    {
+    public String getApr() {
         return apr;
     }
 
-    public void setApr(String apr)
-    {
+    public void setApr(String apr) {
         this.apr = apr;
     }
 
-    public String getPin()
-    {
+    public String getPin() {
         return pin;
     }
 
-    public void setPin(String pin)
-    {
+    public void setPin(String pin) {
         this.pin = pin;
     }
 
-    public String getCID()
-    {
+    public String getCID() {
         return cid;
     }
 
-    public void setCid(String cid)
-    {
+    public void setCid(String cid) {
         this.cid = cid;
     }
 
-    public LocalDateTime getExperationDate()
-    {
+    public LocalDateTime getExperationDate() {
         return experationDate;
     }
 
-    public void setExperationDate(LocalDateTime experationDate)
-    {
+    public void setExperationDate(LocalDateTime experationDate) {
         this.experationDate = experationDate;
     }
 
-    public LocalDateTime getDateIssued()
-    {
+    public LocalDateTime getDateIssued() {
         return dateIssued;
     }
 
-    public void setDateIssued(LocalDateTime dateIssued)
-    {
+    public void setDateIssued(LocalDateTime dateIssued) {
         this.dateIssued = dateIssued;
     }
 
-    public CardType getCardType()
-    {
+    public CardType getCardType() {
         return cardType;
     }
 
-    public void setCardType(CardType cardType)
-    {
+    public void setCardType(CardType cardType) {
         this.cardType = cardType;
     }
 
-    public BigDecimal getLimit()
-    {
+    public BigDecimal getLimit() {
         return limit;
     }
 
-    public void setLimit(BigDecimal limit)
-    {
+    public void setLimit(BigDecimal limit) {
         this.limit = limit;
     }
 
-    public BigDecimal getBalance()
-    {
+    public BigDecimal getBalance() {
         return totalLimitForUse.subtract(limit);
     }
 
-    public void setBalance(BigDecimal balance)
-    {
+    public void setBalance(BigDecimal balance) {
         this.balance = balance;
     }
 
-    public boolean isDisabled()
-    {
+    public boolean isDisabled() {
         return isDisabled;
     }
 
-    public BigDecimal getTotalLimitForUse()
-    {
+    public BigDecimal getTotalLimitForUse() {
         return totalLimitForUse;
     }
 
-    public void setDisabled(boolean disabled)
-    {
+    public void setDisabled(boolean disabled) {
         this.isDisabled = disabled;
     }
 
@@ -192,25 +167,30 @@ public class Card implements Serializable
     }
 
 
-
     public enum CardType
     {
-        BRONZE(250, 500),
-        SILVER(500, 1000),
-        GOLD(1000, 10000),
-        PLATINUM(10000, 50000),
-        GUNGA(-1, -1);
+        BRONZE("Bronze", 250, 500),
+        SILVER("Silver", 500, 1000),
+        GOLD("Gold", 1000, 10000),
+        PLATINUM("Platinum", 10000, 50000),
+        GUNGA("Gunga", -1, -1);
 
-        private int lowerLimit = 0;
-        private int upperLimit = 0;
+        private int lowerLimit;
+        private int upperLimit;
+        private String cardName;
 
-        CardType(int lower, int upper) {
-            lowerLimit = lower;
-            upperLimit = upper;
+        CardType(String cardName, int lowerLimit, int upperLimit) {
+            this.cardName = cardName;
+            this.lowerLimit = lowerLimit;
+            this.upperLimit = upperLimit;
         }
 
         public String getLowerLimit() {
             return String.valueOf(lowerLimit);
+        }
+
+        public String getCardName() {
+            return cardName;
         }
 
         public String getUpperLimit() {

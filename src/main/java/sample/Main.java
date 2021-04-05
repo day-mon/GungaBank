@@ -44,6 +44,7 @@ public class Main extends Application
     {
         FileOperations.loadInformation();
 
+
         users.put("123", new User("Josh", "Peck", "123", new Date(), "2142323232", "239239232", StringOperations.hashPassword("123")));
         scene = new Scene(loadFXML("/loginpage"), 700, 500);
         stage.getIcons().add(new Image(Main.class.getResourceAsStream("/LOGO.PNG")));
@@ -96,12 +97,26 @@ public class Main extends Application
         open(toOpen);
     }
 
+    public static void open(String toOpen, String title, int length, int width, StageStyle style, Parent root) throws IOException
+    {
+        if (!forms.containsKey(toOpen))
+        {
+            scene = new Scene(root);
+            Stage stg = new Stage();
+            stg.getIcons().add(new Image(Main.class.getResourceAsStream("/LOGO.PNG")));
+            stg.initStyle(StageStyle.DECORATED);
+            stg.setTitle(title);
+            stg.setScene(scene);
+            stg.setResizable(false);
+            stg.initStyle(style);
+            forms.put(toOpen, stg);
+        }
+        open(toOpen);
+    }
+
 
     public static void main(String[] args)
     {
-
-        System.out.println();
-
         launch(args);
     }
 

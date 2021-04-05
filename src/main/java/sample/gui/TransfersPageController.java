@@ -88,7 +88,7 @@ public class TransfersPageController
     private BankAccount bankAccount = Main.userLoggedIn.getBankAccounts().get(0);
 
     @GungaObject
-    private User user = Main.userLoggedIn;
+    private User user;
 
     @FXML
     void onCardIconClicked(MouseEvent event)
@@ -232,6 +232,13 @@ public class TransfersPageController
         }
     }
 
+    public User getUser()
+    {
+        return user;
+    }
 
-
+    public void setUser(User user)
+    {
+        this.user = user;
+    }
 }

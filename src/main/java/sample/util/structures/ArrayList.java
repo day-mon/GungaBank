@@ -138,8 +138,6 @@ public class ArrayList<E> implements ListInterface<E>, Serializable, Iterable<E>
     }
 
 
-
-
     @Override
     public E get(int index)
     {

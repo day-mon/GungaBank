@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.paint.*?>
@@ -14,11 +15,10 @@
             <Font name="Berlin Sans FB Demi Bold" size="50.0" />
          </font>
       </Text>
-      <VBox layoutX="102.0" layoutY="84.0" prefHeight="235.0" prefWidth="496.0" spacing="35.0">
+      <VBox layoutX="102.0" layoutY="84.0" prefHeight="235.0" prefWidth="496.0" spacing="90.0">
          <children>
             <TextField id="firstNameTextField" fx:id="ANNUAL_INCOME" prefHeight="49.0" prefWidth="496.0" promptText="Annual Income" style="-fx-background-color: transparent; -fx-border-width: 0px 0px 2px 0px; -fx-border-color: #FFFF; -fx-text-fill: #FFFF;" />
             <TextField fx:id="TOTAL_ASSETS" prefHeight="49.0" prefWidth="496.0" promptText="Total Assets (USD Amount)" style="-fx-background-color: transparent; -fx-border-width: 0px 0px 2px 0px; -fx-border-color: #FFFF; -fx-text-fill: #FFFF;" />
-            <TextField fx:id="PHONE_NUMBER" prefHeight="49.0" prefWidth="496.0" promptText="Phone number" style="-fx-background-color: transparent; -fx-border-width: 0px 0px 2px 0px; -fx-border-color: #FFFF; -fx-text-fill: #FFFF;" />
          </children>
       </VBox>
       <Circle layoutX="80.0" layoutY="494.0" radius="100.0" strokeType="INSIDE" strokeWidth="0.0">
