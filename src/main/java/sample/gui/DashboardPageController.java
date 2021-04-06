@@ -108,10 +108,10 @@ public class DashboardPageController
             bankAccount.getTransactions().forEach(s::add);
 
 
-            dateColumn.setCellValueFactory(new PropertyValueFactory<Transaction, String>("Date"));
-            accountColumn.setCellValueFactory(new PropertyValueFactory<Transaction, String>("accountNumber"));
-            ammountColumn.setCellValueFactory(new PropertyValueFactory<Transaction, String>("amount"));
-            transactionColumn.setCellValueFactory(new PropertyValueFactory<Transaction, String>("TransactionType"));
+            dateColumn.setCellValueFactory(new PropertyValueFactory<>("Date"));
+            accountColumn.setCellValueFactory(new PropertyValueFactory<>("accountNumber"));
+            ammountColumn.setCellValueFactory(new PropertyValueFactory<>("amount"));
+            transactionColumn.setCellValueFactory(new PropertyValueFactory<>("TransactionType"));
             transactionTable.setItems(s);
 
 

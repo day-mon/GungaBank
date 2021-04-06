@@ -1,8 +1,8 @@
 package sample.util.structures;
 
-import java.io.Serializable;
 import sample.util.structures.interfaces.Dictionary;
 
+import java.io.Serializable;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.Objects;
@@ -28,14 +28,13 @@ public class HashDictionary<K, V> implements Serializable, Dictionary<K, V>
     private int size;
     private static final int DEFAULT_CAPACITY = 17;
     private static final float LOAD_FACTOR = 0.75f;
-    private float loadfactor;
+    private final float loadfactor;
 
     public HashDictionary()
     {
         this(DEFAULT_CAPACITY, LOAD_FACTOR);
     }
 
-    //TODO
     public HashDictionary(int initialCapacity, float factor)
     {
         entries = new Object[initialCapacity];
@@ -43,7 +42,6 @@ public class HashDictionary<K, V> implements Serializable, Dictionary<K, V>
         size = 0;
     }
 
-    //TODO
     @Override
     public Iterator<K> keys()
     {
@@ -89,7 +87,6 @@ public class HashDictionary<K, V> implements Serializable, Dictionary<K, V>
         };
     }
 
-    //TODO
     @Override
     public Iterator<V> elements()
     {
@@ -135,7 +132,6 @@ public class HashDictionary<K, V> implements Serializable, Dictionary<K, V>
         };
     }
 
-    //TODO
     @SuppressWarnings("unchecked")
     @Override
     public V get(K key)
@@ -157,9 +153,9 @@ public class HashDictionary<K, V> implements Serializable, Dictionary<K, V>
     {
         Object[] arr = entries;
         entries = new Object[nextPrime(newCap)];
-        for (int i = 0; i < arr.length; i++)
+        for (Object o : arr)
         {
-            Node n = (Node) arr[i];
+            Node n = (Node) o;
             while (n != null)
             {
                 Node node = new Node(n.getKey(), n.getValue());
@@ -179,7 +175,6 @@ public class HashDictionary<K, V> implements Serializable, Dictionary<K, V>
         }
     }
 
-    //TODO
     @Override
     public V remove(K key)
     {
@@ -227,7 +222,6 @@ public class HashDictionary<K, V> implements Serializable, Dictionary<K, V>
         return ret;
     }
 
-    //TODO
     @Override
     public V put(K key, V value)
     {

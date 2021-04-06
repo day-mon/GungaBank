@@ -4,22 +4,6 @@ package sample;
  * JavaFX Imports
  */
 
-import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.image.Image;
-import javafx.stage.Stage;
-import javafx.stage.StageStyle;
-import sample.core.objects.User;
-import sample.util.operations.FileOperations;
-import sample.util.operations.StringOperations;
-import sample.util.structures.HashDictionary;
-
-import java.io.IOException;
-import java.util.Date;
-import java.util.Iterator;
-
 /**
  * Self Imports
  * <p>
@@ -30,8 +14,9 @@ import java.util.Iterator;
  * Java Imports
  */
 
-public class Main extends Application
+public class Main
 {
+    /*
     // static abuse :(
     private static Scene scene;
     public static HashDictionary<String, User> users = new HashDictionary<>();
@@ -120,4 +105,7 @@ public class Main extends Application
         launch(args);
     }
 
-}
+     */
+    GungaBank bankApp = new GungaBank();
+
+    bankApp.build();

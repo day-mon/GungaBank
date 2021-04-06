@@ -1,7 +1,7 @@
 //ok
 package sample.util.structures;
 
-import sample.util.structures.interfaces.*;
+import sample.util.structures.interfaces.Set;
 
 import java.io.Serializable;
 import java.util.Arrays;
@@ -14,10 +14,7 @@ public class ArraySet<T> implements Serializable, Set<T> {
     private int size;
     private int capacity;
 
-    /**
-     * TODO: Make resizeArray private,  resize array is not needed to be used by the actual person using the data structure only by you (Shane)
-     *
-     */
+
 
 
 

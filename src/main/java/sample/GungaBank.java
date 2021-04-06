@@ -6,15 +6,25 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import sample.handlers.FileHandler;
 
+import java.time.LocalDateTime;
+
 public class GungaBank extends Application
 {
     private final Logger logger;
+    private final LocalDateTime bankAppStartTime;
     private final FileHandler fileHandler;
 
     public GungaBank()
     {
         this.logger = LoggerFactory.getLogger(GungaBank.class);
         this.fileHandler = new FileHandler(this);
+        this.bankAppStartTime = LocalDateTime.now();
+
+    }
+
+    public void build()
+    {
+
     }
 
     /**

@@ -65,7 +65,7 @@ public class RegisterPageController
         // This method is called by the FXMLLoader when initialization is complete
     void initialize()
     {
-        textFields = new ArrayList<TextField>();
+        textFields = new ArrayList<>();
         textFields.add(firstNameTextField);
         textFields.add(lastNameTextField);
         textFields.add(emailTextField);
@@ -83,7 +83,7 @@ public class RegisterPageController
     }
 
     @FXML
-    void registerButtonClicked(ActionEvent event) throws IOException, InterruptedException, ParseException
+    void registerButtonClicked(ActionEvent event) throws IOException, ParseException
     {
         HashDictionary<Integer, String> errorReasons = new HashDictionary<>();
         int currentErrors = 0;
@@ -126,7 +126,7 @@ public class RegisterPageController
                     currentField = textFields.get(i);
 
 
-                    if (currentField.equals(""))
+                    if (currentField.getText().isEmpty())
                     {
                         errorReasons.put(currentErrors++, "Your last name field is empty!");
                     }
@@ -151,7 +151,7 @@ public class RegisterPageController
                     /**
                      * For emails we will do a regex pattern checker
                      */
-                    if (currentField.getText().equals(""))
+                    if (currentField.getText().isEmpty())
                     {
                         errorReasons.put(currentErrors++, "Your email field is empty!");
                     }
@@ -197,7 +197,7 @@ public class RegisterPageController
                     // error checks Date field
                 case 4:
                     currentField = textFields.get(i);
-                    if (currentField.getText().equals(""))
+                    if (currentField.getText().isEmpty())
                     {
                         errorReasons.put(currentErrors++, "Your Date field is empty!");
                     }
@@ -212,7 +212,7 @@ public class RegisterPageController
                     // error checks Number field
                 case 5:
                     currentField = textFields.get(i);
-                    if (currentField.getText().equals(""))
+                    if (currentField.getText().isEmpty())
                     {
                         errorReasons.put(currentErrors++, "Your number field is empty!");
                     }
@@ -254,8 +254,8 @@ public class RegisterPageController
                 while (keys.hasNext())
                 {
                     int element = keys.next();
-                    /**
-                     * Could use a stringbuilder but meh.
+                    /*
+                      Could use a StringBuilder but meh.
                      */
                     errors.append(errorReasons.get(element)).append("\n");
                     size++;
@@ -306,7 +306,7 @@ public class RegisterPageController
         }
         catch (Exception e)
         {
-            System.err.printf("Error occured: %s ", e.getLocalizedMessage());
+            System.err.printf("Error occurred: %s ", e.getLocalizedMessage());
         }
     }
 
@@ -356,7 +356,7 @@ public class RegisterPageController
 
 
 
-    private boolean checkEmail(String email) throws IOException
+    private boolean checkEmail(String email)
     {
         return Main.users.containsKey(email);
     }

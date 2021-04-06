@@ -66,7 +66,7 @@ public class ProfilePageController
     private User user = Main.userLoggedIn;
 
     @GungaObject
-    private BankAccount bankAccount = Main.userLoggedIn.getBankAccounts().get(0);
+    private final BankAccount bankAccount = Main.userLoggedIn.getBankAccounts().get(0);
 
 
     @FXML
@@ -84,7 +84,6 @@ public class ProfilePageController
     @FXML
     void onProfileClicked(MouseEvent event)
     {
-        return;
     }
 
     @FXML

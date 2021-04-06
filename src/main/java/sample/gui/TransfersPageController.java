@@ -3,7 +3,6 @@ package sample.gui;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -135,20 +134,20 @@ public class TransfersPageController
 
         s.addAll(transactionsToDisplay);
 
-        dateColumn.setCellValueFactory(new PropertyValueFactory<Transaction, String>("Date"));
-        accountColumn.setCellValueFactory(new PropertyValueFactory<Transaction, String>("accountNumber"));
-        ammountColumn.setCellValueFactory(new PropertyValueFactory<Transaction, String>("amount"));
-        transactionColumn.setCellValueFactory(new PropertyValueFactory<Transaction, String>("TransactionType"));
+        dateColumn.setCellValueFactory(new PropertyValueFactory<>("Date"));
+        accountColumn.setCellValueFactory(new PropertyValueFactory<>("accountNumber"));
+        ammountColumn.setCellValueFactory(new PropertyValueFactory<>("amount"));
+        transactionColumn.setCellValueFactory(new PropertyValueFactory<>("TransactionType"));
         transactionTable.setItems(s);
 
     }
 
     public void transferMoneyButtonClicked(ActionEvent actionEvent)
     {
-        String amountTosend = amountToSend.getText();
+        String amountUserSending = amountToSend.getText();
         String accountNumber = accountNumberTF.getText();
 
-        if (!Checks.number(amountTosend) && !Checks.number(accountNumber))
+        if (!Checks.number(amountUserSending) && !Checks.number(accountNumber))
         {
             AlertOperations.AlertShortner("bad", "Invalid Number!", "Please only insert numbers in the sending field!");
             return;
@@ -182,8 +181,8 @@ public class TransfersPageController
         dialogVbox.getChildren().addAll(text, passwordField, btn);
 
 
-        double amt = Double.parseDouble(amountTosend);
-        long accNumber = Long.parseLong(amountTosend);
+        double amt = Double.parseDouble(amountUserSending);
+        long accNumber = Long.parseLong(amountUserSending);
         if (Main.userLoggedIn.getBankAccounts().get(0).getBalance() < amt)
         {
             AlertOperations.AlertShortner("bad", "Not enough funds", "You do not have enough funds in your account to complete this transaction");
@@ -196,36 +195,32 @@ public class TransfersPageController
             dialog.setScene(dialogScene);
             dialog.show();
             btn.setOnAction(
-                    new EventHandler<ActionEvent>()
+                    event ->
                     {
-                        @Override
-                        public void handle(ActionEvent event)
+                        if (Objects.equals(Main.userLoggedIn.gethashedPass(), StringOperations.hashPassword(passwordField.getText())))
                         {
-                            if (Objects.equals(Main.userLoggedIn.gethashedPass(), StringOperations.hashPassword(passwordField.getText())))
-                            {
-                                Transaction transaction = new Transaction(new BigDecimal(amt + ""), accNumber, new Date(), Transaction.TransactionType.TRANSFER);
-                                bankAccount.getTransactions().add(transaction);
+                            Transaction transaction = new Transaction(new BigDecimal(amt + ""), accNumber, new Date(), Transaction.TransactionType.TRANSFER);
+                            bankAccount.getTransactions().add(transaction);
 
-                                dialog.close();
+                            dialog.close();
 
-                                s.add(transaction);
-                                dateColumn.setCellValueFactory(new PropertyValueFactory<Transaction, String>("Date"));
-                                accountColumn.setCellValueFactory(new PropertyValueFactory<Transaction, String>("accountNumber"));
-                                ammountColumn.setCellValueFactory(new PropertyValueFactory<Transaction, String>("amount"));
-                                transactionColumn.setCellValueFactory(new PropertyValueFactory<Transaction, String>("TransactionType"));
-                                transactionTable.setItems(s);
+                            s.add(transaction);
+                            dateColumn.setCellValueFactory(new PropertyValueFactory<>("Date"));
+                            accountColumn.setCellValueFactory(new PropertyValueFactory<>("accountNumber"));
+                            ammountColumn.setCellValueFactory(new PropertyValueFactory<>("amount"));
+                            transactionColumn.setCellValueFactory(new PropertyValueFactory<>("TransactionType"));
+                            transactionTable.setItems(s);
 
 
-                                bankAccount.removeToBalance(transaction.getAmount());
+                            bankAccount.removeToBalance(transaction.getAmount());
 
-                                FileOperations.writeToFile(FileOperations.users, Main.users);
+                            FileOperations.writeToFile(FileOperations.users, Main.users);
 
 
-                            }
-                            else
-                            {
-                                passwordField.setStyle("-fx-background-color: transparent; -fx-border-width: 0px 0px 2px 0px; -fx-border-color: #FF0000; -fx-text-fill: #FFFF");
-                            }
+                        }
+                        else
+                        {
+                            passwordField.setStyle("-fx-background-color: transparent; -fx-border-width: 0px 0px 2px 0px; -fx-border-color: #FF0000; -fx-text-fill: #FFFF");
                         }
                     }
             );

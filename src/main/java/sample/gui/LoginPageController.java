@@ -1,7 +1,3 @@
-/**
- * Sample Skeleton for 'loginpage.fxml' Controller Class
- */
-
 package sample.gui;
 
 import javafx.event.ActionEvent;

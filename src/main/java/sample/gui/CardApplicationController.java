@@ -19,10 +19,7 @@ import sample.util.structures.HashDictionary;
 
 import java.math.BigDecimal;
 import java.net.URL;
-import java.util.Iterator;
-import java.util.Optional;
-import java.util.Random;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class CardApplicationController
 {
@@ -126,45 +123,45 @@ public class CardApplicationController
             {
                 if (as >= in * 2)
                 {
-                    addCard("18.99", Card.CardType.GOLD, String.valueOf(getLimit(Card.CardType.GOLD)), "0");
+                    addCard("18.99", Card.CardType.GOLD, String.valueOf(getLimit(Card.CardType.GOLD)));
                 }
                 else if (as < in * 2 && as > in / 2)
                 {
-                    addCard("20.99", Card.CardType.SILVER, String.valueOf(getLimit(Card.CardType.SILVER)), "0");
+                    addCard("20.99", Card.CardType.SILVER, String.valueOf(getLimit(Card.CardType.SILVER)));
                 }
                 else
                 {
-                    addCard("22.99", Card.CardType.BRONZE, String.valueOf(getLimit(Card.CardType.BRONZE)), "0");
+                    addCard("22.99", Card.CardType.BRONZE, String.valueOf(getLimit(Card.CardType.BRONZE)));
                 }
             }
             if (in > 20000 && in <= 150000)
             {
                 if (as >= in * 4)
                 {
-                    addCard("15.99", Card.CardType.PLATINUM, String.valueOf(getLimit(Card.CardType.PLATINUM)), "0");
+                    addCard("15.99", Card.CardType.PLATINUM, String.valueOf(getLimit(Card.CardType.PLATINUM)));
                 }
                 else if (as < in * 3 && as > in / 3)
                 {
-                    addCard("18.99", Card.CardType.GOLD, String.valueOf(getLimit(Card.CardType.GOLD)), "0");
+                    addCard("18.99", Card.CardType.GOLD, String.valueOf(getLimit(Card.CardType.GOLD)));
                 }
                 else
                 {
-                    addCard("29.99", Card.CardType.SILVER, String.valueOf(getLimit(Card.CardType.SILVER)), "0");
+                    addCard("29.99", Card.CardType.SILVER, String.valueOf(getLimit(Card.CardType.SILVER)));
                 }
             }
             if (in > 150000)
             {
                 if (as >= in * 6)
                 {
-                    addCard("13.99", Card.CardType.GUNGA, "No Limit", "0");
+                    addCard("13.99", Card.CardType.GUNGA, "No Limit");
                 }
                 else if (as < in * 4 && as > in / 4)
                 {
-                    addCard("15.99", Card.CardType.PLATINUM, String.valueOf(getLimit(Card.CardType.PLATINUM)), "0");
+                    addCard("15.99", Card.CardType.PLATINUM, String.valueOf(getLimit(Card.CardType.PLATINUM)));
                 }
                 else
                 {
-                    addCard("17.99", Card.CardType.GOLD, String.valueOf(getLimit(Card.CardType.GOLD)), "0");
+                    addCard("17.99", Card.CardType.GOLD, String.valueOf(getLimit(Card.CardType.GOLD)));
                 }
             }
 
@@ -187,8 +184,8 @@ public class CardApplicationController
                 while (keys.hasNext())
                 {
                     int element = keys.next();
-                    /**
-                     * Could use a stringbuilder but meh.
+                    /*
+                      Could use a StringBuilder but meh.
                      */
                     errors.append(errorReasons.get(element)).append("\n");
                     size++;
@@ -210,17 +207,18 @@ public class CardApplicationController
 
             Optional<ButtonType> await = approved.showAndWait();
 
-            if (await.get().getText().equals("OK"))
+            if (Objects.equals(await.get().getText(), "OK"))
             {
+
             }
         }
     }
 
-    private void addCard(String apr, Card.CardType type, String limit, String bal) //too many lines to type
+    private void addCard(String apr, Card.CardType type, String limit) //too many lines to type
     {
         java.util.Random r = new java.util.Random();
         int num = r.nextInt(999) + 1000;
-        Main.userLoggedIn.getCards().add(new Card(Main.userLoggedIn, apr, String.valueOf(num), type, new BigDecimal(limit), new BigDecimal(bal)));
+        Main.userLoggedIn.getCards().add(new Card(Main.userLoggedIn, apr, String.valueOf(num), type, new BigDecimal(limit), new BigDecimal("0")));
     }
 
     private int getLimit(Card.CardType cardType)

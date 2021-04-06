@@ -108,7 +108,7 @@ public class CreditCardPageController
     private User user = Main.userLoggedIn;
 
     @GungaObject
-    private Card card = user.getCards().get(0);
+    private final Card card = user.getCards().get(0);
 
     @GungaObject
     private ArrayList<TextField> pinPasswordFields = new ArrayList<>();
@@ -322,7 +322,7 @@ public class CreditCardPageController
             {
 
 
-                String errors = "";
+                StringBuilder errors = new StringBuilder();
                 int size = 0;
 
 
@@ -332,12 +332,12 @@ public class CreditCardPageController
                     /**
                      * Could use a stringbuilder but meh.
                      */
-                    errors += (errorReasons.get(element) + "\n");
+                    errors.append(errorReasons.get(element)).append("\n");
                     size++;
                 }
 
                 alert.setHeaderText("You have " + size + " errors!");
-                alert.setContentText(errors);
+                alert.setContentText(errors.toString());
                 alert.show();
                 return;
             }
