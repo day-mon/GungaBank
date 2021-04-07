@@ -1,4 +1,4 @@
-package actions;
+package sample.actions;
 
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
@@ -8,15 +8,21 @@ import org.slf4j.LoggerFactory;
 import sample.GungaBankConstants;
 import sample.util.structures.ArrayList;
 
-public class onButtonHovered implements EventHandler<MouseEvent>
+public class OnButtonHovered implements EventHandler<MouseEvent>
 {
     private ArrayList<Button> buttons;
     private Logger BUTTON_HANDLER;
 
-    public onButtonHovered(ArrayList<Button> button)
+    public OnButtonHovered(ArrayList<Button> button)
     {
-        BUTTON_HANDLER = LoggerFactory.getLogger(onButtonHovered.class);
-        button.forEach(buttons::add);
+        BUTTON_HANDLER = LoggerFactory.getLogger(OnButtonHovered.class);
+        buttons = new ArrayList<>();
+
+        for (Button buttonInList : button)
+        {
+            buttonInList.addEventHandler(MouseEvent.MOUSE_ENTERED, this);
+            buttons.add(buttonInList);
+        }
     }
     /**
      * Invoked when a specific event of the type for which this handler is

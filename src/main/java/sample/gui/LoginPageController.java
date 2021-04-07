@@ -14,14 +14,17 @@ import javafx.scene.text.Text;
 import javafx.stage.StageStyle;
 import sample.GungaBankConstants;
 import sample.Main;
+import sample.actions.OnButtonHovered;
 import sample.core.objects.BankAccount;
 import sample.core.objects.User;
+import sample.core.other.GungaObject;
 import sample.util.operations.AlertOperations;
 import sample.util.operations.FileOperations;
 import sample.util.operations.StringOperations;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.ResourceBundle;
 
@@ -48,13 +51,21 @@ public class LoginPageController {
     @FXML // fx:id="registerButton"
     private Button registerButton; // Value injected by FXMLLoader
 
+    @GungaObject
+    private ArrayList<Button> buttons;
 
+    @GungaObject
+    private OnButtonHovered hovered;
 
 
 
     @FXML
         // This method is called by the FXMLLoader when initialization is complete
-    void initialize() {
+    void initialize()
+    {
+        buttons.add(registerButton);
+        buttons.add(loginTextLabel);
+        hovered = new OnButtonHovered(buttons);
 
     }
     /**

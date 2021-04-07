@@ -3,13 +3,11 @@
  */
 package sample.gui;
 
-import actions.onButtonHovered;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.input.MouseEvent;
-import sample.GungaBankConstants;
 import sample.Main;
+import sample.actions.OnButtonHovered;
 import sample.core.objects.User;
 import sample.core.other.GungaObject;
 import sample.util.Checks;
@@ -18,6 +16,7 @@ import sample.util.operations.StringOperations;
 import sample.util.structures.ArrayList;
 import sample.util.structures.HashDictionary;
 
+import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -65,7 +64,7 @@ public class RegisterPageController
     private ArrayList<Button> buttons;
 
     @GungaObject
-    private onButtonHovered hoverEvent;
+    private OnButtonHovered hoverEvent;
 
 
     @FXML
@@ -83,7 +82,7 @@ public class RegisterPageController
         buttons.add(clearButton);
         buttons.add(backButton);
         buttons.add(registerButton);
-        hoverEvent = new onButtonHovered(buttons);
+        hoverEvent = new OnButtonHovered(buttons);
     }
 
 
@@ -321,27 +320,19 @@ public class RegisterPageController
         }
     }
 
+
     @FXML
     void onBackExited(MouseEvent event)
     {
         backButton.setStyle("-fx-background-color: #313131;");
     }
 
-    @FXML
-    void onBackHovered(MouseEvent event)
-    {
-        backButton.setStyle(GungaBankConstants.BUTTON_HOVER_COLOR_STYLE);
-    }
 
     public void onRegisterExited(MouseEvent mouseEvent)
     {
         registerButton.setStyle("-fx-background-color: #313131;");
     }
 
-    public void onRegisterHovered(MouseEvent mouseEvent)
-    {
-        registerButton.setStyle(GungaBankConstants.BUTTON_HOVER_COLOR_STYLE);
-    }
 
     public void onClearButtonExited(MouseEvent mouseEvent)
     {
@@ -349,11 +340,8 @@ public class RegisterPageController
     }
 
 
-    public void onClearButtonHovered(MouseEvent mouseEvent)
-    {
-        clearButton.setOnAction(onButtonHovered);
-        // doesnt work
-    }
+
+
 
 
 
@@ -368,4 +356,6 @@ public class RegisterPageController
     }
 
 
+
+    
 }
