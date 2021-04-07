@@ -7,8 +7,10 @@ import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 import javafx.util.Duration;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import sample.GungaBankConstants;
 import sample.Main;
 import sample.core.objects.User;
 
@@ -16,10 +18,7 @@ import java.util.Optional;
 
 public class StageOperations
 {
-    private final static int LENGTH_FOR_MAIN = 1190;
-    private final static int WIDTH_FOR_MAIN = 790;
-    private final static StageStyle DEFAULT_STAGE_STYLE = StageStyle.DECORATED;
-
+    private static final Logger STAGE_LOGGER = LoggerFactory.getLogger(StageOperations.class);
 
     public static void cardApplicationStage()
     {
@@ -29,8 +28,8 @@ public class StageOperations
             Stage creditAppStage = new Stage();
             creditAppStage.setTitle("Credit Card Application") ;
             creditAppStage.setResizable(false);
-            creditAppStage.getIcons().add(new Image(Main.class.getResourceAsStream("/LOGO.PNG")));
-            creditAppStage.initStyle(DEFAULT_STAGE_STYLE);
+            creditAppStage.getIcons().add(new Image(Main.class.getResourceAsStream("/GungaBankLogo.PNG")));
+            creditAppStage.initStyle(GungaBankConstants.DEFAULT_STAGE_STYLE);
             creditAppStage.setX(454);
             creditAppStage.setY(700);
             creditAppStage.setScene(scene);
@@ -38,7 +37,7 @@ public class StageOperations
         }
         catch (Exception e)
         {
-
+            STAGE_LOGGER.error("Error occurred: " + e.getMessage(), e);
         }
     }
 
@@ -49,15 +48,23 @@ public class StageOperations
             if (Main.forms.containsKey("/cardpage"))
             {
                 Main.forms.remove("/cardpage");
-                Main.open("/cardpage", "Dashboard", LENGTH_FOR_MAIN, WIDTH_FOR_MAIN, DEFAULT_STAGE_STYLE);
+                Main.open("/cardpage",
+                        "Dashboard",
+                        GungaBankConstants.LENGTH_FOR_MAIN,
+                        GungaBankConstants.WIDTH_FOR_MAIN,
+                        GungaBankConstants.DEFAULT_STAGE_STYLE);
                 return;
             }
-            Main.open("/cardpage", "Dashboard", LENGTH_FOR_MAIN, WIDTH_FOR_MAIN, DEFAULT_STAGE_STYLE);
+            Main.open("/cardpage",
+                    "Dashboard",
+                    GungaBankConstants.LENGTH_FOR_MAIN,
+                    GungaBankConstants.WIDTH_FOR_MAIN,
+                    GungaBankConstants.DEFAULT_STAGE_STYLE);
 
         }
         catch (Exception e)
         {
-            System.out.printf("Error occured: %s", e.getMessage());
+            STAGE_LOGGER.error("Error occurred: " + e.getMessage(), e);
             e.printStackTrace();
         }
     }
@@ -69,15 +76,19 @@ public class StageOperations
             if (Main.forms.containsKey("/profilepage"))
             {
                 Main.forms.remove("/profilepage");
-                Main.open("/profilepage", "Dashboard", LENGTH_FOR_MAIN, WIDTH_FOR_MAIN, DEFAULT_STAGE_STYLE);
+                Main.open("/profilepage",
+                        "Dashboard",
+                        GungaBankConstants.LENGTH_FOR_MAIN,
+                        GungaBankConstants.WIDTH_FOR_MAIN,
+                        GungaBankConstants.DEFAULT_STAGE_STYLE);
                 return;
             }
-            Main.open("/profilepage", "Dashboard", LENGTH_FOR_MAIN, WIDTH_FOR_MAIN, DEFAULT_STAGE_STYLE);
+            Main.open("/profilepage", "Dashboard", GungaBankConstants.LENGTH_FOR_MAIN, GungaBankConstants.WIDTH_FOR_MAIN, GungaBankConstants.DEFAULT_STAGE_STYLE);
 
         }
         catch (Exception e)
         {
-            System.out.printf("Error occured: %s", e.getMessage());
+            STAGE_LOGGER.error("Error occurred: " + e.getMessage(), e);
             e.printStackTrace();
         }
     }
@@ -89,10 +100,10 @@ public class StageOperations
             if (Main.forms.containsKey("/transfers"))
             {
                 Main.forms.remove("/transfers");
-                Main.open("/transfers", "Transfers", LENGTH_FOR_MAIN, WIDTH_FOR_MAIN, DEFAULT_STAGE_STYLE);
+                Main.open("/transfers", "Transfers",GungaBankConstants.LENGTH_FOR_MAIN, GungaBankConstants.WIDTH_FOR_MAIN, GungaBankConstants.DEFAULT_STAGE_STYLE);
                 return;
             }
-            Main.open("/transfers", "Transfers", LENGTH_FOR_MAIN, WIDTH_FOR_MAIN,DEFAULT_STAGE_STYLE);
+            Main.open("/transfers", "Transfers", GungaBankConstants.LENGTH_FOR_MAIN, GungaBankConstants.WIDTH_FOR_MAIN, GungaBankConstants.DEFAULT_STAGE_STYLE);
 
         }
         catch (Exception e)
@@ -110,17 +121,16 @@ public class StageOperations
             if (Main.forms.containsKey("/dashboard"))
             {
                 Main.forms.remove("/dashboard");
-                Main.open("/dashboard", "Dashboard", LENGTH_FOR_MAIN, WIDTH_FOR_MAIN, DEFAULT_STAGE_STYLE);
+                Main.open("/dashboard", "Dashboard", GungaBankConstants.LENGTH_FOR_MAIN, GungaBankConstants.WIDTH_FOR_MAIN, GungaBankConstants.DEFAULT_STAGE_STYLE);
                 return;
             }
-            Main.open("/dashboard", "Dashboard", LENGTH_FOR_MAIN, WIDTH_FOR_MAIN, DEFAULT_STAGE_STYLE);
+            Main.open("/dashboard", "Dashboard", GungaBankConstants.LENGTH_FOR_MAIN, GungaBankConstants.WIDTH_FOR_MAIN, GungaBankConstants.DEFAULT_STAGE_STYLE);
 
         }
         catch (Exception e)
         {
-            System.out.printf("Error occured: %s", e.getMessage());
-            e.printStackTrace();
-            e.getMessage();
+            STAGE_LOGGER.error("Error occurred: " + e.getMessage(), e);
+
         }
     }
 
@@ -150,7 +160,7 @@ public class StageOperations
             }
             catch (Exception e)
             {
-                System.out.printf("Error occured: %s", e.getMessage());
+                STAGE_LOGGER.error("Error occurred: " + e.getMessage(), e);
             }
         });
         delay.play();
@@ -175,5 +185,7 @@ public class StageOperations
         }
         StageOperations.creditCardStage();
     }
+
+
 
 }

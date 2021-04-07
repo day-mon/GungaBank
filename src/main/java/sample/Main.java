@@ -30,9 +30,10 @@ import java.util.Iterator;
  * Java Imports
  */
 
-public class Main extends Application
+public class Main extends  Application
 {
-    // static abuse :(
+
+
     private static Scene scene;
     public static HashDictionary<String, User> users = new HashDictionary<>();
     public static HashDictionary<String, Stage> forms = new HashDictionary<>();
@@ -45,8 +46,8 @@ public class Main extends Application
         FileOperations.loadInformation();
 
         users.put("123", new User("Josh", "Peck", "123", new Date(), "2142323232", "239239232", StringOperations.hashPassword("123")));
-        scene = new Scene(loadFXML("/loginpage"), 700, 500);
-        stage.getIcons().add(new Image(Main.class.getResourceAsStream("/LOGO.PNG")));
+        scene = new Scene(loadFXML("/login"), 700, 500);
+        stage.getIcons().add(new Image(Main.class.getResourceAsStream("/GungaBankLogo.PNG")));
         stage.setTitle("Gunga Bank");
         stage.setScene(scene);
         stage.initStyle(StageStyle.DECORATED);
@@ -74,9 +75,6 @@ public class Main extends Application
                 break;
             }
         }
-
-
-
     }
 
     public static void open(String toOpen, String title, int length, int width, StageStyle style) throws IOException
@@ -85,7 +83,7 @@ public class Main extends Application
         {
             scene = new Scene(loadFXML(toOpen), length, width);
             Stage stg = new Stage();
-            stg.getIcons().add(new Image(Main.class.getResourceAsStream("/LOGO.PNG")));
+            stg.getIcons().add(new Image(Main.class.getResourceAsStream("/GungaBankLogo.PNG")));
             stg.initStyle(StageStyle.DECORATED);
             stg.setTitle(title);
             stg.setScene(scene);
@@ -99,10 +97,7 @@ public class Main extends Application
 
     public static void main(String[] args)
     {
-
-        System.out.println();
-
-        launch(args);
+       launch(args);
     }
 
 }

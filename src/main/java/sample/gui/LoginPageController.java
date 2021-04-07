@@ -1,5 +1,5 @@
 /**
- * Sample Skeleton for 'loginpage.fxml' Controller Class
+ * Sample Skeleton for 'login.fxml' Controller Class
  */
 
 package sample.gui;
@@ -82,7 +82,7 @@ public class LoginPageController {
 
             try
             {
-               Main.open("/registerpage", "Register Page", 700, 835, StageStyle.UTILITY);
+               Main.open("/register", "Register Page", 700, 835, StageStyle.UTILITY);
             }
             catch (IOException e)
             {

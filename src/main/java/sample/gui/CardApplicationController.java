@@ -46,7 +46,6 @@ public class CardApplicationController
     private Button APPLY_BUTTON;
 
     @GungaObject
-
     private User user = Main.userLoggedIn;
 
     private ArrayList<TextField> textFields;

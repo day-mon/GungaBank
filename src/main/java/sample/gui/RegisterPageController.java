@@ -1,8 +1,9 @@
 /**
- * Sample Skeleton for 'registerpage.fxml' Controller Class
+ * Sample Skeleton for 'register.fxml' Controller Class
  */
 package sample.gui;
 
+import actions.onButtonHovered;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -10,6 +11,7 @@ import javafx.scene.input.MouseEvent;
 import sample.GungaBankConstants;
 import sample.Main;
 import sample.core.objects.User;
+import sample.core.other.GungaObject;
 import sample.util.Checks;
 import sample.util.operations.FileOperations;
 import sample.util.operations.StringOperations;
@@ -56,15 +58,21 @@ public class RegisterPageController
     @FXML
     private Button backButton;
 
-    // TODO: Something wrong with our arraylist?? we need to fix epic poggers :O
+    @FXML
     private ArrayList<TextField> textFields;
+
+    @FXML
+    private ArrayList<Button> buttons;
+
+    @GungaObject
+    private onButtonHovered hoverEvent;
 
 
     @FXML
         // This method is called by the FXMLLoader when initialization is complete
     void initialize()
     {
-        textFields = new ArrayList<TextField>();
+        textFields = new ArrayList<>();
         textFields.add(firstNameTextField);
         textFields.add(lastNameTextField);
         textFields.add(emailTextField);
@@ -72,6 +80,10 @@ public class RegisterPageController
         textFields.add(dobTextField);
         textFields.add(phoneNumberTextField);
         textFields.add(ssnTextField);
+        buttons.add(clearButton);
+        buttons.add(backButton);
+        buttons.add(registerButton);
+        hoverEvent = new onButtonHovered(buttons);
     }
 
 
@@ -111,8 +123,8 @@ public class RegisterPageController
                     {
                         errorReasons.put(currentErrors++, "Your name is too long? \n(UK Government data suggest that this is a unreasonable length for a first name) \n Source: https://webarchive.nationalarchives.gov.uk/20100407173424/http://www.cabinetoffice.gov.uk/govtalk/schemasstandards/e-gif/datastandards.aspx");
                     }
-                    /**
-                     * This checks if everything in the text file is a letter
+                    /*
+                      This checks if everything in the text file is a letter
                      */
                     if (!textFields.get(i).getText().chars().allMatch(Character::isLetter))
                     {
@@ -147,8 +159,8 @@ public class RegisterPageController
                     // error checks email field
                 case 2:
                     currentField = textFields.get(i);
-                    /**
-                     * For emails we will do a regex pattern checker
+                    /*
+                      For emails we will do a regex pattern checker
                      */
                     if (currentField.getText().equals(""))
                     {
@@ -253,8 +265,8 @@ public class RegisterPageController
                 while (keys.hasNext())
                 {
                     int element = keys.next();
-                    /**
-                     * Could use a stringbuilder but meh.
+                    /*
+                      Could use a stringbuilder but meh.
                      */
                     errors.append(errorReasons.get(element)).append("\n");
                     size++;
@@ -336,24 +348,19 @@ public class RegisterPageController
         clearButton.setStyle("-fx-background-color: #313131;");
     }
 
+
     public void onClearButtonHovered(MouseEvent mouseEvent)
     {
-        clearButton.setStyle(GungaBankConstants.BUTTON_HOVER_COLOR_STYLE);
+        clearButton.setOnAction(onButtonHovered);
+        // doesnt work
     }
+
+
 
     private void clearTextFields()
     {
         textFields.forEach(textField -> textField.setText(""));
     }
-
-    //all Validate Checks checks for field entries
-
-
-
-
-
-
-
 
     private boolean checkEmail(String email) throws IOException
     {
@@ -362,5 +369,3 @@ public class RegisterPageController
 
 
 }
-
-// 700 x 835
