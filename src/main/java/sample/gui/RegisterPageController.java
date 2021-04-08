@@ -7,6 +7,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import sample.Main;
+import sample.actions.OnButtonExited;
 import sample.actions.OnButtonHovered;
 import sample.core.objects.User;
 import sample.core.other.GungaObject;
@@ -16,7 +17,6 @@ import sample.util.operations.StringOperations;
 import sample.util.structures.ArrayList;
 import sample.util.structures.HashDictionary;
 
-import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -66,12 +66,16 @@ public class RegisterPageController
     @GungaObject
     private OnButtonHovered hoverEvent;
 
+    @GungaObject
+    private OnButtonExited exitEvent;
+
 
     @FXML
         // This method is called by the FXMLLoader when initialization is complete
     void initialize()
     {
         textFields = new ArrayList<>();
+        buttons = new ArrayList<>();
         textFields.add(firstNameTextField);
         textFields.add(lastNameTextField);
         textFields.add(emailTextField);
@@ -83,6 +87,7 @@ public class RegisterPageController
         buttons.add(backButton);
         buttons.add(registerButton);
         hoverEvent = new OnButtonHovered(buttons);
+        exitEvent = new OnButtonExited(buttons);
     }
 
 
@@ -321,23 +326,6 @@ public class RegisterPageController
     }
 
 
-    @FXML
-    void onBackExited(MouseEvent event)
-    {
-        backButton.setStyle("-fx-background-color: #313131;");
-    }
-
-
-    public void onRegisterExited(MouseEvent mouseEvent)
-    {
-        registerButton.setStyle("-fx-background-color: #313131;");
-    }
-
-
-    public void onClearButtonExited(MouseEvent mouseEvent)
-    {
-        clearButton.setStyle("-fx-background-color: #313131;");
-    }
 
 
 

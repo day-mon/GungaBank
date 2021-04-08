@@ -8,22 +8,23 @@ import org.slf4j.LoggerFactory;
 import sample.GungaBankConstants;
 import sample.util.structures.ArrayList;
 
-public class OnButtonHovered implements EventHandler<MouseEvent>
+public class OnButtonExited implements EventHandler<MouseEvent>
 {
     private final ArrayList<Button> buttons;
     private final Logger BUTTON_HANDLER;
 
-    public OnButtonHovered(ArrayList<Button> button)
+    public OnButtonExited(ArrayList<Button> button)
     {
         BUTTON_HANDLER = LoggerFactory.getLogger(OnButtonHovered.class);
         buttons = new ArrayList<>();
 
         for (Button buttonInList : button)
         {
-            buttonInList.addEventHandler(MouseEvent.MOUSE_ENTERED, this);
+            buttonInList.addEventHandler(MouseEvent.MOUSE_EXITED, this);
             buttons.add(buttonInList);
         }
     }
+
     /**
      * Invoked when a specific event of the type for which this handler is
      * registered happens.
@@ -36,7 +37,7 @@ public class OnButtonHovered implements EventHandler<MouseEvent>
         Button button = (Button)event.getSource();
         if (buttons.contains(button))
         {
-            button.setStyle(GungaBankConstants.BUTTON_HOVER_COLOR_STYLE);
+            button.setStyle(GungaBankConstants.BUTTON_COLOR_STYLE);
         }
         else
         {

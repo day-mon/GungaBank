@@ -71,4 +71,9 @@ public class GungaBank extends Application
     {
         return GUNGA_LOGGER;
     }
+
+    public StageHandler getStageHandler()
+    {
+        return stageHandler;
+    }
 }

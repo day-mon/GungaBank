@@ -24,7 +24,7 @@ public class StageOperations
     {
         try
         {
-            Scene scene = new Scene(Main.loadFXML("/creditcardapp"));
+            Scene scene = new Scene(Main.loadFXML("/credit_card_application"));
             Stage creditAppStage = new Stage();
             creditAppStage.setTitle("Credit Card Application") ;
             creditAppStage.setResizable(false);
@@ -45,10 +45,10 @@ public class StageOperations
     {
         try
         {
-            if (Main.forms.containsKey("/cardpage"))
+            if (Main.forms.containsKey("/card_page"))
             {
-                Main.forms.remove("/cardpage");
-                Main.open("/cardpage",
+                Main.forms.remove("/card_page");
+                Main.open("/card_page",
                         "Dashboard",
                         GungaBankConstants.LENGTH_FOR_MAIN,
                         GungaBankConstants.WIDTH_FOR_MAIN,
@@ -64,7 +64,7 @@ public class StageOperations
         }
         catch (Exception e)
         {
-            STAGE_LOGGER.error("Error occurred: " + e.getMessage(), e);
+            STAGE_LOGGER.error("Error occurred: {} ", e.getMessage(), e);
             e.printStackTrace();
         }
     }
@@ -88,7 +88,7 @@ public class StageOperations
         }
         catch (Exception e)
         {
-            STAGE_LOGGER.error("Error occurred: " + e.getMessage(), e);
+            STAGE_LOGGER.error("Error occurred: {} ", e.getMessage(), e);
             e.printStackTrace();
         }
     }
@@ -108,7 +108,7 @@ public class StageOperations
         }
         catch (Exception e)
         {
-            System.out.printf("Error occured: %s", e.getMessage());
+            STAGE_LOGGER.error("Error occurred: {}", e.getMessage());
             e.printStackTrace();
 
         }

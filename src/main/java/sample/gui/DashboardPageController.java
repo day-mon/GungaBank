@@ -1,25 +1,25 @@
 package sample.gui;
 
-import javafx.animation.PauseTransition;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
-import javafx.util.Duration;
+import sample.GungaBank;
 import sample.Main;
+import sample.actions.OnIconClicked;
 import sample.core.objects.BankAccount;
 import sample.core.objects.Transaction;
 import sample.core.objects.User;
 import sample.core.other.GungaObject;
-import sample.util.operations.StageOperations;
 
 import java.net.URL;
-import java.util.Optional;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class DashboardPageController
@@ -79,10 +79,24 @@ public class DashboardPageController
     @GungaObject
     private User user = Main.userLoggedIn;
 
+    @GungaObject
+    private ArrayList<ImageView> imageViewArrayList;
+
+    @GungaObject
+    private OnIconClicked onIconClicked;
+
+
 
     @FXML
     void initialize()
     {
+        imageViewArrayList = new ArrayList<>();
+        imageViewArrayList.add(homeIcon);
+        imageViewArrayList.add(transferIcon);
+        imageViewArrayList.add(creditCardIcon);
+        imageViewArrayList.add(profileIcon);
+        imageViewArrayList.add(logoutIcon);
+        onIconClicked = new OnIconClicked(imageViewArrayList);
         BankAccount bankAccount = Main.userLoggedIn.getBankAccounts().get(0);
         User user = Main.userLoggedIn;
 
@@ -110,52 +124,7 @@ public class DashboardPageController
     }
 
 
-    public void onTransferIconClicked(MouseEvent mouseEvent)
-    {
-        StageOperations.switchToTransfersScene();
-    }
 
-    public void onCardIconClicked(MouseEvent mouseEvent)
-    {
-        StageOperations.switchToCardPage(user);
-    }
-
-    public void onProfileClicked(MouseEvent mouseEvent)
-    {
-        StageOperations.switchToProfileScene();
-    }
-
-    public void onLogoutClicked(MouseEvent mouseEvent)
-    {
-
-        Alert alert = new Alert(Alert.AlertType.WARNING,
-                "You have 5 seconds! To respond or you will be logged out!",
-                new ButtonType("Abort!", ButtonBar.ButtonData.CANCEL_CLOSE),
-                new ButtonType("Okay!", ButtonBar.ButtonData.OK_DONE));
-
-        Optional<ButtonType> result = alert.showAndWait();
-
-        if (result.get().getText().equals("Abort!"))
-        {
-            return;
-        }
-
-
-        PauseTransition delay = new PauseTransition(Duration.seconds(5.0));
-        delay.setOnFinished(event ->
-        {
-            try
-            {
-                Main.userLoggedIn = null;
-                Main.open("/loginpage");
-            }
-            catch (Exception e)
-            {
-                System.out.printf("Error occured: %s", e.getMessage());
-            }
-        });
-        delay.play();
-    }
 }
 
 

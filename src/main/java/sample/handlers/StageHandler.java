@@ -52,6 +52,20 @@ public class StageHandler
         return stageDict;
     }
 
+    public void switchToStage(String stageToSwitchTo)
+    {
+        try
+        {
+            this.stages.get("/" + stageToSwitchTo).getStage().show();
+        }
+        catch (Exception e)
+        {
+
+        }
+
+
+    }
+
 
 
     public void start(Stage primaryStage)
@@ -62,7 +76,7 @@ public class StageHandler
         }
         catch (Exception e)
         {
-
+            gungaBank.getLogger().error("Error occurred: {}", e.getMessage(), e);
         }
     }
 

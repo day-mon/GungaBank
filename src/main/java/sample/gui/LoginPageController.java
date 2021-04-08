@@ -9,11 +9,10 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import javafx.stage.StageStyle;
-import sample.GungaBankConstants;
 import sample.Main;
+import sample.actions.OnButtonExited;
 import sample.actions.OnButtonHovered;
 import sample.core.objects.BankAccount;
 import sample.core.objects.User;
@@ -21,10 +20,10 @@ import sample.core.other.GungaObject;
 import sample.util.operations.AlertOperations;
 import sample.util.operations.FileOperations;
 import sample.util.operations.StringOperations;
+import sample.util.structures.ArrayList;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.ResourceBundle;
 
@@ -57,37 +56,23 @@ public class LoginPageController {
     @GungaObject
     private OnButtonHovered hovered;
 
+    @GungaObject
+    private OnButtonExited exited;
+
 
 
     @FXML
         // This method is called by the FXMLLoader when initialization is complete
     void initialize()
     {
+        buttons = new ArrayList<>();
         buttons.add(registerButton);
         buttons.add(loginTextLabel);
         hovered = new OnButtonHovered(buttons);
+        exited = new OnButtonExited(buttons);
 
     }
-    /**
-     * When the login button is hovered over by a mouse it will change to a different color
-     * @param event
-     */
-    @FXML
-    void onLoginHovered(MouseEvent event) {
-        loginTextLabel.setStyle(GungaBankConstants.BUTTON_HOVER_COLOR_STYLE);
-    }
 
-    public void onLoginHoveredExited(MouseEvent mouseEvent) {
-        loginTextLabel.setStyle(GungaBankConstants.BUTTON_COLOR_STYLE);
-    }
-
-    public void onRegisterHovered(MouseEvent mouseEvent) {
-        registerButton.setStyle(GungaBankConstants.BUTTON_HOVER_COLOR_STYLE);
-    }
-
-    public void onRegisterExited(MouseEvent mouseEvent) {
-        registerButton.setStyle(GungaBankConstants.BUTTON_COLOR_STYLE);
-    }
 
     public void onRegisterButtonClick(ActionEvent actionEvent) {
 

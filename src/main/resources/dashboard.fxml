@@ -23,22 +23,22 @@
                         <Image url="@icons8_home_50px_4.png" />
                      </image>
                   </ImageView>
-                  <ImageView fx:id="transferIcon" onMouseClicked="#onTransferIconClicked">
+                  <ImageView fx:id="transferIcon">
                      <image>
                         <Image url="@icons8_exchange_50px.png" />
                      </image>
                   </ImageView>
-                  <ImageView fx:id="creditCardIcon" onMouseClicked="#onCardIconClicked">
+                  <ImageView fx:id="creditCardIcon">
                      <image>
                         <Image url="@icons8_mastercard_credit_card_50px_1.png" />
                      </image>
                   </ImageView>
-                  <ImageView fx:id="profileIcon" onMouseClicked="#onProfileClicked">
+                  <ImageView fx:id="profileIcon">
                      <image>
                         <Image url="@icons8_male_user_50px_1.png" />
                      </image>
                   </ImageView>
-                  <ImageView fx:id="logoutIcon" onMouseClicked="#onLogoutClicked">
+                  <ImageView fx:id="logoutIcon">
                      <image>
                         <Image url="@icons8_exit_50px_3.png" />
                      </image>

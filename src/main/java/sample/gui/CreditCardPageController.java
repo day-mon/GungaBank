@@ -6,8 +6,9 @@ import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
-import sample.GungaBankConstants;
 import sample.Main;
+import sample.actions.OnButtonExited;
+import sample.actions.OnButtonHovered;
 import sample.core.objects.Card;
 import sample.core.objects.User;
 import sample.core.other.GungaObject;
@@ -111,14 +112,33 @@ public class CreditCardPageController
     private Card card = user.getCards().get(0);
 
     @GungaObject
-    private ArrayList<TextField> pinPasswordFields = new ArrayList<>();
+    private ArrayList<TextField> pinPasswordFields;
+
+    @GungaObject
+    private ArrayList<Button> buttons;
+
+    @GungaObject
+    private OnButtonExited onButtonExited;
+
+    @GungaObject
+    private OnButtonHovered onButtonHovered;
 
 
     @FXML
     void initialize()
     {
+        buttons = new ArrayList<>();
+        pinPasswordFields = new ArrayList<>();
+        buttons.add(PIN_CONFIRM);
+        buttons.add(DISABLE_CARD);
+        buttons.add(CARD_UPGRADE);
+        buttons.add(LIMIT_INCREASE);
         pinPasswordFields.add(PIN_TEXT_FIELD);
         pinPasswordFields.add(CONFIRM_PIN_TEXT_FIELD);
+
+        onButtonExited = new OnButtonExited(buttons);
+        onButtonHovered = new OnButtonHovered(buttons);
+
 
 
         FULL_NAME_IN_CARD.setText(user.getFirstName().toUpperCase() + " " + user.getLastName().toUpperCase());
@@ -138,69 +158,7 @@ public class CreditCardPageController
 
     }
 
-    // ===================================== ON HOVER =====================================
 
-
-    @FXML
-    void onApplyCardHovered(MouseEvent event)
-    {
-        CARD_UPGRADE.setStyle(GungaBankConstants.BUTTON_HOVER_COLOR_STYLE);
-    }
-
-    @FXML
-    void onConfirmedButtonHovered(MouseEvent event)
-    {
-        PIN_CONFIRM.setStyle(GungaBankConstants.BUTTON_HOVER_COLOR_STYLE);
-    }
-
-    @FXML
-    void onDisabledCardHovered(MouseEvent event)
-    {
-        DISABLE_CARD.setStyle(GungaBankConstants.BUTTON_HOVER_COLOR_STYLE);
-    }
-
-    @FXML
-    void onLimitIncreaseHovered(MouseEvent event)
-    {
-        LIMIT_INCREASE.setStyle(GungaBankConstants.BUTTON_HOVER_COLOR_STYLE);
-    }
-
-
-    @FXML
-    void onGenerateCardHovered(MouseEvent event)
-    {
-        GENERATE_CARD_NUMBER.setStyle(GungaBankConstants.BUTTON_HOVER_COLOR_STYLE);
-    }
-
-    @FXML
-    void onApplyCardExited(MouseEvent event)
-    {
-        CARD_UPGRADE.setStyle(GungaBankConstants.BUTTON_COLOR_STYLE);
-    }
-
-    @FXML
-    void onConfirmedButtonExited(MouseEvent event)
-    {
-        PIN_CONFIRM.setStyle(GungaBankConstants.BUTTON_COLOR_STYLE);
-    }
-
-    @FXML
-    void onDisabledCardExited(MouseEvent event)
-    {
-        DISABLE_CARD.setStyle(GungaBankConstants.BUTTON_COLOR_STYLE);
-    }
-
-    @FXML
-    void onGenerateCardExited(MouseEvent event)
-    {
-        GENERATE_CARD_NUMBER.setStyle(GungaBankConstants.BUTTON_COLOR_STYLE);
-    }
-
-    @FXML
-    void onLimitIncreaseExited(MouseEvent event)
-    {
-        LIMIT_INCREASE.setStyle(GungaBankConstants.BUTTON_COLOR_STYLE);
-    }
 
     // ===================================== ON CLICKS (BUTTON) =====================================
 
@@ -357,14 +315,6 @@ public class CreditCardPageController
         }
     }
 
-
-    @FXML
-    void onApplyCardUpgradeClick(ActionEvent event)
-    {
-
-    }
-
-
     // ===================================== ON CLICKS (SWITCH SCENES) =====================================
 
     @FXML
@@ -399,4 +349,6 @@ public class CreditCardPageController
     }
 
 
+    public void onApplyCardUpgradeClick(ActionEvent actionEvent) {
+    }
 }

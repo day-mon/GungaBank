@@ -209,17 +209,17 @@
                   </Text>
                   <PasswordField fx:id="PIN_TEXT_FIELD" layoutX="193.0" layoutY="93.0" style="-fx-border-width: 0px 0px 2px 0px; -fx-border-color: #FFFF; -fx-background-color: transparent; -fx-text-fill: #FFFF;" />
                   <PasswordField fx:id="CONFIRM_PIN_TEXT_FIELD" layoutX="207.0" layoutY="185.0" style="-fx-border-width: 0px 0px 2px 0px; -fx-border-color: #FFFF; -fx-background-color: transparent; -fx-text-fill: #FFFF;" />
-                  <Button fx:id="PIN_CONFIRM" layoutX="152.0" layoutY="243.0" mnemonicParsing="false" onAction="#onPinConfirmedClick" onMouseEntered="#onConfirmedButtonHovered" onMouseExited="#onConfirmedButtonExited" style="-fx-background-color: #212121;" text="Confirm" textFill="WHITE" />
+                  <Button fx:id="PIN_CONFIRM" layoutX="152.0" layoutY="243.0" mnemonicParsing="false" onAction="#onPinConfirmedClick"  style="-fx-background-color: #212121;" text="Confirm" textFill="WHITE" />
                </children>
             </Pane>
             <Pane layoutX="674.0" layoutY="392.0" prefHeight="316.0" prefWidth="385.0" style="-fx-background-color: #313131;">
                <children>
                   <VBox alignment="CENTER" layoutX="42.0" layoutY="12.0" prefHeight="290.0" prefWidth="306.0" spacing="45.0">
                      <children>
-                        <Button fx:id="DISABLE_CARD" mnemonicParsing="false" onAction="#onDisableCardClick" onMouseEntered="#onDisabledCardHovered" onMouseExited="#onDisabledCardExited" prefHeight="25.0" prefWidth="93.0" style="-fx-background-color: #212121;" text="Disable Card" textFill="WHITE" />
-                        <Button fx:id="GENERATE_CARD_NUMBER" mnemonicParsing="false" onAction="#onGenerateCardClick" onMouseEntered="#onGenerateCardHovered" onMouseExited="#onGenerateCardExited" prefHeight="25.0" prefWidth="130.0" style="-fx-background-color: #212121;" text="Generate New Card" textFill="WHITE" />
-                        <Button fx:id="CARD_UPGRADE" mnemonicParsing="false" onAction="#onApplyCardUpgradeClick" onMouseEntered="#onApplyCardHovered" onMouseExited="#onApplyCardExited" prefHeight="25.0" prefWidth="159.0" style="-fx-background-color: #212121;" text="Apply for Card Upgrade" textFill="WHITE" />
-                        <Button fx:id="LIMIT_INCREASE" mnemonicParsing="false" onAction="#onLimitIncreaseClick" onMouseExited="#onLimitIncreaseHovered" onMouseMoved="#onLimitIncreaseExited" prefHeight="25.0" prefWidth="159.0" style="-fx-background-color: #212121;" text="Apply for a Limit Increase" textFill="WHITE" />
+                        <Button fx:id="DISABLE_CARD" mnemonicParsing="false" onAction="#onDisableCardClick"  prefHeight="25.0" prefWidth="93.0" style="-fx-background-color: #212121;" text="Disable Card" textFill="WHITE" />
+                        <Button fx:id="GENERATE_CARD_NUMBER" mnemonicParsing="false" onAction="#onGenerateCardClick" prefHeight="25.0" prefWidth="130.0" style="-fx-background-color: #212121;" text="Generate New Card" textFill="WHITE" />
+                        <Button fx:id="CARD_UPGRADE" mnemonicParsing="false" onAction="#onApplyCardUpgradeClick"  prefHeight="25.0" prefWidth="159.0" style="-fx-background-color: #212121;" text="Apply for Card Upgrade" textFill="WHITE" />
+                        <Button fx:id="LIMIT_INCREASE" mnemonicParsing="false" onAction="#onLimitIncreaseClick"  prefHeight="25.0" prefWidth="159.0" style="-fx-background-color: #212121;" text="Apply for a Limit Increase" textFill="WHITE" />
                      </children>
                   </VBox>
                </children>

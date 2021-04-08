@@ -191,7 +191,7 @@
             </LinearGradient>
          </fill>
       </Circle>
-      <Button fx:id="clearButton" layoutX="102.0" layoutY="319.0" mnemonicParsing="false" onAction="#clearButtonClicked" onMouseEntered="#onClearButtonHovered" onMouseExited="#onClearButtonExited" prefHeight="43.0" prefWidth="230.0" style="-fx-background-color: #313131;" text="Clear" textFill="WHITE" />
-      <Button fx:id="APPLY_BUTTON" layoutX="365.0" layoutY="319.0" mnemonicParsing="false" onAction="#onApplyClicked" onMouseEntered="#onApplyHovered" onMouseExited="#onRegisterExited" prefHeight="43.0" prefWidth="230.0" style="-fx-background-color: #313131;" text="Apply" textFill="WHITE" />
+      <Button fx:id="clearButton" layoutX="102.0" layoutY="319.0" mnemonicParsing="false" onAction="#clearButtonClicked"  prefHeight="43.0" prefWidth="230.0" style="-fx-background-color: #313131;" text="Clear" textFill="WHITE" />
+      <Button fx:id="APPLY_BUTTON" layoutX="365.0" layoutY="319.0" mnemonicParsing="false" onAction="#onApplyClicked" prefHeight="43.0" prefWidth="230.0" style="-fx-background-color: #313131;" text="Apply" textFill="WHITE" />
    </children>
 </AnchorPane>

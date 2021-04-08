@@ -5,9 +5,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import javafx.scene.input.MouseEvent;
-import sample.GungaBankConstants;
 import sample.Main;
+import sample.actions.OnButtonExited;
+import sample.actions.OnButtonHovered;
 import sample.core.objects.Card;
 import sample.core.objects.User;
 import sample.core.other.GungaObject;
@@ -48,15 +48,31 @@ public class CardApplicationController
     @GungaObject
     private User user = Main.userLoggedIn;
 
+    @GungaObject
     private ArrayList<TextField> textFields;
+
+    @GungaObject
+    private ArrayList<Button> buttons;
+
+    @GungaObject
+    private OnButtonHovered onButtonHovered;
+
+    @GungaObject
+    private OnButtonExited onButtonExited;
 
     @FXML
     void initialize()
     {
+        buttons = new ArrayList<>();
         textFields = new ArrayList<TextField>();
+        buttons.add(clearButton);
+        buttons.add(APPLY_BUTTON);
         textFields.add(ANNUAL_INCOME);
         textFields.add(TOTAL_ASSETS);
         textFields.add(PHONE_NUMBER);
+
+        onButtonExited = new OnButtonExited(buttons);
+        onButtonHovered = new OnButtonHovered(buttons);
     }
 
     @FXML
@@ -225,30 +241,5 @@ public class CardApplicationController
         int num = r.nextInt(999) + 1000;
         Main.userLoggedIn.getCards().add(new Card(Main.userLoggedIn, apr, String.valueOf(num), type, new BigDecimal(limit), new BigDecimal(bal)));
     }
-
-    @FXML
-    void onApplyHovered(MouseEvent event)
-    {
-        APPLY_BUTTON.setStyle(GungaBankConstants.BUTTON_HOVER_COLOR_STYLE);
-    }
-
-    @FXML
-    void onClearButtonExited(MouseEvent event)
-    {
-        clearButton.setStyle(GungaBankConstants.BUTTON_COLOR_STYLE);
-    }
-
-    @FXML
-    void onClearButtonHovered(MouseEvent event)
-    {
-        clearButton.setStyle(GungaBankConstants.BUTTON_HOVER_COLOR_STYLE);
-    }
-
-    @FXML
-    void onRegisterExited(MouseEvent event)
-    {
-        APPLY_BUTTON.setStyle(GungaBankConstants.BUTTON_COLOR_STYLE);
-    }
-
 
 }
