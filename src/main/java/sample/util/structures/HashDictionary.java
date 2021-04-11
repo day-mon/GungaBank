@@ -1,8 +1,8 @@
 package sample.util.structures;
 
-import java.io.Serializable;
 import sample.util.structures.interfaces.Dictionary;
 
+import java.io.Serializable;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.Objects;
@@ -19,13 +19,14 @@ import java.util.Objects;
  * collection? - What is the runtime complexity of the methods?
  *
  * @author Stephen J. Sarma-Weierman
- * @author YOUR NAME HERE
+ * @author Damon M., Ryan L., Shane W.
+ * @see Dictionary
  */
 @SuppressWarnings("unchecked")
 public class HashDictionary<K, V> implements Serializable, Dictionary<K, V>
 {
     private Object[] entries; //array of Nodes
-    private int size;
+        private int size;
     private static final int DEFAULT_CAPACITY = 17;
     private static final float LOAD_FACTOR = 0.75f;
     private float loadfactor;
@@ -35,7 +36,6 @@ public class HashDictionary<K, V> implements Serializable, Dictionary<K, V>
         this(DEFAULT_CAPACITY, LOAD_FACTOR);
     }
 
-    //TODO
     public HashDictionary(int initialCapacity, float factor)
     {
         entries = new Object[initialCapacity];
@@ -43,7 +43,6 @@ public class HashDictionary<K, V> implements Serializable, Dictionary<K, V>
         size = 0;
     }
 
-    //TODO
     @Override
     public Iterator<K> keys()
     {
@@ -89,7 +88,6 @@ public class HashDictionary<K, V> implements Serializable, Dictionary<K, V>
         };
     }
 
-    //TODO
     @Override
     public Iterator<V> elements()
     {
@@ -135,7 +133,6 @@ public class HashDictionary<K, V> implements Serializable, Dictionary<K, V>
         };
     }
 
-    //TODO
     @SuppressWarnings("unchecked")
     @Override
     public V get(K key)
@@ -157,29 +154,24 @@ public class HashDictionary<K, V> implements Serializable, Dictionary<K, V>
     {
         Object[] arr = entries;
         entries = new Object[nextPrime(newCap)];
-        for (int i = 0; i < arr.length; i++)
+        for (Object o : arr)
         {
-            Node n = (Node) arr[i];
+            Node n = (Node) o;
             while (n != null)
             {
                 Node node = new Node(n.getKey(), n.getValue());
                 int index = getHashIndex(node.getKey());
-                if (entries[index] == null)
-                {
-                    entries[index] = node;
-                }
-                else
+                if (entries[index] != null)
                 {
                     Node n2 = (Node) entries[index];
                     node.setNext(n2);
-                    entries[index] = node;
                 }
-                n = n.getNext();
+                entries[index] = node;
+                n = n.next;
             }
         }
     }
 
-    //TODO
     @Override
     public V remove(K key)
     {
@@ -194,7 +186,7 @@ public class HashDictionary<K, V> implements Serializable, Dictionary<K, V>
 
         if (n.getNext() == null)
         {
-            ret = (V) n.getValue();
+            ret =  n.value;
             entries[index] = null;
             size--;
             return ret;
@@ -227,7 +219,6 @@ public class HashDictionary<K, V> implements Serializable, Dictionary<K, V>
         return ret;
     }
 
-    //TODO
     @Override
     public V put(K key, V value)
     {
@@ -293,23 +284,16 @@ public class HashDictionary<K, V> implements Serializable, Dictionary<K, V>
 
         Node n = (Node) entries[index];
 
-        if (Objects.equals(k, n.key))
-        {
-            return true;
-        }
-        else
+        if (!Objects.equals(k, n.key))
         {
             while (n != null && !Objects.equals(k, n.key))
             {
                 n = n.next;
             }
 
-            if (n.key != k)
-            {
-                return false;
-            }
-            return true;
+            return n.key == k;
         }
+        return true;
 
     }
 
@@ -318,8 +302,8 @@ public class HashDictionary<K, V> implements Serializable, Dictionary<K, V>
      * This returns an index based on the hashCode for the key object. The index
      * must be in the bounds of the array.
      *
-     * @param key
-     * @return
+     * @param key s
+     * @return s
      */
     private int getHashIndex(K key)
     {

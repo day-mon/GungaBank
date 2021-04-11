@@ -16,17 +16,15 @@ import sample.util.structures.ArrayList;
 import java.util.Optional;
 
 
-public class OnIconClicked implements EventHandler<MouseEvent>
+public class OnIconClicked extends GungaBank implements EventHandler<MouseEvent>
 {
     private final ArrayList<ImageView> icons;
     private final Logger ICON_HANDLER;
-    private final GungaBank gungaBank;
 
-    public OnIconClicked(ArrayList<ImageView> iconsPassing, GungaBank gungaBank)
+    public OnIconClicked(ArrayList<ImageView> iconsPassing)
     {
         ICON_HANDLER = LoggerFactory.getLogger(OnIconClicked.class);
         icons = new ArrayList<>();
-        this.gungaBank = gungaBank;
 
         for (ImageView icons : iconsPassing)
         {
@@ -46,21 +44,21 @@ public class OnIconClicked implements EventHandler<MouseEvent>
     {
         ImageView imageClicked = (ImageView)event.getSource();
         String imageClickedName = imageClicked.getId();
-
-
+        System.out.println("Event entered");
+        System.out.print(imageClickedName);
         switch (imageClickedName)
         {
             case "transferIcon":
-                gungaBank.getStageHandler().switchToStage("transfers");
+                getStageHandler().switchToStage("transfers");
                 break;
             case "homeIcon":
-                gungaBank.getStageHandler().switchToStage("dashboard");
+                getStageHandler().switchToStage("dashboard");
                 break;
             case "creditCardIcon":
-                gungaBank.getStageHandler().switchToStage("card_page");
+               getStageHandler().switchToStage("credit_card");
                 break;
             case "profileIcon":
-                gungaBank.getStageHandler().switchToStage("profile");
+                getStageHandler().switchToStage("profile");
                 break;
             case "logoutIcon":
                 Alert alert = new Alert(Alert.AlertType.WARNING,
@@ -82,7 +80,7 @@ public class OnIconClicked implements EventHandler<MouseEvent>
                 {
                     try
                     {
-                        gungaBank.getStageHandler().switchToStage("login");
+                        getStageHandler().switchToStage("login");
                     }
                     catch (Exception e)
                     {
@@ -92,9 +90,7 @@ public class OnIconClicked implements EventHandler<MouseEvent>
                 delay.play();
                 break;
             default:
-                ICON_HANDLER.error("Icon not found, we will add it to the list. You may have to add it to the switch case {@see OnIconClicked.java}");
-                icons.add(imageClicked);
-
+                ICON_HANDLER.error("Icon not found. You may have to add it to the switch case {@see OnIconClicked.java}");
         }
     }
 }

@@ -5,13 +5,13 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import sample.GungaBank;
-import sample.Main;
 import sample.core.objects.StageWrapper;
 import sample.util.structures.ArrayList;
 import sample.util.structures.HashDictionary;
 
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Iterator;
 
 public class StageHandler
 {
@@ -48,21 +48,39 @@ public class StageHandler
             stageDict.put(stages.getResourceName(), stages);
         }
 
-        gungaBank.getLogger().info("{} has been loaded successfully!", stageList);
+        gungaBank.getLogger().info("{} has been loaded successfully!", stageList.getClass().getName());
         return stageDict;
     }
 
     public void switchToStage(String stageToSwitchTo)
     {
+        Iterator<StageWrapper> s = stages.elements();
+
+        while (s.hasNext())
+        {
+            StageWrapper element = s.next();
+            Stage stg = element.getStage();
+            if (stg.isShowing())
+            {
+                System.out.println(stg.getTitle() + " is showing");
+                stg.hide();
+                stages.get(stageToSwitchTo).getStage().show();
+                break;
+            }
+        }
+        /*
         try
         {
-            this.stages.get("/" + stageToSwitchTo).getStage().show();
+            StageWrapper wrap = stages.get("/"+stageToSwitchTo);
+            Stage primaryStage = wrap.getStage();
+            scene = new Scene(loadFXML(wrap.getResourceName()));
+            primaryStage.setScene(scene);
         }
         catch (Exception e)
         {
-
+            gungaBank.getLogger().error("{} cannot be loaded", stageToSwitchTo, e);
         }
-
+        */
 
     }
 
@@ -72,7 +90,10 @@ public class StageHandler
     {
         try
         {
-            this.stages.get("/login").getStage().show();
+            StageWrapper wrap = stages.get("/login");
+            primaryStage = stages.get("/login").getStage();
+            scene = new Scene(loadFXML("/login"), wrap.getWidth(), wrap.getHeight());
+            primaryStage.show();
         }
         catch (Exception e)
         {
@@ -80,8 +101,8 @@ public class StageHandler
         }
     }
 
-    private static Parent loadFXML(String title) throws IOException
+    private Parent loadFXML(String title) throws IOException
     {
-        return new FXMLLoader(Main.class.getResource(title + ".fxml")).load();
+        return new FXMLLoader(getClass().getResource(title + ".fxml")).load();
     }
 }

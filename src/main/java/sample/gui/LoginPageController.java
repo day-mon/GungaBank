@@ -11,6 +11,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import javafx.stage.StageStyle;
+import sample.GungaBank;
 import sample.Main;
 import sample.actions.OnButtonExited;
 import sample.actions.OnButtonHovered;
@@ -59,6 +60,9 @@ public class LoginPageController {
     @GungaObject
     private OnButtonExited exited;
 
+    @GungaObject
+    private GungaBank gungaBank;
+
 
 
     @FXML
@@ -72,7 +76,6 @@ public class LoginPageController {
         exited = new OnButtonExited(buttons);
 
     }
-
 
     public void onRegisterButtonClick(ActionEvent actionEvent) {
 

@@ -30,7 +30,7 @@ import java.util.Iterator;
  * Java Imports
  */
 
-public class Main extends  Application
+public class Main extends Application
 {
 
 
@@ -44,6 +44,7 @@ public class Main extends  Application
     public void start(Stage stage) throws Exception
     {
         FileOperations.loadInformation();
+
 
         users.put("123", new User("Josh", "Peck", "123", new Date(), "2142323232", "239239232", StringOperations.hashPassword("123")));
         scene = new Scene(loadFXML("/login"), 700, 500);
@@ -97,7 +98,9 @@ public class Main extends  Application
 
     public static void main(String[] args)
     {
-        launch(args);
+       GungaBank gungaBank = new GungaBank();
+
+        Application.launch(GungaBank.class, args);
     }
 
 }

@@ -10,16 +10,15 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
-import sample.GungaBank;
 import sample.Main;
 import sample.actions.OnIconClicked;
 import sample.core.objects.BankAccount;
 import sample.core.objects.Transaction;
 import sample.core.objects.User;
+import sample.util.structures.ArrayList;
 import sample.core.other.GungaObject;
 
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class DashboardPageController
@@ -80,25 +79,28 @@ public class DashboardPageController
     private User user = Main.userLoggedIn;
 
     @GungaObject
-    private ArrayList<ImageView> imageViewArrayList;
+    private ArrayList<ImageView> icons;
 
     @GungaObject
     private OnIconClicked onIconClicked;
 
 
 
+
+
+
     @FXML
     void initialize()
     {
-        imageViewArrayList = new ArrayList<>();
-        imageViewArrayList.add(homeIcon);
-        imageViewArrayList.add(transferIcon);
-        imageViewArrayList.add(creditCardIcon);
-        imageViewArrayList.add(profileIcon);
-        imageViewArrayList.add(logoutIcon);
-        onIconClicked = new OnIconClicked(imageViewArrayList);
         BankAccount bankAccount = Main.userLoggedIn.getBankAccounts().get(0);
         User user = Main.userLoggedIn;
+
+        icons = new ArrayList<>();
+        icons.addAll(homeIcon, transferIcon, creditCardIcon, logoutIcon, profileIcon);
+        onIconClicked = new OnIconClicked(icons);
+
+
+
 
         String replaced = nameText.getText().replace("%{name}", user.getFirstName());
 
@@ -108,16 +110,16 @@ public class DashboardPageController
 
 
 
-        ObservableList<Transaction> s = FXCollections.observableArrayList();
+        ObservableList<Transaction> columns = FXCollections.observableArrayList();
 
-        bankAccount.getTransactions().forEach(s::add);
+        bankAccount.getTransactions().forEach(columns::add);
 
 
         dateColumn.setCellValueFactory(new PropertyValueFactory<Transaction, String>("Date"));
         accountColumn.setCellValueFactory(new PropertyValueFactory<Transaction, String>("accountNumber"));
         ammountColumn.setCellValueFactory(new PropertyValueFactory<Transaction, String>("amount"));
         transactionColumn.setCellValueFactory(new PropertyValueFactory<Transaction, String>("TransactionType"));
-        transactionTable.setItems(s);
+        transactionTable.setItems(columns);
 
 
         bankAccountBalance.setText(Main.userLoggedIn.getBankAccounts().get(0).getBalance() + "");

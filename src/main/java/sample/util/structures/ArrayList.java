@@ -12,7 +12,7 @@ import java.util.stream.Stream;
  * @author Damon l. Montague Jr
  * @author Ryan Leitenbeger
  * @author Shanes Wiles
- * @see sample.util.structures.interfaces.ListInterface
+ * @see ListInterface
  */
 
 public class ArrayList<E> implements ListInterface<E>, Serializable, Iterable<E>
@@ -54,6 +54,7 @@ public class ArrayList<E> implements ListInterface<E>, Serializable, Iterable<E>
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public Iterator<E> iterator()
     {
         return new Iterator<E>()
@@ -96,6 +97,14 @@ public class ArrayList<E> implements ListInterface<E>, Serializable, Iterable<E>
         return true;
     }
 
+    public void addAll(E... e)
+    {
+        for (E ele : e)
+        {
+            add(ele);
+        }
+    }
+
     @Override
     public boolean remove(Object o)
     {
@@ -132,6 +141,7 @@ public class ArrayList<E> implements ListInterface<E>, Serializable, Iterable<E>
         size = 0;
     }
 
+    @SuppressWarnings("unchecked")
     public Stream<E> stream()
     {
         return Arrays.stream(toArray((E[]) list), 0, size);
@@ -141,6 +151,7 @@ public class ArrayList<E> implements ListInterface<E>, Serializable, Iterable<E>
 
 
     @Override
+    @SuppressWarnings("unchecked")
     public E get(int index)
     {
         if (index >= 0 && index < size)
@@ -237,11 +248,10 @@ public class ArrayList<E> implements ListInterface<E>, Serializable, Iterable<E>
         return false;
     }
 
-    public boolean addAll(Collection<? extends E> e)
+    public void addAll(Collection<? extends E> e)
     {
         for (E ele : e)
             add(ele);
-        return true;
     }
 
 
@@ -249,6 +259,7 @@ public class ArrayList<E> implements ListInterface<E>, Serializable, Iterable<E>
      * Allows expressions for shorter for loops
      * @param action
      */
+    @SuppressWarnings("unchecked")
     public void forEach(Consumer<? super E> action)
     {
         Objects.requireNonNull(action);

@@ -19,8 +19,11 @@ public class StageWrapper
     private int width;
     private StageStyle style;
 
+
+
     public StageWrapper(String name, int width, int height)
     {
+
         this.height = height;
         this.width = width;
         this.name = name;
@@ -52,10 +55,26 @@ public class StageWrapper
         stage.setTitle(name);
             stage.setResizable(false);
             stage.getIcons().add(image);
-            stage.setWidth(GungaBankConstants.LENGTH_FOR_MAIN);
-            stage.setHeight(GungaBankConstants.WIDTH_FOR_MAIN);
+            stage.setWidth(GungaBankConstants.WIDTH_FOR_MAIN);
+            stage.setHeight(GungaBankConstants.LENGTH_FOR_MAIN);
             stage.initStyle(style);
         this.stage = stage;
+        this.height = GungaBankConstants.LENGTH_FOR_MAIN;
+    }
+
+    public int getWidth()
+    {
+        return width;
+    }
+
+    public int getHeight()
+    {
+        return height;
+    }
+
+    public StageStyle getStyle()
+    {
+        return style;
     }
 
     public Stage getStage()
@@ -78,4 +97,6 @@ public class StageWrapper
     {
         return new FXMLLoader(Main.class.getResource(title + ".fxml")).load();
     }
+
+
 }

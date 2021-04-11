@@ -71,6 +71,8 @@ public class CardApplicationController
         textFields.add(TOTAL_ASSETS);
         textFields.add(PHONE_NUMBER);
 
+
+
         onButtonExited = new OnButtonExited(buttons);
         onButtonHovered = new OnButtonHovered(buttons);
     }

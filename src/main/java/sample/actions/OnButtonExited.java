@@ -5,10 +5,11 @@ import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import sample.GungaBank;
 import sample.GungaBankConstants;
 import sample.util.structures.ArrayList;
 
-public class OnButtonExited implements EventHandler<MouseEvent>
+public class OnButtonExited extends GungaBank implements EventHandler<MouseEvent>
 {
     private final ArrayList<Button> buttons;
     private final Logger BUTTON_HANDLER;
@@ -35,6 +36,7 @@ public class OnButtonExited implements EventHandler<MouseEvent>
     public void handle(MouseEvent event)
     {
         Button button = (Button)event.getSource();
+
         if (buttons.contains(button))
         {
             button.setStyle(GungaBankConstants.BUTTON_COLOR_STYLE);

@@ -54,7 +54,6 @@ public class FileHandler
         catch(Exception e)
         {
             gungaBank.getLogger().error("USER FILE COULD NOT BE CREATED", e);
-
         }
     }
 
