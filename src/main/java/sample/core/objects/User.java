@@ -200,4 +200,21 @@ public class User implements Serializable {
 
     }
 
+    @Override
+    public String toString() {
+        return "User{" +
+                "dateOfCreation=" + dateOfCreation +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", dateOfBirth=" + dateOfBirth +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", ssn='" + ssn + '\'' +
+                ", hashedPass='" + hashedPass + '\'' +
+                ", bankAccounts=" + bankAccounts +
+                ", cards=" + cards +
+                ", lastLogin=" + lastLogin +
+                ", netWorth=" + netWorth +
+                '}';
+    }
 }

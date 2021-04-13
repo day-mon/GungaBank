@@ -30,10 +30,7 @@ import sample.util.operations.StringOperations;
 
 import java.math.BigDecimal;
 import java.net.URL;
-import java.util.Date;
-import java.util.List;
-import java.util.Objects;
-import java.util.ResourceBundle;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class TransfersPageController
@@ -183,7 +180,7 @@ public class TransfersPageController
 
 
         double amt = Double.parseDouble(amountTosend);
-        long accNumber = Long.parseLong(amountTosend);
+        long accNumber = Long.parseLong(accountNumber);
         if (Main.userLoggedIn.getBankAccounts().get(0).getBalance() < amt)
         {
             AlertOperations.AlertShortner("bad", "Not enough funds", "You do not have enough funds in your account to complete this transaction");
@@ -218,6 +215,28 @@ public class TransfersPageController
 
                                 bankAccount.removeToBalance(transaction.getAmount());
 
+                                Iterator<User> it = Main.users.elements();
+                                while(it.hasNext())
+                                {
+                                    User u = it.next();
+                                    System.out.println(u.toString());
+                                    if (u.getBankAccounts().size() > 0)
+                                    {
+                                        System.out.println("First if statement is okay!");
+                                        if (accNumber == u.getBankAccounts().get(0).getAccountNumber())
+                                        {
+                                            System.out.println(u.getFirstName() + " has the money!");
+                                            System.out.println(u.getFirstName() + " balance is " + u.getBankAccounts().get(0).getBalance());
+                                            u.getBankAccounts().get(0).addToBalance(transaction.getAmount());
+                                            u.getBankAccounts().get(0).getTransactions().add(transaction);
+                                            System.out.println("Activated");
+                                            System.out.println(u.getFirstName() + " balance is " + u.getBankAccounts().get(0).getBalance());
+
+
+                                        }
+                                    }
+
+                                }
                                 FileOperations.writeToFile(FileOperations.users, Main.users);
 
 

@@ -45,6 +45,7 @@ public class Main extends Application
         FileOperations.loadInformation();
 
         users.put("123", new User("Josh", "Peck", "123", new Date(), "2142323232", "239239232", StringOperations.hashPassword("123")));
+        users.put("124", new User("Kyle", "Perk", "124", new Date(), "4125053703", "123412123", StringOperations.hashPassword("124")));
         scene = new Scene(loadFXML("/loginpage"), 700, 500);
         stage.getIcons().add(new Image(Main.class.getResourceAsStream("/LOGO.PNG")));
         stage.setTitle("Gunga Bank");
@@ -100,9 +101,10 @@ public class Main extends Application
     public static void main(String[] args)
     {
 
-        System.out.println();
 
         launch(args);
+
+
     }
 
 }
