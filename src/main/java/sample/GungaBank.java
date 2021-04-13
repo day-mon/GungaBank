@@ -13,17 +13,17 @@ import java.time.LocalDateTime;
 public class GungaBank extends Application
 {
     private static StageHandler stageHandler;
+    private static FileHandler fileHandler;
     private final Logger GUNGA_LOGGER;
     private final LocalDateTime bankAppStartTime;
-    private final FileHandler fileHandler;
 
 
     public GungaBank()
     {
-        this.GUNGA_LOGGER = LoggerFactory.getLogger(GungaBank.class);
-        this.fileHandler = new FileHandler();
+        GUNGA_LOGGER = LoggerFactory.getLogger(GungaBank.class);
+        fileHandler = new FileHandler();
         stageHandler = new StageHandler();
-        this.bankAppStartTime = LocalDateTime.now();
+        bankAppStartTime = LocalDateTime.now();
     }
 
 
@@ -66,6 +66,11 @@ public class GungaBank extends Application
     public Logger getLogger()
     {
         return GUNGA_LOGGER;
+    }
+
+    public static FileHandler getFileHandler()
+    {
+        return fileHandler;
     }
 
     public static StageHandler getStageHandler()

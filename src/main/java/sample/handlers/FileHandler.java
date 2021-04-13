@@ -56,9 +56,9 @@ public class FileHandler
         }
     }
 
+
     private static ArrayList<File> getAllFilesWithExt(File dir, String ext)
     {
-
         ArrayList<File> filesWithExt = new ArrayList<>();
         if (dir.isDirectory())
         {
