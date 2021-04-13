@@ -9,19 +9,19 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
-import javafx.scene.text.TextAlignment;
-import sample.Main;
 import sample.actions.OnIconClicked;
-import sample.core.objects.BankAccount;
-import sample.core.objects.Transaction;
-import sample.core.objects.User;
-import sample.util.structures.ArrayList;
+import sample.core.interfaces.Controller;
+import sample.core.objects.bank.BankAccount;
+import sample.core.objects.bank.Transaction;
+import sample.core.objects.bank.User;
 import sample.core.other.GungaObject;
+import sample.util.structures.ArrayList;
 
 import java.net.URL;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
-public class DashboardPageController
+public class DashboardPageController implements Controller
 {
 
     @FXML
@@ -76,7 +76,7 @@ public class DashboardPageController
     private Text nameText;
 
     @GungaObject
-    private User user = Main.userLoggedIn;
+    private User user;
 
     @GungaObject
     private ArrayList<ImageView> icons;
@@ -84,32 +84,18 @@ public class DashboardPageController
     @GungaObject
     private OnIconClicked onIconClicked;
 
+    private int i = 0;
 
 
-
-
-
-    @FXML
-    void initialize()
+    /**
+     * @param user
+     */
+    @Override
+    public void initData(User user)
     {
-        BankAccount bankAccount = Main.userLoggedIn.getBankAccounts().get(0);
-        User user = Main.userLoggedIn;
-
-        icons = new ArrayList<>();
-        icons.addAll(homeIcon, transferIcon, creditCardIcon, logoutIcon, profileIcon);
-        onIconClicked = new OnIconClicked(icons);
-
-
-
-
+        BankAccount bankAccount = user.getBankAccounts().get(0);
         String replaced = nameText.getText().replace("%{name}", user.getFirstName());
-
-        nameText.setText(replaced);
-        nameText.setTextAlignment(TextAlignment.CENTER);
-        creditCardBalance.setText(user.getCards().size() <= 0  ? "N/A" : user.getCards().get(0).getBalance().doubleValue() +"");
-
-
-
+        creditCardBalance.setText(user.getCards().size() <= 0 ? "N/A" : user.getCards().get(0).getBalance().doubleValue() + "");
         ObservableList<Transaction> columns = FXCollections.observableArrayList();
 
         bankAccount.getTransactions().forEach(columns::add);
@@ -121,10 +107,23 @@ public class DashboardPageController
         transactionColumn.setCellValueFactory(new PropertyValueFactory<Transaction, String>("TransactionType"));
         transactionTable.setItems(columns);
 
+        System.out.println(user.getFirstName());
 
-        bankAccountBalance.setText(Main.userLoggedIn.getBankAccounts().get(0).getBalance() + "");
+
+        bankAccountBalance.setText(user.getBankAccounts().get(0).getBalance() + "");
+        this.user = user;
+
+
     }
 
+    @FXML
+    void initialize()
+    {
+        System.out.println(Objects.isNull(this.user));
+        icons = new ArrayList<>();
+        icons.addAll(homeIcon, transferIcon, creditCardIcon, logoutIcon, profileIcon);
+        onIconClicked = new OnIconClicked(icons);
+    }
 
 
 }

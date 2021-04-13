@@ -1,8 +1,9 @@
 package sample.handlers;
 
-import sample.GungaBank;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import sample.Main;
-import sample.core.objects.User;
+import sample.core.objects.bank.User;
 import sample.util.structures.ArrayList;
 import sample.util.structures.HashDictionary;
 
@@ -14,17 +15,15 @@ import java.util.Objects;
 
 public class FileHandler
 {
-    private static GungaBank gungaBank;
+    private final static Logger LOGGER = LoggerFactory.getLogger(FileHandler.class);
     public final static File USER_FOLDER = new File("src/main/java/sample/files");
-    public final static File USER_FILE = new File(USER_FOLDER, "user.ser");
+    public final static File USER_FILE = new File(USER_FOLDER, "users.ser");
 
 
-    public FileHandler(GungaBank gungaBank)
+    public FileHandler()
     {
         initFile();
         initFolder();
-        this.gungaBank = gungaBank;
-
     }
 
     private void initFolder()
@@ -38,7 +37,7 @@ public class FileHandler
         }
         catch (Exception e)
         {
-            gungaBank.getLogger().error("USER FOLDER COULD NOT BE CREATED", e);
+            LOGGER.error("USER FOLDER COULD NOT BE CREATED", e);
         }
     }
 
@@ -53,7 +52,7 @@ public class FileHandler
         }
         catch(Exception e)
         {
-            gungaBank.getLogger().error("USER FILE COULD NOT BE CREATED", e);
+            LOGGER.error("USER FILE COULD NOT BE CREATED", e);
         }
     }
 
@@ -65,7 +64,7 @@ public class FileHandler
         {
 
             if (Objects.requireNonNull(dir.listFiles()).length == 0)
-                gungaBank.getLogger().warn("There are no files serializable files");
+                LOGGER.warn("There are no files serializable files");
             for (File file : dir.listFiles())
             {
                 String[] fileParts = file.getName().split("\\.");
@@ -78,7 +77,7 @@ public class FileHandler
         }
         else
         {
-            gungaBank.getLogger().warn(dir.getName() + " is not a directory!");
+            LOGGER.warn(dir.getName() + " is not a directory!");
             return null;
         }
         return filesWithExt;
@@ -120,11 +119,11 @@ public class FileHandler
         }
         catch (IOException e)
         {
-            gungaBank.getLogger().error("IOException: " + e.getMessage(), e);
+            LOGGER.error("IOException: " + e.getMessage(), e);
         }
         catch(ClassNotFoundException e)
         {
-            gungaBank.getLogger().error("ClassNotFoundException: " + e.getMessage() ,e);
+            LOGGER.error("ClassNotFoundException: " + e.getMessage(), e);
         }
 
     }

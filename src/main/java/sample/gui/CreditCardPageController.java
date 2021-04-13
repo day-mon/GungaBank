@@ -9,8 +9,8 @@ import javafx.scene.text.Text;
 import sample.Main;
 import sample.actions.OnButtonExited;
 import sample.actions.OnButtonHovered;
-import sample.core.objects.Card;
-import sample.core.objects.User;
+import sample.core.objects.bank.Card;
+import sample.core.objects.bank.User;
 import sample.core.other.GungaObject;
 import sample.util.operations.FileOperations;
 import sample.util.operations.StageOperations;
@@ -140,7 +140,6 @@ public class CreditCardPageController
         onButtonHovered = new OnButtonHovered(buttons);
 
 
-
         FULL_NAME_IN_CARD.setText(user.getFirstName().toUpperCase() + " " + user.getLastName().toUpperCase());
         CARD_NUMBER_IN_CARD.setText(user.getCards().get(0).getCardNumber());
         CREDIT_CARD_NUMBER.setText(card.getCardNumber());
@@ -150,8 +149,8 @@ public class CreditCardPageController
         CVV_NUMBER.setText(card.getCID());
         CREDIT_CARD_TYPE.setText(card.getCardType().toString());
         CARD_ISSUED_DATE.setText(card.getDateIssued().format(DateTimeFormatter.ofPattern("MM/yyyy")));
-        CARD_EXPIRY_DATE.setText(card.getExperationDate().format(DateTimeFormatter.ofPattern("MM/yyyy")));
-        EXPR_DATE.setText(card.getExperationDate().format(DateTimeFormatter.ofPattern("MM/yyyy")));
+        CARD_EXPIRY_DATE.setText(card.getExpirationDate().format(DateTimeFormatter.ofPattern("MM/yyyy")));
+        EXPR_DATE.setText(card.getExpirationDate().format(DateTimeFormatter.ofPattern("MM/yyyy")));
         CARD_ENABLED.setText(card.isDisabled() ? "No" : "Yes");
         DISABLE_CARD.setText(card.isDisabled() ? "Enable Card" : DISABLE_CARD.getText());
         CREDIT_CARD_LIMIT.setText(card.getLimit().toPlainString());
@@ -179,8 +178,8 @@ public class CreditCardPageController
             CVV_NUMBER.setText(card.getCID());
             CREDIT_CARD_TYPE.setText(card.getCardType().toString());
             CARD_ISSUED_DATE.setText(card.getDateIssued().format(DateTimeFormatter.ofPattern("MM/yyyy")));
-            CARD_EXPIRY_DATE.setText(card.getExperationDate().format(DateTimeFormatter.ofPattern("MM/yyyy")));
-            EXPR_DATE.setText(card.getExperationDate().format(DateTimeFormatter.ofPattern("MM/yyyy")));
+            CARD_EXPIRY_DATE.setText(card.getExpirationDate().format(DateTimeFormatter.ofPattern("MM/yyyy")));
+            EXPR_DATE.setText(card.getExpirationDate().format(DateTimeFormatter.ofPattern("MM/yyyy")));
             FileOperations.writeToFile(FileOperations.users, Main.users);
         }
 

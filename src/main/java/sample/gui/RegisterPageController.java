@@ -9,7 +9,7 @@ import javafx.scene.control.*;
 import sample.Main;
 import sample.actions.OnButtonExited;
 import sample.actions.OnButtonHovered;
-import sample.core.objects.User;
+import sample.core.objects.bank.User;
 import sample.core.other.GungaObject;
 import sample.util.Checks;
 import sample.util.operations.FileOperations;

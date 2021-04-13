@@ -6,6 +6,8 @@ package sample.gui;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -15,8 +17,8 @@ import sample.GungaBank;
 import sample.Main;
 import sample.actions.OnButtonExited;
 import sample.actions.OnButtonHovered;
-import sample.core.objects.BankAccount;
-import sample.core.objects.User;
+import sample.core.objects.bank.BankAccount;
+import sample.core.objects.bank.User;
 import sample.core.other.GungaObject;
 import sample.util.operations.AlertOperations;
 import sample.util.operations.FileOperations;
@@ -28,7 +30,10 @@ import java.net.URL;
 import java.util.Date;
 import java.util.ResourceBundle;
 
-public class LoginPageController {
+import static sample.GungaBank.getStageHandler;
+
+public class LoginPageController
+{
 
     @FXML // ResourceBundle that was given to the FXMLLoader
     private ResourceBundle resources;
@@ -63,6 +68,7 @@ public class LoginPageController {
     @GungaObject
     private GungaBank gungaBank;
 
+    private Parent root;
 
 
     @FXML
@@ -77,16 +83,17 @@ public class LoginPageController {
 
     }
 
-    public void onRegisterButtonClick(ActionEvent actionEvent) {
+    public void onRegisterButtonClick(ActionEvent actionEvent)
+    {
 
-            try
-            {
-               Main.open("/register", "Register Page", 700, 835, StageStyle.UTILITY);
-            }
-            catch (IOException e)
-            {
-                e.printStackTrace();
-            }
+        try
+        {
+            Main.open("/register", "Register Page", 700, 835, StageStyle.UTILITY);
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
 
     }
 
@@ -120,32 +127,34 @@ public class LoginPageController {
 
         try
         {
-            Main.userLoggedIn = userToLogin;
-            System.out.println("Main.user: " + Main.userLoggedIn.getFirstName());
-            System.out.println("UserToLogin: " + userToLogin.getFirstName());
 
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/dashboard.fxml"));
+            root = loader.load();
+
+            DashboardPageController controller = loader.getController();
             if (userToLogin.getBankAccounts().size() <= 0)
             {
                 userToLogin.getBankAccounts().add(new BankAccount(userToLogin, BankAccount.AccountTypes.CHECKING));
             }
+            controller.initData(userToLogin);
+
 
             if (Main.forms.containsKey("/dashboard"))
                 Main.forms.remove("/dashboard");
 
-            Main.open("/dashboard", "Dashboard", 1190, 790, StageStyle.DECORATED);
-            String sucess = String.format("Welcome %s! \nYour last login was %s", userToLogin.getFirstName(),  userToLogin.getLastLogin() == null ?  "Never!" : userToLogin.getLastLogin());
 
-            Main.userLoggedIn.setLastLogin(new Date());
+            getStageHandler().switchToStage("dashboard");
+            String success = String.format("Welcome %s! \nYour last login was %s", userToLogin.getFirstName(), userToLogin.getLastLogin() == null ? "Never!" : userToLogin.getLastLogin());
+
+            userToLogin.setLastLogin(new Date());
             FileOperations.writeToFile(FileOperations.users, Main.users);
 
-            AlertOperations.AlertShortner("good", "Login success!",sucess);
         }
         catch (Exception e)
         {
-            System.err.printf("Error occured: %s", e.getLocalizedMessage());
+            System.err.printf("Error occurred: %s", e.getLocalizedMessage());
             e.printStackTrace();
         }
-
 
 
     }

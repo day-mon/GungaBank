@@ -5,11 +5,10 @@ import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import sample.GungaBank;
 import sample.GungaBankConstants;
 import sample.util.structures.ArrayList;
 
-public class OnButtonExited extends GungaBank implements EventHandler<MouseEvent>
+public class OnButtonExited implements EventHandler<MouseEvent>
 {
     private final ArrayList<Button> buttons;
     private final Logger BUTTON_HANDLER;

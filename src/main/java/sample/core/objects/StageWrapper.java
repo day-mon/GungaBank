@@ -32,13 +32,14 @@ public class StageWrapper
                 .toString()
                 .toLowerCase()
                 .replaceAll("\\s", "_");
-        Stage stage = new Stage();
-                stage.setTitle(name);
-                stage.setResizable(false);
-                stage.setWidth(width);
-                stage.setHeight(height);
-                stage.initStyle(style);
-        this.stage = stage;
+        this.stage = new Stage();
+        Image image = new Image(Main.class.getResourceAsStream("/GungaBankLogo.PNG"));
+        stage.getIcons().addAll(image);
+        stage.setTitle(name);
+        stage.setResizable(false);
+        stage.setWidth(width);
+        stage.setHeight(height);
+        stage.initStyle(GungaBankConstants.DEFAULT_STAGE_STYLE);
 
     }
 
@@ -50,16 +51,17 @@ public class StageWrapper
                 .toString()
                 .toLowerCase()
                 .replaceAll("\\s", "_");
-        Stage stage = new Stage();
+        this.stage = new Stage();
         Image image = new Image(Main.class.getResourceAsStream("/GungaBankLogo.PNG"));
         stage.setTitle(name);
-            stage.setResizable(false);
-            stage.getIcons().add(image);
-            stage.setWidth(GungaBankConstants.WIDTH_FOR_MAIN);
-            stage.setHeight(GungaBankConstants.LENGTH_FOR_MAIN);
-            stage.initStyle(style);
-        this.stage = stage;
-        this.height = GungaBankConstants.LENGTH_FOR_MAIN;
+        stage.setResizable(false);
+        stage.getIcons().add(image);
+        stage.setWidth(GungaBankConstants.WIDTH_FOR_MAIN);
+        stage.setHeight(GungaBankConstants.HEIGHT_FOR_MAIN);
+        stage.initStyle(GungaBankConstants.DEFAULT_STAGE_STYLE);
+
+        this.width = GungaBankConstants.WIDTH_FOR_MAIN;
+        this.height = GungaBankConstants.HEIGHT_FOR_MAIN;
     }
 
     public int getWidth()
@@ -72,10 +74,6 @@ public class StageWrapper
         return height;
     }
 
-    public StageStyle getStyle()
-    {
-        return style;
-    }
 
     public Stage getStage()
     {

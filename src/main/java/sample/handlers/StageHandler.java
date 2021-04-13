@@ -4,7 +4,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import sample.GungaBank;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import sample.core.objects.StageWrapper;
 import sample.util.structures.ArrayList;
 import sample.util.structures.HashDictionary;
@@ -15,16 +16,13 @@ import java.util.Iterator;
 
 public class StageHandler
 {
-    private static GungaBank gungaBank;
+    private final static Logger LOGGER = LoggerFactory.getLogger(StageHandler.class);
     private HashDictionary<String, StageWrapper> stages;
     private static Scene scene;
 
-
-    public StageHandler(GungaBank gungaBank)
+    public StageHandler()
     {
-         this.gungaBank = gungaBank;
-         this.stages = generateStageMap();
-
+        this.stages = generateStageMap();
     }
 
     private HashDictionary<String, StageWrapper> generateStageMap()
@@ -32,13 +30,13 @@ public class StageHandler
         ArrayList<StageWrapper> stageList = new ArrayList<>();
         stageList.addAll(
                 Arrays.asList(
-                    new StageWrapper("Dashboard"),
-                    new StageWrapper("Credit Card"),
-                    new StageWrapper("Profile"),
-                    new StageWrapper("Transfers"),
-                    new StageWrapper("Register",  700, 835),
-                    new StageWrapper("Login", 700, 500),
-                    new StageWrapper("Credit Card Application", 454, 700)
+                        new StageWrapper("Dashboard"),
+                        new StageWrapper("Credit Card"),
+                        new StageWrapper("Profile"),
+                        new StageWrapper("Transfers"),
+                        new StageWrapper("Register", 700, 835),
+                        new StageWrapper("Login", 700, 550), // 300 + 409  496+500
+                        new StageWrapper("Credit Card Application", 454, 700)
                 ));
 
         HashDictionary<String, StageWrapper> stageDict = new HashDictionary<>();
@@ -48,13 +46,14 @@ public class StageHandler
             stageDict.put(stages.getResourceName(), stages);
         }
 
-        gungaBank.getLogger().info("{} has been loaded successfully!", stageList.getClass().getName());
+        LOGGER.info("{} has been loaded successfully!", stageList.getClass().getSimpleName());
         return stageDict;
     }
 
     public void switchToStage(String stageToSwitchTo)
     {
         Iterator<StageWrapper> s = stages.elements();
+        String resource_name = "/" + stageToSwitchTo;
 
         while (s.hasNext())
         {
@@ -62,25 +61,25 @@ public class StageHandler
             Stage stg = element.getStage();
             if (stg.isShowing())
             {
-                System.out.println(stg.getTitle() + " is showing");
-                stg.hide();
-                stages.get(stageToSwitchTo).getStage().show();
-                break;
+                try
+                {
+                    System.out.println(stg.getTitle() + " is showing");
+                    stg.hide();
+                    StageWrapper wrap = stages.get(resource_name);
+                    scene = new Scene(loadFXML(resource_name), wrap.getHeight(), wrap.getWidth());
+                    Stage stage = wrap.getStage();
+                    stage.setScene(scene);
+                    stage.show();
+
+                    break;
+                }
+                catch (Exception e)
+                {
+                    LOGGER.error("Error occurred: {}", e.getMessage(), e);
+                }
             }
         }
-        /*
-        try
-        {
-            StageWrapper wrap = stages.get("/"+stageToSwitchTo);
-            Stage primaryStage = wrap.getStage();
-            scene = new Scene(loadFXML(wrap.getResourceName()));
-            primaryStage.setScene(scene);
-        }
-        catch (Exception e)
-        {
-            gungaBank.getLogger().error("{} cannot be loaded", stageToSwitchTo, e);
-        }
-        */
+
 
     }
 
@@ -92,12 +91,14 @@ public class StageHandler
         {
             StageWrapper wrap = stages.get("/login");
             primaryStage = stages.get("/login").getStage();
-            scene = new Scene(loadFXML("/login"), wrap.getWidth(), wrap.getHeight());
+            scene = new Scene(loadFXML("/login"), wrap.getHeight(), wrap.getWidth());
+            primaryStage.setScene(scene);
             primaryStage.show();
+            LOGGER.info("Main scene has loaded successfully!");
         }
         catch (Exception e)
         {
-            gungaBank.getLogger().error("Error occurred: {}", e.getMessage(), e);
+            LOGGER.error("Error occurred: {}", e.getMessage(), e);
         }
     }
 
@@ -105,4 +106,6 @@ public class StageHandler
     {
         return new FXMLLoader(getClass().getResource(title + ".fxml")).load();
     }
+
+
 }

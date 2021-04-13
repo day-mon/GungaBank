@@ -11,7 +11,7 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import sample.core.objects.User;
+import sample.core.objects.bank.User;
 import sample.util.operations.FileOperations;
 import sample.util.operations.StringOperations;
 import sample.util.structures.HashDictionary;
@@ -46,7 +46,6 @@ public class Main extends Application
         FileOperations.loadInformation();
 
 
-        users.put("123", new User("Josh", "Peck", "123", new Date(), "2142323232", "239239232", StringOperations.hashPassword("123")));
         scene = new Scene(loadFXML("/login"), 700, 500);
         stage.getIcons().add(new Image(Main.class.getResourceAsStream("/GungaBankLogo.PNG")));
         stage.setTitle("Gunga Bank");
@@ -93,13 +92,15 @@ public class Main extends Application
             forms.put(toOpen, stg);
         }
         open(toOpen);
+
     }
 
-
+    // ignore above
     public static void main(String[] args)
     {
-       GungaBank gungaBank = new GungaBank();
+        users.put("123", new User("Josh", "Peck", "123", new Date(), "2142323232", "239239232", StringOperations.hashPassword("123")));
 
+        // launch(args);
         Application.launch(GungaBank.class, args);
     }
 

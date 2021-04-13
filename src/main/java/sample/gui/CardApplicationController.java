@@ -8,8 +8,9 @@ import javafx.scene.control.TextField;
 import sample.Main;
 import sample.actions.OnButtonExited;
 import sample.actions.OnButtonHovered;
-import sample.core.objects.Card;
-import sample.core.objects.User;
+import sample.core.interfaces.Controller;
+import sample.core.objects.bank.Card;
+import sample.core.objects.bank.User;
 import sample.core.other.GungaObject;
 import sample.util.Checks;
 import sample.util.operations.FileOperations;
@@ -21,7 +22,7 @@ import java.net.URL;
 import java.util.Iterator;
 import java.util.ResourceBundle;
 
-public class CardApplicationController
+public class CardApplicationController implements Controller
 {
 
     @FXML
@@ -244,4 +245,13 @@ public class CardApplicationController
         Main.userLoggedIn.getCards().add(new Card(Main.userLoggedIn, apr, String.valueOf(num), type, new BigDecimal(limit), new BigDecimal(bal)));
     }
 
+
+    /**
+     * @param user
+     */
+    @Override
+    public void initData(User user)
+    {
+
+    }
 }

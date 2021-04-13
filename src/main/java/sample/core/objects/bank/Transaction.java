@@ -1,4 +1,4 @@
-package sample.core.objects;
+package sample.core.objects.bank;
 
 import java.awt.*;
 import java.io.Serializable;

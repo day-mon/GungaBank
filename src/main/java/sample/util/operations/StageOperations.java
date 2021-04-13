@@ -12,7 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import sample.GungaBankConstants;
 import sample.Main;
-import sample.core.objects.User;
+import sample.core.objects.bank.User;
 
 import java.util.Optional;
 
@@ -50,14 +50,14 @@ public class StageOperations
                 Main.forms.remove("/card_page");
                 Main.open("/card_page",
                         "Dashboard",
-                        GungaBankConstants.LENGTH_FOR_MAIN,
+                        GungaBankConstants.HEIGHT_FOR_MAIN,
                         GungaBankConstants.WIDTH_FOR_MAIN,
                         GungaBankConstants.DEFAULT_STAGE_STYLE);
                 return;
             }
             Main.open("/cardpage",
                     "Dashboard",
-                    GungaBankConstants.LENGTH_FOR_MAIN,
+                    GungaBankConstants.HEIGHT_FOR_MAIN,
                     GungaBankConstants.WIDTH_FOR_MAIN,
                     GungaBankConstants.DEFAULT_STAGE_STYLE);
 
@@ -78,12 +78,12 @@ public class StageOperations
                 Main.forms.remove("/profilepage");
                 Main.open("/profilepage",
                         "Dashboard",
-                        GungaBankConstants.LENGTH_FOR_MAIN,
+                        GungaBankConstants.HEIGHT_FOR_MAIN,
                         GungaBankConstants.WIDTH_FOR_MAIN,
                         GungaBankConstants.DEFAULT_STAGE_STYLE);
                 return;
             }
-            Main.open("/profilepage", "Dashboard", GungaBankConstants.LENGTH_FOR_MAIN, GungaBankConstants.WIDTH_FOR_MAIN, GungaBankConstants.DEFAULT_STAGE_STYLE);
+            Main.open("/profilepage", "Dashboard", GungaBankConstants.HEIGHT_FOR_MAIN, GungaBankConstants.WIDTH_FOR_MAIN, GungaBankConstants.DEFAULT_STAGE_STYLE);
 
         }
         catch (Exception e)
@@ -100,10 +100,10 @@ public class StageOperations
             if (Main.forms.containsKey("/transfers"))
             {
                 Main.forms.remove("/transfers");
-                Main.open("/transfers", "Transfers",GungaBankConstants.LENGTH_FOR_MAIN, GungaBankConstants.WIDTH_FOR_MAIN, GungaBankConstants.DEFAULT_STAGE_STYLE);
+                Main.open("/transfers", "Transfers", GungaBankConstants.HEIGHT_FOR_MAIN, GungaBankConstants.WIDTH_FOR_MAIN, GungaBankConstants.DEFAULT_STAGE_STYLE);
                 return;
             }
-            Main.open("/transfers", "Transfers", GungaBankConstants.LENGTH_FOR_MAIN, GungaBankConstants.WIDTH_FOR_MAIN, GungaBankConstants.DEFAULT_STAGE_STYLE);
+            Main.open("/transfers", "Transfers", GungaBankConstants.HEIGHT_FOR_MAIN, GungaBankConstants.WIDTH_FOR_MAIN, GungaBankConstants.DEFAULT_STAGE_STYLE);
 
         }
         catch (Exception e)
@@ -121,10 +121,10 @@ public class StageOperations
             if (Main.forms.containsKey("/dashboard"))
             {
                 Main.forms.remove("/dashboard");
-                Main.open("/dashboard", "Dashboard", GungaBankConstants.LENGTH_FOR_MAIN, GungaBankConstants.WIDTH_FOR_MAIN, GungaBankConstants.DEFAULT_STAGE_STYLE);
+                Main.open("/dashboard", "Dashboard", GungaBankConstants.HEIGHT_FOR_MAIN, GungaBankConstants.WIDTH_FOR_MAIN, GungaBankConstants.DEFAULT_STAGE_STYLE);
                 return;
             }
-            Main.open("/dashboard", "Dashboard", GungaBankConstants.LENGTH_FOR_MAIN, GungaBankConstants.WIDTH_FOR_MAIN, GungaBankConstants.DEFAULT_STAGE_STYLE);
+            Main.open("/dashboard", "Dashboard", GungaBankConstants.HEIGHT_FOR_MAIN, GungaBankConstants.WIDTH_FOR_MAIN, GungaBankConstants.DEFAULT_STAGE_STYLE);
 
         }
         catch (Exception e)

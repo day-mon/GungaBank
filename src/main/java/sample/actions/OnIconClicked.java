@@ -10,13 +10,14 @@ import javafx.scene.input.MouseEvent;
 import javafx.util.Duration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import sample.GungaBank;
 import sample.util.structures.ArrayList;
 
 import java.util.Optional;
 
+import static sample.GungaBank.getStageHandler;
 
-public class OnIconClicked extends GungaBank implements EventHandler<MouseEvent>
+
+public class OnIconClicked implements EventHandler<MouseEvent>
 {
     private final ArrayList<ImageView> icons;
     private final Logger ICON_HANDLER;
@@ -48,6 +49,7 @@ public class OnIconClicked extends GungaBank implements EventHandler<MouseEvent>
         System.out.print(imageClickedName);
         switch (imageClickedName)
         {
+
             case "transferIcon":
                 getStageHandler().switchToStage("transfers");
                 break;
@@ -55,7 +57,7 @@ public class OnIconClicked extends GungaBank implements EventHandler<MouseEvent>
                 getStageHandler().switchToStage("dashboard");
                 break;
             case "creditCardIcon":
-               getStageHandler().switchToStage("credit_card");
+                getStageHandler().switchToStage("card_page");
                 break;
             case "profileIcon":
                 getStageHandler().switchToStage("profile");
@@ -91,6 +93,7 @@ public class OnIconClicked extends GungaBank implements EventHandler<MouseEvent>
                 break;
             default:
                 ICON_HANDLER.error("Icon not found. You may have to add it to the switch case {@see OnIconClicked.java}");
+
         }
     }
 }

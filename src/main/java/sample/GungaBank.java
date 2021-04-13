@@ -12,31 +12,19 @@ import java.time.LocalDateTime;
 
 public class GungaBank extends Application
 {
+    private static StageHandler stageHandler;
     private final Logger GUNGA_LOGGER;
     private final LocalDateTime bankAppStartTime;
     private final FileHandler fileHandler;
-    private final StageHandler stageHandler;
+
 
     public GungaBank()
     {
         this.GUNGA_LOGGER = LoggerFactory.getLogger(GungaBank.class);
-        this.fileHandler = new FileHandler(this);
-        this.stageHandler = new StageHandler(this);
+        this.fileHandler = new FileHandler();
+        stageHandler = new StageHandler();
         this.bankAppStartTime = LocalDateTime.now();
     }
-
-    public void build()
-    {
-        GUNGA_LOGGER.info("======================== [ Initializing GungaBank ] ========================");
-        GUNGA_LOGGER.info("Operating System: " + System.getProperty("os.name"));
-        GUNGA_LOGGER.info("Java Version: " + System.getProperty("java.version") + ", " + System.getProperty("java.vendor"));
-        GUNGA_LOGGER.info("Java VM Version: " + System.getProperty("java.vm.name") + " (" + System.getProperty("java.vm.info") + "), " + System.getProperty("java.vm.vendor"));
-        GUNGA_LOGGER.info("Java Home: " + System.getProperty("java.home"));
-        GUNGA_LOGGER.info("Current Directory: " + Paths.get("").toAbsolutePath());
-        GUNGA_LOGGER.info("Memory: " + Runtime.getRuntime().maxMemory() / 1024 / 1024 + "MB");
-
-    }
-
 
 
     /**
@@ -57,6 +45,14 @@ public class GungaBank extends Application
     @Override
     public void start(Stage primaryStage) throws Exception
     {
+        GUNGA_LOGGER.info("======================== [ Initializing GungaBank ] ========================");
+        GUNGA_LOGGER.info("Start time:           " + bankAppStartTime);
+        GUNGA_LOGGER.info("Operating System:     " + System.getProperty("os.name"));
+        GUNGA_LOGGER.info("Java Version:         " + System.getProperty("java.version") + ", " + System.getProperty("java.vendor"));
+        GUNGA_LOGGER.info("Java VM Version:      " + System.getProperty("java.vm.name") + " (" + System.getProperty("java.vm.info") + "), " + System.getProperty("java.vm.vendor"));
+        GUNGA_LOGGER.info("Java Home:            " + System.getProperty("java.home"));
+        GUNGA_LOGGER.info("Current Directory:    " + Paths.get("").toAbsolutePath());
+        GUNGA_LOGGER.info("Memory:               " + Runtime.getRuntime().maxMemory() / 1024 / 1024 + "MB");
         stageHandler.start(primaryStage);
     }
 
@@ -72,7 +68,7 @@ public class GungaBank extends Application
         return GUNGA_LOGGER;
     }
 
-    public StageHandler getStageHandler()
+    public static StageHandler getStageHandler()
     {
         return stageHandler;
     }

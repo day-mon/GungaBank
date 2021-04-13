@@ -1,4 +1,4 @@
-package sample.core.objects;
+package sample.core.objects.bank;
 
 import net.andreinc.mockneat.MockNeat;
 import sample.core.other.GungaObject;
@@ -49,6 +49,8 @@ public class Card implements Serializable
     public void setCardHolder(User cardHolder)
     {
         this.cardHolder = cardHolder;
+        save();
+
     }
 
     public String getCardNumber()
@@ -59,6 +61,8 @@ public class Card implements Serializable
     public void setCardNumber(String cardNumber)
     {
         this.cardNumber = cardNumber;
+        save();
+
     }
 
     public String getApr()
@@ -69,6 +73,8 @@ public class Card implements Serializable
     public void setApr(String apr)
     {
         this.apr = apr;
+        save();
+
     }
 
     public String getPin()
@@ -79,6 +85,8 @@ public class Card implements Serializable
     public void setPin(String pin)
     {
         this.pin = pin;
+        save();
+
     }
 
     public String getCID()
@@ -89,16 +97,19 @@ public class Card implements Serializable
     public void setCid(String cid)
     {
         this.cid = cid;
+        save();
+
     }
 
-    public LocalDateTime getExperationDate()
+    public LocalDateTime getExpirationDate()
     {
         return experationDate;
     }
 
-    public void setExperationDate(LocalDateTime experationDate)
+    public void setExperationDate(LocalDateTime expirationDate)
     {
-        this.experationDate = experationDate;
+        this.experationDate = expirationDate;
+        save();
     }
 
     public LocalDateTime getDateIssued()
@@ -109,6 +120,7 @@ public class Card implements Serializable
     public void setDateIssued(LocalDateTime dateIssued)
     {
         this.dateIssued = dateIssued;
+        save();
     }
 
     public CardType getCardType()
@@ -119,6 +131,7 @@ public class Card implements Serializable
     public void setCardType(CardType cardType)
     {
         this.cardType = cardType;
+        save();
     }
 
     public BigDecimal getLimit()
@@ -129,6 +142,7 @@ public class Card implements Serializable
     public void setLimit(BigDecimal limit)
     {
         this.limit = limit;
+        save();
     }
 
     public BigDecimal getBalance()
@@ -139,6 +153,7 @@ public class Card implements Serializable
     public void setBalance(BigDecimal balance)
     {
         this.balance = balance;
+        save();
     }
 
     public boolean isDisabled()
@@ -154,6 +169,7 @@ public class Card implements Serializable
     public void setDisabled(boolean disabled)
     {
         this.isDisabled = disabled;
+        save();
     }
 
     private String generateRandomCID()
@@ -171,10 +187,12 @@ public class Card implements Serializable
 
     private String getCardNameMoified()
     {
-        StringBuilder s = new StringBuilder(MockNeat.threadLocal()
-                .creditCards()
-                .masterCard()
-                .get());
+        StringBuilder s = new StringBuilder(
+                MockNeat.threadLocal()
+                        .creditCards()
+                        .masterCard()
+                        .get()
+        );
 
         for (int i = 4; i < 19; i += 5)
         {
@@ -191,6 +209,10 @@ public class Card implements Serializable
         this.dateIssued = LocalDateTime.now();
     }
 
+    private void save()
+    {
+
+    }
 
 
     public enum CardType

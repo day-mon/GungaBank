@@ -6,8 +6,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import sample.Main;
-import sample.core.objects.BankAccount;
-import sample.core.objects.User;
+import sample.core.objects.bank.BankAccount;
+import sample.core.objects.bank.User;
 import sample.core.other.GungaObject;
 import sample.util.operations.StageOperations;
 

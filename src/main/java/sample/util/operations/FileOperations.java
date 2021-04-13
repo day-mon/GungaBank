@@ -1,10 +1,9 @@
 package sample.util.operations;
 
 import sample.Main;
+import sample.core.objects.bank.User;
 import sample.util.structures.ArrayList;
-import sample.core.objects.User;
 import sample.util.structures.HashDictionary;
-
 
 import java.io.*;
 
