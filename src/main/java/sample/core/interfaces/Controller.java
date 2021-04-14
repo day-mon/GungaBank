@@ -7,5 +7,8 @@ public interface Controller
     /**
      * @param user
      */
-    public void initData(User user);
+    void initData(User user);
+
+    User getUser();
+
 }

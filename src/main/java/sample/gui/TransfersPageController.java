@@ -17,6 +17,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import sample.Main;
+import sample.core.interfaces.Controller;
 import sample.core.objects.bank.BankAccount;
 import sample.core.objects.bank.Transaction;
 import sample.core.objects.bank.User;
@@ -35,7 +36,7 @@ import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
-public class TransfersPageController
+public class TransfersPageController implements Controller
 {
 
     @FXML
@@ -227,6 +228,21 @@ public class TransfersPageController
         }
     }
 
+
+    /**
+     * @param user
+     */
+    @Override
+    public void initData(User user)
+    {
+
+    }
+
+    @Override
+    public User getUser()
+    {
+        return user;
+    }
 
 
 }

@@ -18,7 +18,7 @@ public class GungaBank extends Application
     private final LocalDateTime bankAppStartTime;
 
 
-    public GungaBank()
+    public GungaBank() throws Exception
     {
         GUNGA_LOGGER = LoggerFactory.getLogger(GungaBank.class);
         fileHandler = new FileHandler();

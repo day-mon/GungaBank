@@ -254,4 +254,10 @@ public class CardApplicationController implements Controller
     {
 
     }
+
+    @Override
+    public User getUser()
+    {
+        return user;
+    }
 }

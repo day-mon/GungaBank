@@ -1,43 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
 <?import javafx.scene.shape.Line?>
-<?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
-
+<?import javafx.scene.text.*?>
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.gui.ProfilePageController">
    <children>
       <AnchorPane prefHeight="800.0" prefWidth="86.0" style="-fx-background-color: #212121;">
          <children>
             <VBox layoutX="29.0" layoutY="92.0" prefHeight="650.0" prefWidth="82.0" spacing="100.0">
                <children>
-                  <ImageView fx:id="homeIcon" onMouseClicked="#onDashboardClicked">
+                  <ImageView fx:id="homeIcon">
                      <image>
-                        <Image url="@icons8_home_50px_4.png" />
+                        <Image url="@icons8_home_50px_4.png"/>
                      </image>
                   </ImageView>
-                  <ImageView fx:id="transferIcon" onMouseClicked="#onTransferIconClicked">
+                  <ImageView fx:id="transferIcon">
                      <image>
-                        <Image url="@icons8_exchange_50px.png" />
+                        <Image url="@icons8_exchange_50px.png"/>
                      </image>
                   </ImageView>
-                  <ImageView fx:id="creditCardIcon" onMouseClicked="#onCardIconClicked">
+                  <ImageView fx:id="creditCardIcon">
                      <image>
-                        <Image url="@icons8_mastercard_credit_card_50px_1.png" />
+                        <Image url="@icons8_mastercard_credit_card_50px_1.png"/>
                      </image>
                   </ImageView>
-                  <ImageView fx:id="profileIcon" onMouseClicked="#onProfileClicked">
+                  <ImageView fx:id="profileIcon">
                      <image>
-                        <Image url="@icons8_male_user_50px_1.png" />
+                        <Image url="@icons8_male_user_50px_1.png"/>
                      </image>
                   </ImageView>
-                  <ImageView fx:id="logoutIcon" onMouseClicked="#onLogoutClicked">
+                  <ImageView fx:id="logoutIcon">
                      <image>
-                        <Image url="@icons8_exit_50px_3.png" />
+                        <Image url="@icons8_exit_50px_3.png"/>
                      </image>
                   </ImageView>
                </children>

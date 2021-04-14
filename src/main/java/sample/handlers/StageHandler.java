@@ -50,6 +50,11 @@ public class StageHandler
         return stageDict;
     }
 
+    public FXMLLoader getLoader(String stage)
+    {
+        return stages.get(stage).getLoader();
+    }
+
     public void switchToStage(String stageToSwitchTo)
     {
         Iterator<StageWrapper> s = stages.elements();
@@ -79,8 +84,38 @@ public class StageHandler
                 }
             }
         }
+    }
 
+    public void switchToStage(String stageToSwitchTo, Parent root)
+    {
 
+        Iterator<StageWrapper> s = stages.elements();
+        String resource_name = "/" + stageToSwitchTo;
+
+        while (s.hasNext())
+        {
+            StageWrapper element = s.next();
+            Stage stg = element.getStage();
+            if (stg.isShowing())
+            {
+                try
+                {
+                    System.out.println(stg.getTitle() + " is showing");
+                    stg.hide();
+                    StageWrapper wrap = stages.get(resource_name);
+                    scene = new Scene(root, wrap.getHeight(), wrap.getWidth());
+                    Stage stage = wrap.getStage();
+                    stage.setScene(scene);
+                    stage.show();
+
+                    break;
+                }
+                catch (Exception e)
+                {
+                    LOGGER.error("Error occurred: {}", e.getMessage(), e);
+                }
+            }
+        }
     }
 
 
@@ -104,7 +139,7 @@ public class StageHandler
 
     private Parent loadFXML(String title) throws IOException
     {
-        return new FXMLLoader(getClass().getResource(title + ".fxml")).load();
+        return getLoader(title).load();
     }
 
 

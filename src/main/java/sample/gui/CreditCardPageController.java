@@ -277,11 +277,8 @@ public class CreditCardPageController
 
             if (keys.hasNext())
             {
-
-
                 String errors = "";
                 int size = 0;
-
 
                 while (keys.hasNext())
                 {
@@ -300,9 +297,9 @@ public class CreditCardPageController
             }
 
             ButtonType exitButton = new ButtonType("Okay!", ButtonBar.ButtonData.CANCEL_CLOSE);
-            Alert successfullPin = new Alert(Alert.AlertType.NONE,
+            Alert successfulPin = new Alert(Alert.AlertType.NONE,
                     "Pin changed!", exitButton);
-            successfullPin.show();
+            successfulPin.show();
             card.setPin(PIN_CONFIRM.getText());
 
             FileOperations.writeToFile(FileOperations.users, Main.users);

@@ -18,11 +18,11 @@ import sample.core.other.GungaObject;
 import sample.util.structures.ArrayList;
 
 import java.net.URL;
-import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class DashboardPageController implements Controller
 {
+
 
     @FXML
     private ResourceBundle resources;
@@ -76,7 +76,7 @@ public class DashboardPageController implements Controller
     private Text nameText;
 
     @GungaObject
-    private User user;
+    private User userLoggedIn;
 
     @GungaObject
     private ArrayList<ImageView> icons;
@@ -84,7 +84,6 @@ public class DashboardPageController implements Controller
     @GungaObject
     private OnIconClicked onIconClicked;
 
-    private int i = 0;
 
 
     /**
@@ -93,13 +92,13 @@ public class DashboardPageController implements Controller
     @Override
     public void initData(User user)
     {
+        userLoggedIn = user;
         BankAccount bankAccount = user.getBankAccounts().get(0);
         String replaced = nameText.getText().replace("%{name}", user.getFirstName());
+        nameText.setText(replaced);
         creditCardBalance.setText(user.getCards().size() <= 0 ? "N/A" : user.getCards().get(0).getBalance().doubleValue() + "");
         ObservableList<Transaction> columns = FXCollections.observableArrayList();
-
         bankAccount.getTransactions().forEach(columns::add);
-
 
         dateColumn.setCellValueFactory(new PropertyValueFactory<Transaction, String>("Date"));
         accountColumn.setCellValueFactory(new PropertyValueFactory<Transaction, String>("accountNumber"));
@@ -107,26 +106,27 @@ public class DashboardPageController implements Controller
         transactionColumn.setCellValueFactory(new PropertyValueFactory<Transaction, String>("TransactionType"));
         transactionTable.setItems(columns);
 
-        System.out.println(user.getFirstName());
-
-
         bankAccountBalance.setText(user.getBankAccounts().get(0).getBalance() + "");
-        this.user = user;
+
+        icons = new ArrayList<>();
+        icons.addAll(homeIcon, transferIcon, creditCardIcon, logoutIcon, profileIcon);
+        onIconClicked = new OnIconClicked(icons, userLoggedIn);
 
 
     }
+
+    @Override
+    public User getUser()
+    {
+        return userLoggedIn;
+    }
+
 
     @FXML
     void initialize()
     {
-        System.out.println(Objects.isNull(this.user));
-        icons = new ArrayList<>();
-        icons.addAll(homeIcon, transferIcon, creditCardIcon, logoutIcon, profileIcon);
-        onIconClicked = new OnIconClicked(icons);
+
     }
 
 
 }
-
-
-

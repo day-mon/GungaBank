@@ -12,6 +12,7 @@ import java.io.IOException;
 
 public class StageWrapper
 {
+    private FXMLLoader loader;
     private Stage stage;
     private String name;
     private String resourceName;
@@ -23,7 +24,6 @@ public class StageWrapper
 
     public StageWrapper(String name, int width, int height)
     {
-
         this.height = height;
         this.width = width;
         this.name = name;
@@ -40,6 +40,9 @@ public class StageWrapper
         stage.setWidth(width);
         stage.setHeight(height);
         stage.initStyle(GungaBankConstants.DEFAULT_STAGE_STYLE);
+        this.loader = new FXMLLoader(Main.class.getResource(resourceName + ".fxml"));
+        this.style = GungaBankConstants.DEFAULT_STAGE_STYLE;
+
 
     }
 
@@ -59,9 +62,10 @@ public class StageWrapper
         stage.setWidth(GungaBankConstants.WIDTH_FOR_MAIN);
         stage.setHeight(GungaBankConstants.HEIGHT_FOR_MAIN);
         stage.initStyle(GungaBankConstants.DEFAULT_STAGE_STYLE);
-
+        this.loader = new FXMLLoader(Main.class.getResource(resourceName + ".fxml"));
         this.width = GungaBankConstants.WIDTH_FOR_MAIN;
         this.height = GungaBankConstants.HEIGHT_FOR_MAIN;
+        this.style = GungaBankConstants.DEFAULT_STAGE_STYLE;
     }
 
     public int getWidth()
@@ -74,6 +78,15 @@ public class StageWrapper
         return height;
     }
 
+    public FXMLLoader getLoader()
+    {
+        return loader;
+    }
+
+    public StageStyle getStyle()
+    {
+        return style;
+    }
 
     public Stage getStage()
     {
@@ -87,8 +100,7 @@ public class StageWrapper
 
     public String getResourceName()
     {
-
-       return resourceName;
+        return resourceName;
     }
 
     private static Parent loadFXML(String title) throws IOException

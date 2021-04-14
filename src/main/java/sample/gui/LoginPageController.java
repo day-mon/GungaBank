@@ -8,11 +8,14 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import javafx.stage.StageStyle;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import sample.GungaBank;
 import sample.Main;
 import sample.actions.OnButtonExited;
@@ -20,7 +23,6 @@ import sample.actions.OnButtonHovered;
 import sample.core.objects.bank.BankAccount;
 import sample.core.objects.bank.User;
 import sample.core.other.GungaObject;
-import sample.util.operations.AlertOperations;
 import sample.util.operations.FileOperations;
 import sample.util.operations.StringOperations;
 import sample.util.structures.ArrayList;
@@ -34,6 +36,8 @@ import static sample.GungaBank.getStageHandler;
 
 public class LoginPageController
 {
+
+    private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
 
     @FXML // ResourceBundle that was given to the FXMLLoader
     private ResourceBundle resources;
@@ -103,16 +107,24 @@ public class LoginPageController
 
         String login = usernameTextField.getText();
         String password = StringOperations.hashPassword(passwordField.getText());
+        Alert alert;
 
-        if (login.length() < 0)
+        if (login.length() == 0)
         {
-            AlertOperations.AlertShortner("bad", "Missing text!", "Login field is empty!");
+            alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText("Missing text!");
+            alert.setContentText("Login field is empty!");
+            alert.show();
             return;
         }
 
+        alert = new Alert(Alert.AlertType.ERROR);
+        alert.setHeaderText("Incorrect login!");
+        alert.setContentText("Your password or email may be incorrect");
+
         if (!Main.users.containsKey(login))
         {
-            AlertOperations.AlertShortner("bad", "Incorrect login!", "Your password or email may be incorrect!");
+            alert.show();
             return;
         }
 
@@ -120,42 +132,43 @@ public class LoginPageController
 
         if (!userToLogin.gethashedPass().equals(password) && userToLogin.getEmail().equals(login))
         {
-            AlertOperations.AlertShortner("bad", "Incorrect login!", "Your password or email may be incorrect!");
+            alert.show();
             return;
         }
 
+        root = preLoadData(userToLogin);
+        getStageHandler().switchToStage("dashboard", root);
+        String success = String.format("Welcome %s! \nYour last login was %s", userToLogin.getFirstName(), userToLogin.getLastLogin() == null ? "Never!" : userToLogin.getLastLogin());
 
+        userToLogin.setLastLogin(new Date());
+
+        alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setHeaderText("Login success!");
+        alert.setContentText(success);
+        alert.show();
+        FileOperations.writeToFile(FileOperations.users, Main.users);
+
+
+    }
+
+    private Parent preLoadData(User userToLogin)
+    {
         try
         {
-
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/dashboard.fxml"));
+            FXMLLoader loader = getStageHandler().getLoader("/dashboard");
             root = loader.load();
-
             DashboardPageController controller = loader.getController();
             if (userToLogin.getBankAccounts().size() <= 0)
             {
                 userToLogin.getBankAccounts().add(new BankAccount(userToLogin, BankAccount.AccountTypes.CHECKING));
             }
             controller.initData(userToLogin);
-
-
-            if (Main.forms.containsKey("/dashboard"))
-                Main.forms.remove("/dashboard");
-
-
-            getStageHandler().switchToStage("dashboard");
-            String success = String.format("Welcome %s! \nYour last login was %s", userToLogin.getFirstName(), userToLogin.getLastLogin() == null ? "Never!" : userToLogin.getLastLogin());
-
-            userToLogin.setLastLogin(new Date());
-            FileOperations.writeToFile(FileOperations.users, Main.users);
-
+            return root;
         }
         catch (Exception e)
         {
-            System.err.printf("Error occurred: %s", e.getLocalizedMessage());
-            e.printStackTrace();
+            LOGGER.error("Error occurred: {}", e.getCause(), e);
         }
-
-
+        return null;
     }
 }
