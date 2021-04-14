@@ -47,7 +47,7 @@ public class CardApplicationController implements Controller
     private Button APPLY_BUTTON;
 
     @GungaObject
-    private User user = Main.userLoggedIn;
+    private User userLoggedIn;
 
     @GungaObject
     private ArrayList<TextField> textFields;
@@ -61,11 +61,20 @@ public class CardApplicationController implements Controller
     @GungaObject
     private OnButtonExited onButtonExited;
 
+    /**
+     * @param user
+     */
+    @Override
+    public void initData(User user)
+    {
+        userLoggedIn = user;
+    }
+
     @FXML
     void initialize()
     {
         buttons = new ArrayList<>();
-        textFields = new ArrayList<TextField>();
+        textFields = new ArrayList<>();
         buttons.add(clearButton);
         buttons.add(APPLY_BUTTON);
         textFields.add(ANNUAL_INCOME);
@@ -87,6 +96,8 @@ public class CardApplicationController implements Controller
     @FXML
     void onApplyClicked(ActionEvent event)
     {
+        Button buttonClicked = (Button) event.getSource();
+        System.out.println(buttonClicked.getId());
         int currentErrors = 0;
         HashDictionary<Integer, String> errorReasons = new HashDictionary<>();
 
@@ -185,22 +196,6 @@ public class CardApplicationController implements Controller
             //small assets big income = low spend, good with money
             //mid assets mid income = mid with money, decent but not great
 
-/*
-            if (assets > 0 && assets < 10000)
-            {
-                Main.userLoggedIn.getCards().add(new Card(Main.userLoggedIn, "20.99%", "0000", Card.CardType.BLACK, new BigDecimal("1000"), new BigDecimal("1000")));
-            }
-            else if (assets >= 10000 && assets < 50000)
-            {
-                Main.userLoggedIn.getCards().add(new Card(Main.userLoggedIn, "20.99%", "0000", Card.CardType.BLACK, new BigDecimal("10000"), new BigDecimal("10000")));
-            }
-            else
-            {
-                Main.userLoggedIn.getCards().add(new Card(Main.userLoggedIn, "20.99%", "0000", Card.CardType.BLACK, new BigDecimal("10000"), new BigDecimal("10000")));
-            }
-*/
-
-
 
 
 
@@ -218,9 +213,7 @@ public class CardApplicationController implements Controller
                 while (keys.hasNext())
                 {
                     int element = keys.next();
-                    /**
-                     * Could use a stringbuilder but meh.
-                     */
+
                     errors.append(errorReasons.get(element)).append("\n");
                     size++;
                 }
@@ -242,22 +235,15 @@ public class CardApplicationController implements Controller
     {
         java.util.Random r = new java.util.Random();
         int num = r.nextInt(999) + 1000;
-        Main.userLoggedIn.getCards().add(new Card(Main.userLoggedIn, apr, String.valueOf(num), type, new BigDecimal(limit), new BigDecimal(bal)));
+        userLoggedIn.getCards().add(new Card(userLoggedIn, apr, String.valueOf(num), type, new BigDecimal(limit), new BigDecimal(bal)));
     }
 
 
-    /**
-     * @param user
-     */
-    @Override
-    public void initData(User user)
-    {
 
-    }
 
     @Override
     public User getUser()
     {
-        return user;
+        return userLoggedIn;
     }
 }

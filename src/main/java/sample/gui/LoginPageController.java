@@ -13,13 +13,13 @@ import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
-import javafx.stage.StageStyle;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import sample.GungaBank;
 import sample.Main;
+import sample.actions.OnButtonClicked;
 import sample.actions.OnButtonExited;
 import sample.actions.OnButtonHovered;
+import sample.core.interfaces.Controller;
 import sample.core.objects.bank.BankAccount;
 import sample.core.objects.bank.User;
 import sample.core.other.GungaObject;
@@ -27,14 +27,13 @@ import sample.util.operations.FileOperations;
 import sample.util.operations.StringOperations;
 import sample.util.structures.ArrayList;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.Date;
 import java.util.ResourceBundle;
 
 import static sample.GungaBank.getStageHandler;
 
-public class LoginPageController
+public class LoginPageController implements Controller
 {
 
     private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
@@ -46,7 +45,7 @@ public class LoginPageController
     private URL location;
 
     @FXML // fx:id="usernameTextField"
-    private TextField usernameTextField; // Value injected by FXMLLoader
+    public TextField usernameTextField; // Value injected by FXMLLoader
 
     @FXML // fx:id="passwordField"
     private PasswordField passwordField; // Value injected by FXMLLoader
@@ -70,7 +69,10 @@ public class LoginPageController
     private OnButtonExited exited;
 
     @GungaObject
-    private GungaBank gungaBank;
+    private OnButtonClicked buttonClicked;
+
+    public String s;
+
 
     private Parent root;
 
@@ -84,20 +86,14 @@ public class LoginPageController
         buttons.add(loginTextLabel);
         hovered = new OnButtonHovered(buttons);
         exited = new OnButtonExited(buttons);
+        buttonClicked = new OnButtonClicked(buttons, this);
 
     }
 
     public void onRegisterButtonClick(ActionEvent actionEvent)
     {
 
-        try
-        {
-            Main.open("/register", "Register Page", 700, 835, StageStyle.UTILITY);
-        }
-        catch (IOException e)
-        {
-            e.printStackTrace();
-        }
+
 
     }
 
@@ -170,5 +166,26 @@ public class LoginPageController
             LOGGER.error("Error occurred: {}", e.getCause(), e);
         }
         return null;
+    }
+
+    /**
+     * @param user
+     */
+    @Override
+    public void initData(User user)
+    {
+
+    }
+
+    @Override
+    public User getUser()
+    {
+        return null;
+    }
+
+
+    public TextField getUsernameTextField()
+    {
+        return usernameTextField;
     }
 }

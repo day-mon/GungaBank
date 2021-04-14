@@ -7,8 +7,10 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import sample.Main;
+import sample.actions.OnButtonClicked;
 import sample.actions.OnButtonExited;
 import sample.actions.OnButtonHovered;
+import sample.core.interfaces.Controller;
 import sample.core.objects.bank.User;
 import sample.core.other.GungaObject;
 import sample.util.Checks;
@@ -24,7 +26,7 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.Optional;
 
-public class RegisterPageController
+public class RegisterPageController implements Controller
 {
 
     @FXML
@@ -69,6 +71,49 @@ public class RegisterPageController
     @GungaObject
     private OnButtonExited exitEvent;
 
+    @GungaObject
+    private OnButtonClicked onButtonClicked;
+
+    public TextField getDobTextField()
+    {
+        return dobTextField;
+    }
+
+    public TextField getEmailTextField()
+    {
+        return emailTextField;
+    }
+
+    public TextField getFirstNameTextField()
+    {
+        return firstNameTextField;
+    }
+
+    public TextField getLastNameTextField()
+    {
+        return lastNameTextField;
+    }
+
+    public TextField getPhoneNumberTextField()
+    {
+        return phoneNumberTextField;
+    }
+
+    public TextField getSsnTextField()
+    {
+        return ssnTextField;
+    }
+
+
+    public ArrayList<Button> getButtons()
+    {
+        return buttons;
+    }
+
+    public ArrayList<TextField> getTextFields()
+    {
+        return textFields;
+    }
 
     @FXML
         // This method is called by the FXMLLoader when initialization is complete
@@ -88,6 +133,7 @@ public class RegisterPageController
         buttons.add(registerButton);
         hoverEvent = new OnButtonHovered(buttons);
         exitEvent = new OnButtonExited(buttons);
+        onButtonClicked = new OnButtonClicked(buttons, this);
     }
 
 
@@ -98,7 +144,7 @@ public class RegisterPageController
     }
 
     @FXML
-    void registerButtonClicked(ActionEvent event) throws IOException, InterruptedException, ParseException
+    void registerButtonClicked(ActionEvent event) throws IOException, ParseException
     {
         HashDictionary<Integer, String> errorReasons = new HashDictionary<>();
         int currentErrors = 0;
@@ -344,6 +390,18 @@ public class RegisterPageController
     }
 
 
+    /**
+     * @param user
+     */
+    @Override
+    public void initData(User user)
+    {
 
-    
+    }
+
+    @Override
+    public User getUser()
+    {
+        return null;
+    }
 }

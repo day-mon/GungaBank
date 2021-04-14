@@ -6,13 +6,16 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import sample.core.interfaces.Controller;
 import sample.core.objects.StageWrapper;
+import sample.core.objects.bank.User;
 import sample.util.structures.ArrayList;
 import sample.util.structures.HashDictionary;
 
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Iterator;
+import java.util.Objects;
 
 public class StageHandler
 {
@@ -36,7 +39,7 @@ public class StageHandler
                         new StageWrapper("Transfers"),
                         new StageWrapper("Register", 700, 835),
                         new StageWrapper("Login", 700, 550), // 300 + 409  496+500
-                        new StageWrapper("Credit Card Application", 454, 700)
+                        new StageWrapper("Credit Card Application", 700, 454)
                 ));
 
         HashDictionary<String, StageWrapper> stageDict = new HashDictionary<>();
@@ -80,9 +83,27 @@ public class StageHandler
                 }
                 catch (Exception e)
                 {
-                    LOGGER.error("Error occurred: {}", e.getMessage(), e);
+                    LOGGER.error("Error occurred: {}", e.getCause(), e);
                 }
             }
+        }
+    }
+
+    public void openNewScene(String newSceneString, User user)
+    {
+        try
+        {
+            StageWrapper wrap = stages.get("/" + newSceneString);
+            Scene newScene = new Scene(loadFXML("/" + newSceneString), wrap.getHeight(), wrap.getWidth());
+            Stage stage = wrap.getStage();
+            Controller controller = getLoader("/" + newSceneString).getController();
+            controller.initData(user);
+            stage.setScene(newScene);
+            stage.show();
+        }
+        catch (Exception e)
+        {
+            LOGGER.error("Error occurred: {} ", e.getCause(), e);
         }
     }
 
@@ -96,13 +117,13 @@ public class StageHandler
         {
             StageWrapper element = s.next();
             Stage stg = element.getStage();
+            StageWrapper wrap = stages.get(resource_name);
             if (stg.isShowing())
             {
                 try
                 {
-                    System.out.println(stg.getTitle() + " is showing");
+                    if (Objects.equals(stg, wrap.getStage())) return;
                     stg.hide();
-                    StageWrapper wrap = stages.get(resource_name);
                     scene = new Scene(root, wrap.getHeight(), wrap.getWidth());
                     Stage stage = wrap.getStage();
                     stage.setScene(scene);
@@ -112,7 +133,7 @@ public class StageHandler
                 }
                 catch (Exception e)
                 {
-                    LOGGER.error("Error occurred: {}", e.getMessage(), e);
+                    LOGGER.error("Error occurred: {}", e.getCause(), e);
                 }
             }
         }
@@ -122,6 +143,7 @@ public class StageHandler
 
     public void start(Stage primaryStage)
     {
+        stages.elements().forEachRemaining(stage -> System.out.println(stage.getResourceName()));
         try
         {
             StageWrapper wrap = stages.get("/login");
@@ -133,7 +155,7 @@ public class StageHandler
         }
         catch (Exception e)
         {
-            LOGGER.error("Error occurred: {}", e.getMessage(), e);
+            LOGGER.error("Error occurred: {}", e.getCause(), e);
         }
     }
 

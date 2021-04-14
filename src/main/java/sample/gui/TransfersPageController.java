@@ -9,7 +9,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -17,6 +16,9 @@ import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import sample.Main;
+import sample.actions.OnButtonExited;
+import sample.actions.OnButtonHovered;
+import sample.actions.OnIconClicked;
 import sample.core.interfaces.Controller;
 import sample.core.objects.bank.BankAccount;
 import sample.core.objects.bank.Transaction;
@@ -25,8 +27,8 @@ import sample.core.other.GungaObject;
 import sample.util.Checks;
 import sample.util.operations.AlertOperations;
 import sample.util.operations.FileOperations;
-import sample.util.operations.StageOperations;
 import sample.util.operations.StringOperations;
+import sample.util.structures.ArrayList;
 
 import java.math.BigDecimal;
 import java.net.URL;
@@ -84,67 +86,55 @@ public class TransfersPageController implements Controller
     @FXML
     private TextField accountNumberTF;
 
+    @FXML
+    public Button transferMoneyButton;
+
     @GungaObject
-    private BankAccount bankAccount = Main.userLoggedIn.getBankAccounts().get(0);
+    private BankAccount bankAccount;
 
     @GungaObject
-    private User user = Main.userLoggedIn;
+    private User userLoggedIn;
 
-    @FXML
-    void onCardIconClicked(MouseEvent event)
+    @GungaObject
+    private ArrayList<ImageView> icons;
+
+    @GungaObject
+    private ArrayList<Button> buttons;
+
+    @GungaObject
+    private OnIconClicked onIconClicked;
+
+    @GungaObject
+    private OnButtonExited onButtonExited;
+
+    @GungaObject
+    private OnButtonHovered onButtonHovered;
+
+
+    /**
+     * @param user
+     */
+    @Override
+    public void initData(User user)
     {
-        StageOperations.switchToCardPage(user);
+        userLoggedIn = user;
+        preloadData();
     }
-
-    @FXML
-    void onLogoutClicked(MouseEvent event)
-    {
-        StageOperations.initLogoutSequence();
-    }
-
-    @FXML
-    void onProfileClicked(MouseEvent event)
-    {
-        StageOperations.switchToProfileScene();
-    }
-
-    @FXML
-    void onTransferIconClicked(MouseEvent event)
-    {
-        StageOperations.switchToTransfersScene();
-    }
-
-    @FXML
-    void onHomeButtonClicked(MouseEvent event)
-    {
-        StageOperations.switchToDashboardScene();
-    }
-
-
 
 
     @FXML
     void initialize()
     {
-
-        List<Transaction> transactionsToDisplay = bankAccount
-                .getTransactions()
-                .stream()
-                .filter(transaction -> transaction.getTransactionType().getTransactionType().equals("TRANSFER"))
-                .collect(Collectors.toList());
-
-        s.addAll(transactionsToDisplay);
-
-        dateColumn.setCellValueFactory(new PropertyValueFactory<Transaction, String>("Date"));
-        accountColumn.setCellValueFactory(new PropertyValueFactory<Transaction, String>("accountNumber"));
-        ammountColumn.setCellValueFactory(new PropertyValueFactory<Transaction, String>("amount"));
-        transactionColumn.setCellValueFactory(new PropertyValueFactory<Transaction, String>("TransactionType"));
-        transactionTable.setItems(s);
+        buttons = new ArrayList<>();
+        buttons.add(transferMoneyButton);
+        onButtonExited = new OnButtonExited(buttons);
+        onButtonHovered = new OnButtonHovered(buttons);
 
     }
 
     public void transferMoneyButtonClicked(ActionEvent actionEvent)
     {
+        System.out.println("Event triggered");
         String amountTosend = amountToSend.getText();
         String accountNumber = accountNumberTF.getText();
 
@@ -184,7 +174,7 @@ public class TransfersPageController implements Controller
 
         double amt = Double.parseDouble(amountTosend);
         long accNumber = Long.parseLong(accountNumber);
-        if (Main.userLoggedIn.getBankAccounts().get(0).getBalance() < amt)
+        if (bankAccount.getBalance() < amt)
         {
             AlertOperations.AlertShortner("bad", "Not enough funds", "You do not have enough funds in your account to complete this transaction");
             return;
@@ -198,7 +188,7 @@ public class TransfersPageController implements Controller
             btn.setOnAction(
                     event ->
                     {
-                        if (Objects.equals(Main.userLoggedIn.gethashedPass(), StringOperations.hashPassword(passwordField.getText())))
+                        if (Objects.equals(userLoggedIn.gethashedPass(), StringOperations.hashPassword(passwordField.getText())))
                         {
                             Transaction transaction = new Transaction(new BigDecimal(amt + ""), accNumber, new Date(), Transaction.TransactionType.TRANSFER);
                             bankAccount.getTransactions().add(transaction);
@@ -229,19 +219,32 @@ public class TransfersPageController implements Controller
     }
 
 
-    /**
-     * @param user
-     */
-    @Override
-    public void initData(User user)
-    {
-
-    }
-
     @Override
     public User getUser()
     {
-        return user;
+        return userLoggedIn;
+    }
+
+    private void preloadData()
+    {
+        bankAccount = userLoggedIn.getBankAccounts().get(0);
+        List<Transaction> transactionsToDisplay = bankAccount
+                .getTransactions()
+                .stream()
+                .filter(transaction -> transaction.getTransactionType().getTransactionType().equals("TRANSFER"))
+                .collect(Collectors.toList());
+
+        s.addAll(transactionsToDisplay);
+
+        dateColumn.setCellValueFactory(new PropertyValueFactory<Transaction, String>("Date"));
+        accountColumn.setCellValueFactory(new PropertyValueFactory<Transaction, String>("accountNumber"));
+        ammountColumn.setCellValueFactory(new PropertyValueFactory<Transaction, String>("amount"));
+        transactionColumn.setCellValueFactory(new PropertyValueFactory<Transaction, String>("TransactionType"));
+
+        transactionTable.setItems(s);
+        icons = new ArrayList<>();
+        icons.addAll(homeIcon, transferIcon, creditCardIcon, logoutIcon, profileIcon);
+        onIconClicked = new OnIconClicked(icons, userLoggedIn);
     }
 
 

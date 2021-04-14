@@ -252,6 +252,7 @@ public class ArrayList<E> implements ListInterface<E>, Serializable, Iterable<E>
     {
         for (E ele : e)
             add(ele);
+
     }
 
 

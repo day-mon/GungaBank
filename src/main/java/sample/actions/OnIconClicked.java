@@ -66,10 +66,18 @@ public class OnIconClicked implements EventHandler<MouseEvent>
                 getStageHandler().switchToStage(stageToSwitch, homeRoot);
                 break;
             case "creditCardIcon":
-                stageToSwitch = "card_page";
-                Parent cardRoot = preLoadData(stageToSwitch);
-                getStageHandler().switchToStage(stageToSwitch, cardRoot);
-                break;
+                stageToSwitch = "credit_card";
+                if (user.getCards().size() == 0)
+                {
+                    getStageHandler().openNewScene("credit_card_application", user);
+                    break;
+                }
+                else
+                {
+                    Parent cardRoot = preLoadData(stageToSwitch);
+                    getStageHandler().switchToStage(stageToSwitch, cardRoot);
+                    break;
+                }
             case "profileIcon":
                 stageToSwitch = "profile";
                 Parent profileRoot = preLoadData(stageToSwitch);
@@ -99,7 +107,7 @@ public class OnIconClicked implements EventHandler<MouseEvent>
                     }
                     catch (Exception e)
                     {
-                        ICON_HANDLER.error("Error occurred: {}", e.getMessage(), e);
+                        ICON_HANDLER.error("Error occurred: {}", e.getCause(), e);
                     }
                 });
                 delay.play();
@@ -116,12 +124,9 @@ public class OnIconClicked implements EventHandler<MouseEvent>
         {
             FXMLLoader loader = getStageHandler().getLoader("/" + stage);
 
-            if (loader.getRoot() != null)
-            {
-                Controller controller = loader.getController();
-                controller.initData(user);
-                return loader.getRoot();
-            }
+            loader.setRoot(null);
+            loader.setController(null);
+
             Parent root = loader.load();
             Controller controller = loader.getController();
             controller.initData(user);

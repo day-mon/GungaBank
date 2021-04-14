@@ -4,16 +4,14 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
-import sample.Main;
 import sample.actions.OnButtonExited;
 import sample.actions.OnButtonHovered;
+import sample.actions.OnIconClicked;
+import sample.core.interfaces.Controller;
 import sample.core.objects.bank.Card;
 import sample.core.objects.bank.User;
 import sample.core.other.GungaObject;
-import sample.util.operations.FileOperations;
-import sample.util.operations.StageOperations;
 import sample.util.structures.ArrayList;
 import sample.util.structures.HashDictionary;
 
@@ -23,7 +21,7 @@ import java.util.Iterator;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-public class CreditCardPageController
+public class CreditCardPageController implements Controller
 {
 
 
@@ -106,10 +104,10 @@ public class CreditCardPageController
     private Button LIMIT_INCREASE;
 
     @GungaObject
-    private User user = Main.userLoggedIn;
+    private User userLoggedIn;
 
     @GungaObject
-    private Card card = user.getCards().get(0);
+    private Card card;
 
     @GungaObject
     private ArrayList<TextField> pinPasswordFields;
@@ -118,30 +116,25 @@ public class CreditCardPageController
     private ArrayList<Button> buttons;
 
     @GungaObject
+    private ArrayList<ImageView> icons;
+
+    @GungaObject
     private OnButtonExited onButtonExited;
 
     @GungaObject
     private OnButtonHovered onButtonHovered;
 
+    @GungaObject
+    private OnIconClicked onIconClicked;
 
-    @FXML
-    void initialize()
+    @Override
+    public void initData(User user)
     {
-        buttons = new ArrayList<>();
-        pinPasswordFields = new ArrayList<>();
-        buttons.add(PIN_CONFIRM);
-        buttons.add(DISABLE_CARD);
-        buttons.add(CARD_UPGRADE);
-        buttons.add(LIMIT_INCREASE);
-        pinPasswordFields.add(PIN_TEXT_FIELD);
-        pinPasswordFields.add(CONFIRM_PIN_TEXT_FIELD);
+        userLoggedIn = user;
+        card = user.getCards().get(0);
 
-        onButtonExited = new OnButtonExited(buttons);
-        onButtonHovered = new OnButtonHovered(buttons);
-
-
-        FULL_NAME_IN_CARD.setText(user.getFirstName().toUpperCase() + " " + user.getLastName().toUpperCase());
-        CARD_NUMBER_IN_CARD.setText(user.getCards().get(0).getCardNumber());
+        FULL_NAME_IN_CARD.setText(userLoggedIn.getFirstName().toUpperCase() + " " + userLoggedIn.getLastName().toUpperCase());
+        CARD_NUMBER_IN_CARD.setText(userLoggedIn.getCards().get(0).getCardNumber());
         CREDIT_CARD_NUMBER.setText(card.getCardNumber());
         APR.setText(card.getApr());
         CREDIT_CARD_BALANCE.setText(card.getBalance().toString());
@@ -154,9 +147,33 @@ public class CreditCardPageController
         CARD_ENABLED.setText(card.isDisabled() ? "No" : "Yes");
         DISABLE_CARD.setText(card.isDisabled() ? "Enable Card" : DISABLE_CARD.getText());
         CREDIT_CARD_LIMIT.setText(card.getLimit().toPlainString());
+        icons = new ArrayList<>();
+        icons.addAll(homeIcon, transferIcon, creditCardIcon, profileIcon, logoutIcon);
+        onIconClicked = new OnIconClicked(icons, userLoggedIn);
 
     }
 
+    @Override
+    public User getUser()
+    {
+        return userLoggedIn;
+    }
+
+    @FXML
+    void initialize()
+    {
+        buttons = new ArrayList<>();
+        pinPasswordFields = new ArrayList<>();
+
+        buttons.addAll(PIN_CONFIRM, DISABLE_CARD, CARD_UPGRADE, LIMIT_INCREASE);
+        pinPasswordFields.addAll(PIN_TEXT_FIELD, CONFIRM_PIN_TEXT_FIELD);
+
+
+        onButtonExited = new OnButtonExited(buttons);
+        onButtonHovered = new OnButtonHovered(buttons);
+
+
+    }
 
 
     // ===================================== ON CLICKS (BUTTON) =====================================
@@ -180,7 +197,6 @@ public class CreditCardPageController
             CARD_ISSUED_DATE.setText(card.getDateIssued().format(DateTimeFormatter.ofPattern("MM/yyyy")));
             CARD_EXPIRY_DATE.setText(card.getExpirationDate().format(DateTimeFormatter.ofPattern("MM/yyyy")));
             EXPR_DATE.setText(card.getExpirationDate().format(DateTimeFormatter.ofPattern("MM/yyyy")));
-            FileOperations.writeToFile(FileOperations.users, Main.users);
         }
 
         if (card.isDisabled())
@@ -200,8 +216,8 @@ public class CreditCardPageController
         if (!card.isDisabled())
         {
             cardDisOrEn = new Alert(Alert.AlertType.INFORMATION, "Would you like to enable your card?",
-                                    new ButtonType("Yes"),
-                                    new ButtonType("No"));
+                    new ButtonType("Yes"),
+                    new ButtonType("No"));
             Optional<ButtonType> s = cardDisOrEn.showAndWait();
 
             if (s.get().getText().equals("Yes"))
@@ -225,7 +241,6 @@ public class CreditCardPageController
                 DISABLE_CARD.setText("Enable Card");
             }
         }
-        FileOperations.writeToFile(FileOperations.users, Main.users);
     }
 
     @FXML
@@ -263,7 +278,7 @@ public class CreditCardPageController
                     continue;
                 case 1:
                     currentField = pinPasswordFields.get(i);
-                    String otherTextFielData = pinPasswordFields.get(i-1).getText();
+                    String otherTextFielData = pinPasswordFields.get(i - 1).getText();
                     if (!(currentField.getText().equals(otherTextFielData)))
                     {
                         errorReasons.put(currentErrors++, "Your pins dont match");
@@ -277,7 +292,7 @@ public class CreditCardPageController
 
             if (keys.hasNext())
             {
-                String errors = "";
+                StringBuilder errors = new StringBuilder();
                 int size = 0;
 
                 while (keys.hasNext())
@@ -286,12 +301,12 @@ public class CreditCardPageController
                     /**
                      * Could use a stringbuilder but meh.
                      */
-                    errors += (errorReasons.get(element) + "\n");
+                    errors.append(errorReasons.get(element)).append("\n");
                     size++;
                 }
 
                 alert.setHeaderText("You have " + size + " errors!");
-                alert.setContentText(errors);
+                alert.setContentText(errors.toString());
                 alert.show();
                 return;
             }
@@ -302,7 +317,6 @@ public class CreditCardPageController
             successfulPin.show();
             card.setPin(PIN_CONFIRM.getText());
 
-            FileOperations.writeToFile(FileOperations.users, Main.users);
 
             pinPasswordFields.forEach(field -> field.setText(""));
             return;
@@ -313,38 +327,13 @@ public class CreditCardPageController
 
     // ===================================== ON CLICKS (SWITCH SCENES) =====================================
 
-    @FXML
-    public void onCardIconClicked(MouseEvent event)
+
+    public void onApplyCardUpgradeClick(ActionEvent actionEvent)
     {
-        return;
     }
 
-    @FXML
-    void onDashboardClicked(MouseEvent event)
-    {
-        StageOperations.switchToDashboardScene();
-    }
+    /**
+     * @param user
+     */
 
-
-    @FXML
-    void onProfileClicked(MouseEvent event)
-    {
-        StageOperations.switchToProfileScene();
-    }
-
-    @FXML
-    void onLogoutClicked(MouseEvent event)
-    {
-        StageOperations.initLogoutSequence();
-    }
-
-    @FXML
-    void onTransferIconClicked(MouseEvent event)
-    {
-        StageOperations.switchToTransfersScene();
-    }
-
-
-    public void onApplyCardUpgradeClick(ActionEvent actionEvent) {
-    }
 }
