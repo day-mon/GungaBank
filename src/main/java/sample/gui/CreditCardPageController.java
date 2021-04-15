@@ -23,7 +23,8 @@ import java.util.Iterator;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-public class CreditCardPageController implements Controller {
+public class CreditCardPageController implements Controller
+{
 
     @FXML
     private ResourceBundle resources;
@@ -134,7 +135,8 @@ public class CreditCardPageController implements Controller {
     private FileHandler fileHandler;
 
     @Override
-    public void initData(User user, StageHandler stageHandler, FileHandler fileHandler) {
+    public void initData(User user, StageHandler stageHandler, FileHandler fileHandler)
+    {
         userLoggedIn = user;
         this.stageHandler = stageHandler;
         this.fileHandler = fileHandler;
@@ -161,7 +163,8 @@ public class CreditCardPageController implements Controller {
     }
 
     @Override
-    public User getUser() {
+    public User getUser()
+    {
         return userLoggedIn;
     }
 
@@ -185,14 +188,16 @@ public class CreditCardPageController implements Controller {
     // ===================================== ON CLICKS (BUTTON) =====================================
 
     @FXML
-    void onGenerateCardClick(ActionEvent event) {
+    void onGenerateCardClick(ActionEvent event)
+    {
 
         Alert genNewCard = new Alert(Alert.AlertType.INFORMATION, "Would you like to generate your card?",
                 new ButtonType("Yes"),
                 new ButtonType("No"));
         Optional<ButtonType> def = genNewCard.showAndWait();
 
-        if (def.get().getText().equals("Yes") && !card.isDisabled()) {
+        if (def.get().getText().equals("Yes") && !card.isDisabled())
+        {
             card.generateNewCard();
             CARD_NUMBER_IN_CARD.setText(card.getCardNumber());
             CREDIT_CARD_NUMBER.setText(card.getCardNumber());
@@ -203,73 +208,100 @@ public class CreditCardPageController implements Controller {
             EXPR_DATE.setText(card.getExpirationDate().format(DateTimeFormatter.ofPattern("MM/yyyy")));
         }
 
-        if (card.isDisabled()) {
+        if (card.isDisabled())
+        {
             genNewCard.setContentText("You cannot make edits to a card that is disabled!");
             genNewCard.show();
         }
-        return;
+
 
     }
 
 
     @FXML
-    void onDisableCardClick(ActionEvent event) {
+    void onDisableCardClick(ActionEvent event)
+    {
         Alert cardDisOrEn;
-        if (!card.isDisabled()) {
+
+        if (!card.isDisabled())
+        {
+            cardDisOrEn = new Alert(Alert.AlertType.INFORMATION, "Would you like to disable your card?",
+                    new ButtonType("Yes"),
+                    new ButtonType("No"));
+            Optional<ButtonType> delay = cardDisOrEn.showAndWait();
+
+            // IntelliJ being weird.. delay will always be present
+            if (delay.get().getText().equals("Yes"))
+            {
+                card.setDisabled(true);
+                CARD_ENABLED.setText("No");
+                DISABLE_CARD.setText("Enable Card");
+            }
+        }
+        else
+        {
             cardDisOrEn = new Alert(Alert.AlertType.INFORMATION, "Would you like to enable your card?",
                     new ButtonType("Yes"),
                     new ButtonType("No"));
             Optional<ButtonType> s = cardDisOrEn.showAndWait();
 
-            if (s.get().getText().equals("Yes")) {
-                card.setDisabled(true);
+            if (s.get().getText().equals("Yes"))
+            {
+                card.setDisabled(false);
                 CARD_ENABLED.setText("Yes");
                 DISABLE_CARD.setText("Disable Card");
-            }
-        } else {
-            cardDisOrEn = new Alert(Alert.AlertType.INFORMATION, "Would you like to disable your card?",
-                    new ButtonType("Yes"),
-                    new ButtonType("No"));
-            Optional<ButtonType> s = cardDisOrEn.showAndWait();
-
-            if (s.get().getText().equals("Yes")) {
-                card.setDisabled(false);
-                CARD_ENABLED.setText("No");
-                DISABLE_CARD.setText("Enable Card");
             }
         }
     }
 
     @FXML
-    void onLimitIncreaseClick(ActionEvent event) {
+    void onLimitIncreaseClick(ActionEvent event)
+    {
 
     }
 
     @FXML
-    void onPinConfirmedClick(ActionEvent event) {
+    void onPinConfirmedClick(ActionEvent event)
+    {
+
+        if (card.isDisabled())
+        {
+            ButtonType exitButton = new ButtonType("Okay!", ButtonBar.ButtonData.CANCEL_CLOSE);
+
+            Alert cardDisabled = new Alert(Alert.AlertType.ERROR,
+                    "Card is disabled!", exitButton);
+            cardDisabled.show();
+            return;
+        }
         int currentErrors = 0;
         HashDictionary<Integer, String> errorReasons = new HashDictionary<>();
-        for (int i = 0; i < pinPasswordFields.size(); i++) {
+        for (int i = 0; i < pinPasswordFields.size(); i++)
+        {
             TextField currentField;
-            switch (i) {
+            switch (i)
+            {
                 case 0:
                     currentField = pinPasswordFields.get(i);
-                    if (currentField.getText().equals("")) {
+                    if (currentField.getText().equals(""))
+                    {
                         errorReasons.put(currentErrors++, "Pin Field is empty!");
                     }
 
-                    if (!currentField.getText().chars().allMatch(Character::isDigit)) {
+                    if (!currentField.getText().chars().allMatch(Character::isDigit))
+                    {
                         errorReasons.put(currentErrors++, "Your pin can only contain numbers!");
                     }
 
-                    if (currentField.getText().length() > 4) {
+                    if (currentField.getText().length() > 4)
+                    {
                         errorReasons.put(currentErrors++, "Your pin cannot be longer than 4 numbers!");
                     }
                     continue;
                 case 1:
                     currentField = pinPasswordFields.get(i);
-                    String otherTextFielData = pinPasswordFields.get(i - 1).getText();
-                    if (!(currentField.getText().equals(otherTextFielData))) {
+                    String otherTextFieldData = pinPasswordFields.get(i - 1).getText();
+                    if (!(currentField.getText().equals(otherTextFieldData)))
+                    {
                         errorReasons.put(currentErrors++, "Your pins dont match");
                     }
                     break;
@@ -279,11 +311,13 @@ public class CreditCardPageController implements Controller {
             Alert alert = new Alert(Alert.AlertType.WARNING);
 
 
-            if (keys.hasNext()) {
+            if (keys.hasNext())
+            {
                 StringBuilder errors = new StringBuilder();
                 int size = 0;
 
-                while (keys.hasNext()) {
+                while (keys.hasNext())
+                {
                     int element = keys.next();
                     /**
                      * Could use a stringbuilder but meh.
@@ -315,6 +349,7 @@ public class CreditCardPageController implements Controller {
     // ===================================== ON CLICKS (SWITCH SCENES) =====================================
 
 
-    public void onApplyCardUpgradeClick(ActionEvent actionEvent) {
+    public void onApplyCardUpgradeClick(ActionEvent actionEvent)
+    {
     }
 }

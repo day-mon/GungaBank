@@ -17,13 +17,15 @@ public class FileHandler
     private HashDictionary<String, User> users;
 
 
-    public FileHandler() {
+    public FileHandler()
+    {
         initFile();
         initFolder();
         users = initUsers();
-        users.put("123", new User("Josh", "Peck", "123", new Date(), "2142323232", "239239232", StringOperations.hashPassword("123")));
-        System.out.println(users.size());
-        users.elements().forEachRemaining(ele -> System.out.println(ele.getFirstName()));
+        users.put("1", new User("Ryan", "Ruffing", "123", new Date(), "2142323232", "239239232", StringOperations.hashPassword("123")));
+        users.put("2", new User("Dom", "D", "123", new Date(), "2142323232", "239239232", StringOperations.hashPassword("123")));
+        users.put("3", new User("Ryan", "L.", "123", new Date(), "2142323232", "239239232", StringOperations.hashPassword("123")));
+
 
     }
 
@@ -38,7 +40,8 @@ public class FileHandler
         }
         catch (Exception e)
         {
-            LOGGER.error("USER FOLDER COULD NOT BE CREATED", e);
+            LOGGER.error("USER FOLDER COULD NOT BE CREATED" +
+                    "Cause: {}", e.getCause(), e);
         }
     }
 
@@ -50,45 +53,57 @@ public class FileHandler
             {
                 USER_FILE.createNewFile();
             }
-        } catch (Exception e) {
-            LOGGER.error("USER FILE COULD NOT BE CREATED", e);
+        }
+        catch (Exception e)
+        {
+            LOGGER.error("USER FILE COULD NOT BE CREATED" +
+                    "Cause: {}", e.getCause(), e);
         }
     }
 
-    public void putUser(User user) {
+    public void putUser(User user)
+    {
         users.put(user.getEmail(), user);
         writeToFile();
     }
 
 
-    public void writeToFile() {
-        try {
+    public void writeToFile()
+    {
+        try
+        {
             FileOutputStream fos = new FileOutputStream(USER_FILE);
             ObjectOutputStream oos = new ObjectOutputStream(fos);
             oos.writeObject(users);
             oos.close();
             fos.close();
             LOGGER.info("User wrote successfully to file!");
-        } catch (Exception e) {
+        }
+        catch (Exception e)
+        {
             LOGGER.error("Error occurred: {}", e.getCause(), e);
-
         }
     }
 
 
-    public static HashDictionary<String, User> initUsers() {
+    public static HashDictionary<String, User> initUsers()
+    {
         HashDictionary<String, User> users = new HashDictionary<>();
-        try {
+        try
+        {
             FileInputStream fis = new FileInputStream(USER_FILE);
             ObjectInputStream ois = new ObjectInputStream(fis);
             users = (HashDictionary<String, User>) ois.readObject();
-        } catch (Exception e) {
+        }
+        catch (Exception e)
+        {
             LOGGER.error("Error occurred: {}", e.getCause(), e);
         }
         return users;
     }
 
-    public HashDictionary<String, User> getUsers() {
+    public HashDictionary<String, User> getUsers()
+    {
         return users;
     }
 }

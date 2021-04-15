@@ -16,5 +16,4 @@ public interface Set<T>
 
     public boolean isEmpty();
 
-    public boolean resizeArray(int cap);
 }

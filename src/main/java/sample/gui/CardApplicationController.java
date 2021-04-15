@@ -38,9 +38,6 @@ public class CardApplicationController implements Controller
     private TextField TOTAL_ASSETS;
 
     @FXML
-    private TextField PHONE_NUMBER;
-
-    @FXML
     private Button clearButton;
 
     @FXML
@@ -61,23 +58,29 @@ public class CardApplicationController implements Controller
     @GungaObject
     private OnButtonExited onButtonExited;
 
+    private StageHandler stageHandler;
+    private FileHandler fileHandler;
+
     /**
      * @param user
      */
     @Override
-    public void initData(User user, StageHandler handler, FileHandler fileHandler) {
+    public void initData(User user, StageHandler handler, FileHandler fileHandler)
+    {
         userLoggedIn = user;
+        this.stageHandler = handler;
+        this.fileHandler = fileHandler;
     }
 
     @FXML
-    void initialize() {
+    void initialize()
+    {
         buttons = new ArrayList<>();
         textFields = new ArrayList<>();
         buttons.add(clearButton);
         buttons.add(APPLY_BUTTON);
         textFields.add(ANNUAL_INCOME);
         textFields.add(TOTAL_ASSETS);
-        textFields.add(PHONE_NUMBER);
 
 
         onButtonExited = new OnButtonExited(buttons);
@@ -98,19 +101,17 @@ public class CardApplicationController implements Controller
         int currentErrors = 0;
         HashDictionary<Integer, String> errorReasons = new HashDictionary<>();
 
-        for (int i = 0; i < textFields.size(); i++)
+        for (TextField textField : textFields)
         {
-            TextField currentField;
-            switch (i)
+            switch (textField.getId())
             {
-                case 0:
-                    currentField = textFields.get(i);
-                    if (currentField.getText().equals(""))
+                case "ANNUAL_INCOME":
+                    if (textField.getText().equals(""))
                     {
                         errorReasons.put(currentErrors++, "Annual Income Field is empty!");
                     }
 
-                    String text = currentField.getText();
+                    String text = textField.getText();
 
                     if (text.length() > 12)
                     {
@@ -122,14 +123,13 @@ public class CardApplicationController implements Controller
                         errorReasons.put(currentErrors++, "The entry in the 'Annual Income' field is not a number!");
                     }
                     continue;
-                case 1:
-                    currentField = textFields.get(i);
-                    if (currentField.getText().equals(""))
+                case "TOTAL_ASSETS":
+                    if (textField.getText().equals(""))
                     {
                         errorReasons.put(currentErrors++, "Annual Income Field is empty!");
                     }
 
-                    String text1 = currentField.getText();
+                    String text1 = textField.getText();
 
                     if (text1.length() > 12)
                     {
@@ -140,62 +140,14 @@ public class CardApplicationController implements Controller
                     {
                         errorReasons.put(currentErrors++, "The entry in the 'Annual Income' field is not a number!");
                     }
-                case 2:
-                    currentField = textFields.get(i);
-                    if (currentField.getText().equals(""))
-                    {
-                        errorReasons.put(currentErrors++, "Your number field is empty!");
-                    }
-                    /*
-                    else if (!Checks.phoneValidator(currentField.getText()))
-                    {
-                        errorReasons.put(currentErrors++, "Phone number is wrong!");
-                    }
-                     */
                     break;
             }
 
 
-            double as = Double.parseDouble(TOTAL_ASSETS.getText());
-            double in = Double.parseDouble(ANNUAL_INCOME.getText());
-
-
-            if (in <= 20000) {
-                if (as >= in * 2) {
-                    addCard("18.99", Card.CardType.GOLD, Card.CardType.GOLD.getLowerLimit(), "0");
-                } else if (as < in * 2 && as > in / 2) {
-                    addCard("20.99", Card.CardType.SILVER, Card.CardType.SILVER.getLowerLimit(), "0");
-                } else {
-                    addCard("22.99", Card.CardType.BRONZE, Card.CardType.BRONZE.getLowerLimit(), "0");
-                }
-            }
-            if (in > 20000 && in <= 150000) {
-                if (as >= in * 4) {
-                    addCard("15.99", Card.CardType.PLATINUM, Card.CardType.PLATINUM.getLowerLimit(), "0");
-                }
-                else if (as < in * 3 && as > in / 3) {
-                    addCard("18.99", Card.CardType.GOLD, Card.CardType.GOLD.getUpperLimit(), "0");
-                } else {
-                    addCard("29.99", Card.CardType.SILVER, Card.CardType.SILVER.getUpperLimit(), "0");
-                }
-            }
-            if (in > 150000) {
-                if (as >= in * 6) {
-                    addCard("13.99", Card.CardType.GUNGA, Card.CardType.GUNGA.getLowerLimit(), "0");
-                } else if (as < in * 4 && as > in / 4) {
-                    addCard("15.99", Card.CardType.PLATINUM, Card.CardType.PLATINUM.getUpperLimit(), "0");
-                } else {
-                    addCard("17.99", Card.CardType.GOLD, Card.CardType.GOLD.getUpperLimit(), "0");
-                }
-            }
-
-            //big assets low income = big spend, bad with money
-            //small assets big income = low spend, good with money
-            //mid assets mid income = mid with money, decent but not great
-
-
-
-
+            // Evals users card
+            Card usersCard = eval();
+            userLoggedIn.getCards().add(usersCard);
+            fileHandler.writeToFile();
 
 
             Iterator<Integer> keys = errorReasons.keys();
@@ -220,21 +172,81 @@ public class CardApplicationController implements Controller
                 return;
             }
 
+            String limit = (usersCard.getLimit().toBigInteger().intValue() != -1) ? usersCard.getLimit().toPlainString() : "No Limit";
             Alert xd = new Alert(Alert.AlertType.INFORMATION);
             xd.setHeaderText("Credit Card Approved!");
-            xd.setContentText("You have been approved!");
+            xd.setContentText("You have been approved!" +
+                    "\nLimit: " + limit +
+                    "\nCard type: " + usersCard.getCardType().getCardName());
             xd.show();
+            stageHandler.close("credit_card_application");
         }
     }
 
-    public void addCard(String apr, Card.CardType type, String limit, String bal) //too many lines to type
+    private Card addCard(String apr, Card.CardType type, String limit, String bal) //too many lines to type
     {
         java.util.Random r = new java.util.Random();
         int num = r.nextInt(999) + 1000;
-        userLoggedIn.getCards().add(new Card(userLoggedIn, apr, String.valueOf(num), type, new BigDecimal(limit), new BigDecimal(bal)));
+        return new Card(userLoggedIn, apr, String.valueOf(num), type, new BigDecimal(limit), new BigDecimal(bal));
+
     }
 
+    private Card eval()
+    {
+        //big assets low income = big spend, bad with money
+        //small assets big income = low spend, good with money
+        //mid assets mid income = mid with money, decent but not great
 
+        double as = Double.parseDouble(TOTAL_ASSETS.getText());
+        double in = Double.parseDouble(ANNUAL_INCOME.getText());
+
+
+        if (in <= 20000)
+        {
+            if (as >= in * 2)
+            {
+                return addCard("18.99", Card.CardType.GOLD, Card.CardType.GOLD.getLowerLimit(), "0");
+            }
+            else if (as < in * 2 && as > in / 2)
+            {
+                return addCard("20.99", Card.CardType.SILVER, Card.CardType.SILVER.getLowerLimit(), "0");
+            }
+            else
+            {
+                return addCard("22.99", Card.CardType.BRONZE, Card.CardType.BRONZE.getLowerLimit(), "0");
+            }
+        }
+        else if (in > 20000 && in <= 150000)
+        {
+            if (as >= in * 4)
+            {
+                return addCard("15.99", Card.CardType.PLATINUM, Card.CardType.PLATINUM.getLowerLimit(), "0");
+            }
+            else if (as < in * 3 && as > in / 3)
+            {
+                return addCard("18.99", Card.CardType.GOLD, Card.CardType.GOLD.getUpperLimit(), "0");
+            }
+            else
+            {
+                return addCard("29.99", Card.CardType.SILVER, Card.CardType.SILVER.getUpperLimit(), "0");
+            }
+        }
+        else
+        {
+            if (as >= in * 6)
+            {
+                return addCard("13.99", Card.CardType.GUNGA, Card.CardType.GUNGA.getLowerLimit(), "0");
+            }
+            else if (as < in * 4 && as > in / 4)
+            {
+                return addCard("15.99", Card.CardType.PLATINUM, Card.CardType.PLATINUM.getUpperLimit(), "0");
+            }
+            else
+            {
+                return addCard("17.99", Card.CardType.GOLD, Card.CardType.GOLD.getUpperLimit(), "0");
+            }
+        }
+    }
 
 
     @Override

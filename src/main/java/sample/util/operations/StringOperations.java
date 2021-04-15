@@ -6,6 +6,14 @@ import java.security.NoSuchAlgorithmException;
 public class StringOperations
 {
 
+    /**
+     * Uses SHA256 to hash a password
+     * <p>
+     * An attempt at security in a horribly unsecured program.
+     *
+     * @param password
+     * @return
+     */
     public static String hashPassword(String password)
     {
         String generatedPassword = "";

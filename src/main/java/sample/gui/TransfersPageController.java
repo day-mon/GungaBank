@@ -121,7 +121,8 @@ public class TransfersPageController implements Controller
      * @param user
      */
     @Override
-    public void initData(User user, StageHandler stageHandler, FileHandler fileHandler) {
+    public void initData(User user, StageHandler stageHandler, FileHandler fileHandler)
+    {
         userLoggedIn = user;
         this.stageHandler = stageHandler;
         this.fileHandler = fileHandler;
@@ -147,6 +148,7 @@ public class TransfersPageController implements Controller
 
         if (!Checks.number(amountTosend) && !Checks.number(accountNumber))
         {
+            // change this.
             AlertOperations.AlertShortner("bad", "Invalid Number!", "Please only insert numbers in the sending field!");
             return;
         }
@@ -197,23 +199,7 @@ public class TransfersPageController implements Controller
                     {
                         if (Objects.equals(userLoggedIn.gethashedPass(), StringOperations.hashPassword(passwordField.getText())))
                         {
-                            Transaction transaction = new Transaction(new BigDecimal(amt + ""), accNumber, new Date(), Transaction.TransactionType.TRANSFER);
-                            bankAccount.getTransactions().add(transaction);
-
-                            dialog.close();
-
-                            s.add(transaction);
-                            dateColumn.setCellValueFactory(new PropertyValueFactory<Transaction, String>("Date"));
-                            accountColumn.setCellValueFactory(new PropertyValueFactory<Transaction, String>("accountNumber"));
-                            ammountColumn.setCellValueFactory(new PropertyValueFactory<Transaction, String>("amount"));
-                            transactionColumn.setCellValueFactory(new PropertyValueFactory<Transaction, String>("TransactionType"));
-                            transactionTable.setItems(s);
-
-
-                            bankAccount.removeToBalance(transaction.getAmount());
-
-
-
+                            addTransaction(dialog, accNumber, accountNumber);
                         }
                         else
                         {
@@ -251,6 +237,25 @@ public class TransfersPageController implements Controller
         icons = new ArrayList<>();
         icons.addAll(homeIcon, transferIcon, creditCardIcon, logoutIcon, profileIcon);
         onIconClicked = new OnIconClicked(icons, userLoggedIn, stageHandler, fileHandler);
+    }
+
+    private void addTransaction(Stage dialog, long ammount, String accountNumber)
+    {
+        Transaction transaction = new Transaction(new BigDecimal(ammount + ""), Long.parseLong(accountNumber), new Date(), Transaction.TransactionType.TRANSFER);
+        bankAccount.getTransactions().add(transaction);
+        dialog.close();
+
+        s.add(transaction);
+        dateColumn.setCellValueFactory(new PropertyValueFactory<Transaction, String>("Date"));
+        accountColumn.setCellValueFactory(new PropertyValueFactory<Transaction, String>("accountNumber"));
+        ammountColumn.setCellValueFactory(new PropertyValueFactory<Transaction, String>("amount"));
+        transactionColumn.setCellValueFactory(new PropertyValueFactory<Transaction, String>("TransactionType"));
+        transactionTable.setItems(s);
+
+
+        bankAccount.removeToBalance(transaction.getAmount());
+        fileHandler.writeToFile();
+
     }
 
 

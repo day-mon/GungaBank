@@ -83,7 +83,8 @@ public class LoginPageController implements Controller
 
     @FXML
         // This method is called by the FXMLLoader when initialization is complete
-    void initialize() {
+    void initialize()
+    {
 
         buttons = new ArrayList<>();
         buttons.add(registerButton);
@@ -96,18 +97,19 @@ public class LoginPageController implements Controller
 
     public void onRegisterButtonClick(ActionEvent actionEvent)
     {
-        stageHandler.switchToStage("register");
+        stageHandler.switchToStage(null, "register");
     }
 
 
-    public void onLoginClick(ActionEvent actionEvent) {
+    public void onLoginClick(ActionEvent actionEvent)
+    {
         HashDictionary<String, User> users = fileHandler.getUsers();
-        System.out.println(users.size());
         String login = usernameTextField.getText();
         String password = StringOperations.hashPassword(passwordField.getText());
         Alert alert;
 
-        if (login.length() == 0) {
+        if (login.length() == 0)
+        {
             alert = new Alert(Alert.AlertType.ERROR);
             alert.setHeaderText("Missing text!");
             alert.setContentText("Login field is empty!");
@@ -119,21 +121,27 @@ public class LoginPageController implements Controller
         alert.setHeaderText("Incorrect login!");
         alert.setContentText("Your password or email may be incorrect");
 
-        if (!users.containsKey(login)) {
+        if (!users.containsKey(login))
+        {
             alert.show();
             return;
         }
 
         User userToLogin = users.get(login);
 
+
         if (!userToLogin.gethashedPass().equals(password) && userToLogin.getEmail().equals(login))
         {
             alert.show();
             return;
         }
+        if (userToLogin.getBankAccounts().size() <= 0)
+        {
+            userToLogin.getBankAccounts().add(new BankAccount(userToLogin, BankAccount.AccountTypes.CHECKING));
+        }
 
-        root = preLoadData(userToLogin);
-        stageHandler.switchToStage("dashboard", root);
+        //root = preLoadData(userToLogin);
+        stageHandler.switchToStage(userToLogin, "dashboard");
         String success = String.format("Welcome %s! \nYour last login was %s", userToLogin.getFirstName(), userToLogin.getLastLogin() == null ? "Never!" : userToLogin.getLastLogin());
 
         userToLogin.setLastLogin(new Date());
@@ -169,7 +177,8 @@ public class LoginPageController implements Controller
 
 
     @Override
-    public void initData(User user, StageHandler stageHandler, FileHandler fileHandler) {
+    public void initData(User user, StageHandler stageHandler, FileHandler fileHandler)
+    {
         this.stageHandler = stageHandler;
         this.fileHandler = fileHandler;
     }

@@ -74,10 +74,51 @@ public class StageHandler
             {
                 try
                 {
-                    System.out.println(stg.getTitle() + " is showing");
                     stg.hide();
                     StageWrapper wrap = stages.get(resource_name);
-                    scene = new Scene(loadFXML(resource_name), wrap.getHeight(), wrap.getWidth());
+                    FXMLLoader loader = getLoader(resource_name);
+                    loader.setController(null);
+                    loader.setRoot(null);
+                    Parent root = wrap.getLoader().load();
+                    Controller controller = getLoader(resource_name).getController();
+                    controller.initData(null, gungaBank.getStageHandler(), gungaBank.getFileHandler());
+                    scene = new Scene(root, wrap.getHeight(), wrap.getWidth());
+                    Stage stage = wrap.getStage();
+                    stage.setScene(scene);
+                    stage.show();
+
+                    break;
+                }
+                catch (Exception e)
+                {
+                    LOGGER.error("Error occurred: {}", e.getCause(), e);
+                }
+            }
+        }
+    }
+
+    public void switchToStage(User user, String stageToSwitchTo)
+    {
+        Iterator<StageWrapper> s = stages.elements();
+        String resource_name = "/" + stageToSwitchTo;
+
+        while (s.hasNext())
+        {
+            StageWrapper element = s.next();
+            Stage stg = element.getStage();
+            if (stg.isShowing())
+            {
+                try
+                {
+                    stg.hide();
+                    StageWrapper wrap = stages.get(resource_name);
+                    FXMLLoader loader = getLoader(resource_name);
+                    loader.setController(null);
+                    loader.setRoot(null);
+                    Parent root = wrap.getLoader().load();
+                    Controller controller = getLoader(resource_name).getController();
+                    controller.initData(user, gungaBank.getStageHandler(), gungaBank.getFileHandler());
+                    scene = new Scene(root, wrap.getHeight(), wrap.getWidth());
                     Stage stage = wrap.getStage();
                     stage.setScene(scene);
                     stage.show();
@@ -96,13 +137,23 @@ public class StageHandler
     {
         try
         {
-            StageWrapper wrap = stages.get("/" + newSceneString);
-            Scene newScene = new Scene(loadFXML("/" + newSceneString), wrap.getHeight(), wrap.getWidth());
-            Stage stage = wrap.getStage();
-            Controller controller = getLoader("/" + newSceneString).getController();
+            String resourceName = "/" + newSceneString;
+            FXMLLoader loader = getLoader(resourceName);
+            StageWrapper wrap = stages.get(resourceName);
+
+
+            loader.setRoot(null);
+            loader.setController(null);
+
+            Parent root = wrap.getLoader().load();
+            Controller controller = getLoader(resourceName).getController();
             controller.initData(user, gungaBank.getStageHandler(), gungaBank.getFileHandler());
+            Scene newScene = new Scene(root, wrap.getHeight(), wrap.getWidth());
+            Stage stage = wrap.getStage();
             stage.setScene(newScene);
             stage.show();
+
+
         }
         catch (Exception e)
         {
@@ -143,11 +194,17 @@ public class StageHandler
     }
 
 
+    public void close(String name)
+    {
+        Stage wrap = stages.get("/" + name).getStage();
+        wrap.close();
+    }
+
 
     public void start(Stage primaryStage)
     {
-        stages.elements().forEachRemaining(stage -> System.out.println(stage.getResourceName()));
-        try {
+        try
+        {
             StageWrapper wrap = stages.get("/login");
             primaryStage = stages.get("/login").getStage();
             scene = new Scene(loadFXML("/login"), wrap.getHeight(), wrap.getWidth());

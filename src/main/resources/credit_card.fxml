@@ -4,7 +4,9 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.gui.CreditCardPageController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0"
+            prefWidth="1202.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="sample.gui.CreditCardPageController">
    <children>
       <AnchorPane prefHeight="800.0" prefWidth="86.0" style="-fx-background-color: #212121;">
          <children>
@@ -65,12 +67,12 @@
                         </Text>
                         <Text fx:id="FULL_NAME_IN_CARD" fill="WHITE" layoutX="14.0" layoutY="173.0" strokeType="OUTSIDE" strokeWidth="0.0" text="FULL_NAME">
                            <font>
-                              <Font name="Berlin Sans FB Demi Bold" size="15.0" />
+                              <Font name="Berlin Sans FB Demi Bold" size="13.0"/>
                            </font>
                         </Text>
                         <Text fx:id="CARD_NUMBER_IN_CARD" fill="WHITE" layoutX="14.0" layoutY="136.0" strokeType="OUTSIDE" strokeWidth="0.0" text="CARD_NUMBER">
                            <font>
-                              <Font name="Berlin Sans FB Demi Bold" size="15.0" />
+                              <Font name="Berlin Sans FB Demi Bold" size="14.0"/>
                            </font>
                         </Text>
                         <ImageView fitHeight="33.0" fitWidth="34.0" layoutX="16.0" layoutY="63.0">
@@ -83,14 +85,16 @@
                               <Image url="@icons8_mastercard_48px.png" />
                            </image>
                         </ImageView>
-                        <Text fx:id="EXPR_DATE" fill="WHITE" layoutX="186.0" layoutY="173.0" strokeType="OUTSIDE" strokeWidth="0.0" text="EXPR_DATE">
+                        <Text fx:id="EXPR_DATE" fill="WHITE" layoutX="210.0" layoutY="173.0" strokeType="OUTSIDE"
+                              strokeWidth="0.0" text="EXPR_DATE">
                            <font>
-                              <Font name="Berlin Sans FB Demi Bold" size="15.0" />
+                              <Font name="Berlin Sans FB Demi Bold" size="15.0"/>
                            </font>
                         </Text>
-                        <Text fill="WHITE" layoutX="153.0" layoutY="166.0" strokeType="OUTSIDE" strokeWidth="0.0" text="GOOD THRU" wrappingWidth="27.255859375">
+                        <Text fill="WHITE" layoutX="175.0" layoutY="165.0" strokeType="OUTSIDE" strokeWidth="0.0"
+                              text="GOOD THRU" wrappingWidth="27.255859375">
                            <font>
-                              <Font name="Berlin Sans FB Demi Bold" size="9.0" />
+                              <Font name="Berlin Sans FB Demi Bold" size="9.0"/>
                            </font>
                         </Text>
                      </children>
@@ -209,17 +213,29 @@
                   </Text>
                   <PasswordField fx:id="PIN_TEXT_FIELD" layoutX="193.0" layoutY="93.0" style="-fx-border-width: 0px 0px 2px 0px; -fx-border-color: #FFFF; -fx-background-color: transparent; -fx-text-fill: #FFFF;" />
                   <PasswordField fx:id="CONFIRM_PIN_TEXT_FIELD" layoutX="207.0" layoutY="185.0" style="-fx-border-width: 0px 0px 2px 0px; -fx-border-color: #FFFF; -fx-background-color: transparent; -fx-text-fill: #FFFF;" />
-                  <Button fx:id="PIN_CONFIRM" layoutX="152.0" layoutY="243.0" mnemonicParsing="false" onAction="#onPinConfirmedClick"  style="-fx-background-color: #212121;" text="Confirm" textFill="WHITE" />
+                  <Button fx:id="PIN_CONFIRM" layoutX="152.0" layoutY="243.0" mnemonicParsing="false"
+                          onAction="#onPinConfirmedClick" style="-fx-background-color: #212121;" text="Confirm"
+                          textFill="WHITE"/>
                </children>
             </Pane>
-            <Pane layoutX="674.0" layoutY="392.0" prefHeight="316.0" prefWidth="385.0" style="-fx-background-color: #313131;">
+            <Pane layoutX="674.0" layoutY="402.0" prefHeight="297.0" prefWidth="385.0"
+                  style="-fx-background-color: #313131;">
                <children>
-                  <VBox alignment="CENTER" layoutX="42.0" layoutY="12.0" prefHeight="290.0" prefWidth="306.0" spacing="45.0">
+                  <VBox alignment="CENTER" layoutX="42.0" layoutY="12.0" prefHeight="284.0" prefWidth="306.0"
+                        spacing="55.0">
                      <children>
-                        <Button fx:id="DISABLE_CARD" mnemonicParsing="false" onAction="#onDisableCardClick"  prefHeight="25.0" prefWidth="93.0" style="-fx-background-color: #212121;" text="Disable Card" textFill="WHITE" />
-                        <Button fx:id="GENERATE_CARD_NUMBER" mnemonicParsing="false" onAction="#onGenerateCardClick" prefHeight="25.0" prefWidth="130.0" style="-fx-background-color: #212121;" text="Generate New Card" textFill="WHITE" />
-                        <Button fx:id="CARD_UPGRADE" mnemonicParsing="false" onAction="#onApplyCardUpgradeClick"  prefHeight="25.0" prefWidth="159.0" style="-fx-background-color: #212121;" text="Apply for Card Upgrade" textFill="WHITE" />
-                        <Button fx:id="LIMIT_INCREASE" mnemonicParsing="false" onAction="#onLimitIncreaseClick"  prefHeight="25.0" prefWidth="159.0" style="-fx-background-color: #212121;" text="Apply for a Limit Increase" textFill="WHITE" />
+                        <Button fx:id="DISABLE_CARD" mnemonicParsing="false" onAction="#onDisableCardClick"
+                                prefHeight="25.0" prefWidth="93.0" style="-fx-background-color: #212121;"
+                                text="Disable Card" textFill="WHITE"/>
+                        <Button fx:id="GENERATE_CARD_NUMBER" mnemonicParsing="false" onAction="#onGenerateCardClick"
+                                prefHeight="25.0" prefWidth="130.0" style="-fx-background-color: #212121;"
+                                text="Generate New Card" textFill="WHITE"/>
+                        <Button fx:id="CARD_UPGRADE" mnemonicParsing="false" onAction="#onApplyCardUpgradeClick"
+                                prefHeight="25.0" prefWidth="159.0" style="-fx-background-color: #212121;"
+                                text="Apply for Card Upgrade" textFill="WHITE"/>
+                        <Button fx:id="LIMIT_INCREASE" mnemonicParsing="false" onAction="#onLimitIncreaseClick"
+                                prefHeight="25.0" prefWidth="159.0" style="-fx-background-color: #212121;"
+                                text="Apply for a Limit Increase" textFill="WHITE"/>
                      </children>
                   </VBox>
                </children>
@@ -229,9 +245,10 @@
                   <Font name="Berlin Sans FB Demi Bold" size="24.0" />
                </font>
             </Text>
-            <Text fill="#313131" layoutX="766.0" layoutY="383.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Card Management">
+            <Text fill="#313131" layoutX="766.0" layoutY="390.0" strokeType="OUTSIDE" strokeWidth="0.0"
+                  text="Card Management">
                <font>
-                  <Font name="Berlin Sans FB Demi Bold" size="24.0" />
+                  <Font name="Berlin Sans FB Demi Bold" size="24.0"/>
                </font>
             </Text>
             <Text fill="#313131" layoutX="194.0" layoutY="47.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Credit Card Details">

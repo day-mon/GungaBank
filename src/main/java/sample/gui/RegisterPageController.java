@@ -3,6 +3,8 @@ package sample.gui;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import sample.actions.OnButtonExited;
 import sample.actions.OnButtonHovered;
 import sample.core.interfaces.Controller;
@@ -24,7 +26,10 @@ import java.util.Optional;
 //mport sample.actions.OnButtonClicked;
 
 
-public class RegisterPageController implements Controller {
+public class RegisterPageController implements Controller
+{
+
+    private Logger LOGGER = LoggerFactory.getLogger(this.getClass());
 
     @FXML
     private TextField firstNameTextField;
@@ -105,7 +110,6 @@ public class RegisterPageController implements Controller {
     {
         return ssnTextField;
     }
-
 
     public ArrayList<Button> getButtons()
     {
@@ -360,12 +364,13 @@ public class RegisterPageController implements Controller {
     {
         try
         {
+            System.out.println(stageHandler == null);
             stageHandler.switchToStage("login");
             clearTextFields();
         }
         catch (Exception e)
         {
-            System.err.printf("Error occurred: %s ", e.getLocalizedMessage());
+            LOGGER.error("Error occurred: {}", e.getCause(), e);
         }
     }
 
