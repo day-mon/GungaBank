@@ -2,28 +2,29 @@ package sample.handlers;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import sample.Main;
 import sample.core.objects.bank.User;
-import sample.util.structures.ArrayList;
+import sample.util.operations.StringOperations;
 import sample.util.structures.HashDictionary;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.util.Objects;
+import java.io.*;
+import java.util.Date;
 
 public class FileHandler
 {
     private final static Logger LOGGER = LoggerFactory.getLogger(FileHandler.class);
     public final static File USER_FOLDER = new File("src/main/java/sample/files");
     public final static File USER_FILE = new File(USER_FOLDER, "users.ser");
+    private HashDictionary<String, User> users;
 
 
-    public FileHandler()
-    {
+    public FileHandler() {
         initFile();
         initFolder();
+        users = initUsers();
+        users.put("123", new User("Josh", "Peck", "123", new Date(), "2142323232", "239239232", StringOperations.hashPassword("123")));
+        System.out.println(users.size());
+        users.elements().forEachRemaining(ele -> System.out.println(ele.getFirstName()));
+
     }
 
     private void initFolder()
@@ -49,82 +50,45 @@ public class FileHandler
             {
                 USER_FILE.createNewFile();
             }
-        }
-        catch(Exception e)
-        {
+        } catch (Exception e) {
             LOGGER.error("USER FILE COULD NOT BE CREATED", e);
         }
     }
 
-
-    private static ArrayList<File> getAllFilesWithExt(File dir, String ext)
-    {
-        ArrayList<File> filesWithExt = new ArrayList<>();
-        if (dir.isDirectory())
-        {
-
-            if (Objects.requireNonNull(dir.listFiles()).length == 0)
-                LOGGER.warn("There are no files serializable files");
-            for (File file : dir.listFiles())
-            {
-                String[] fileParts = file.getName().split("\\.");
-                int lastIndex = fileParts.length - 1;
-                if (fileParts[lastIndex].equals(ext))
-                {
-                    filesWithExt.add(file);
-                }
-            }
-        }
-        else
-        {
-            LOGGER.warn(dir.getName() + " is not a directory!");
-            return null;
-        }
-        return filesWithExt;
+    public void putUser(User user) {
+        users.put(user.getEmail(), user);
+        writeToFile();
     }
 
-    public static void loadInformation()
-    {
-        try
-        {
-            ArrayList<File> files = getAllFilesWithExt(USER_FOLDER, "ser");
-            int serFiles = 0;
-            try
-            {
-                serFiles = files.size();
-            }
-            catch (NullPointerException npex)
-            {
-                System.out.println("No files exist and serializer input failed.");
-            }
 
-            for (int i = 0; i < serFiles; i++)
-            {
-                FileInputStream fis = new FileInputStream(files.get(i).getAbsolutePath());
-                ObjectInputStream ois = new ObjectInputStream(fis);
+    public void writeToFile() {
+        try {
+            FileOutputStream fos = new FileOutputStream(USER_FILE);
+            ObjectOutputStream oos = new ObjectOutputStream(fos);
+            oos.writeObject(users);
+            oos.close();
+            fos.close();
+            LOGGER.info("User wrote successfully to file!");
+        } catch (Exception e) {
+            LOGGER.error("Error occurred: {}", e.getCause(), e);
 
-                String fileName = files.get(i).getName().split("\\.")[0];
-
-                switch (fileName)
-                {
-                    case "users":
-                        Main.users = (HashDictionary<String, User>) ois.readObject();
-                        break;
-                    default:
-                        throw new IllegalStateException("Unexpected value: " + fileName);
-                }
-
-
-            }
         }
-        catch (IOException e)
-        {
-            LOGGER.error("IOException: " + e.getMessage(), e);
-        }
-        catch(ClassNotFoundException e)
-        {
-            LOGGER.error("ClassNotFoundException: " + e.getMessage(), e);
-        }
+    }
 
+
+    public static HashDictionary<String, User> initUsers() {
+        HashDictionary<String, User> users = new HashDictionary<>();
+        try {
+            FileInputStream fis = new FileInputStream(USER_FILE);
+            ObjectInputStream ois = new ObjectInputStream(fis);
+            users = (HashDictionary<String, User>) ois.readObject();
+        } catch (Exception e) {
+            LOGGER.error("Error occurred: {}", e.getCause(), e);
+        }
+        return users;
+    }
+
+    public HashDictionary<String, User> getUsers() {
+        return users;
     }
 }

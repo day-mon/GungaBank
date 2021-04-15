@@ -1,3 +1,4 @@
+/*
 package sample.actions;
 
 import javafx.event.ActionEvent;
@@ -47,7 +48,7 @@ public class OnButtonClicked implements EventHandler<ActionEvent>
      * registered happens.
      *
      * @param event the event which occurred
-     */
+     *
     @Override
     public void handle(ActionEvent event)
     {
@@ -243,7 +244,7 @@ public class OnButtonClicked implements EventHandler<ActionEvent>
                     int element = keys.next();
                     /*
                       Could use a stringbuilder but meh.
-                     */
+                     *
                     errors.append(errorReasons.get(element)).append("\n");
                     size++;
                 }
@@ -258,3 +259,4 @@ public class OnButtonClicked implements EventHandler<ActionEvent>
                     "You have successfully registered \nSending you back to the login page");
         }
     }
+*/

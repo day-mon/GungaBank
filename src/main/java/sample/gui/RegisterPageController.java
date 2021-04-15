@@ -1,20 +1,16 @@
-/**
- * Sample Skeleton for 'register.fxml' Controller Class
- */
 package sample.gui;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import sample.Main;
-import sample.actions.OnButtonClicked;
 import sample.actions.OnButtonExited;
 import sample.actions.OnButtonHovered;
 import sample.core.interfaces.Controller;
 import sample.core.objects.bank.User;
 import sample.core.other.GungaObject;
+import sample.handlers.FileHandler;
+import sample.handlers.StageHandler;
 import sample.util.Checks;
-import sample.util.operations.FileOperations;
 import sample.util.operations.StringOperations;
 import sample.util.structures.ArrayList;
 import sample.util.structures.HashDictionary;
@@ -22,12 +18,13 @@ import sample.util.structures.HashDictionary;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Iterator;
 import java.util.Optional;
 
-public class RegisterPageController implements Controller
-{
+//mport sample.actions.OnButtonClicked;
+
+
+public class RegisterPageController implements Controller {
 
     @FXML
     private TextField firstNameTextField;
@@ -71,16 +68,21 @@ public class RegisterPageController implements Controller
     @GungaObject
     private OnButtonExited exitEvent;
 
-    @GungaObject
-    private OnButtonClicked onButtonClicked;
+    //@GungaObject
+    //private OnButtonClicked onButtonClicked;
 
-    public TextField getDobTextField()
-    {
+    @GungaObject
+    private StageHandler stageHandler;
+
+    @GungaObject
+    private FileHandler fileHandler;
+
+
+    public TextField getDobTextField() {
         return dobTextField;
     }
 
-    public TextField getEmailTextField()
-    {
+    public TextField getEmailTextField() {
         return emailTextField;
     }
 
@@ -133,7 +135,7 @@ public class RegisterPageController implements Controller
         buttons.add(registerButton);
         hoverEvent = new OnButtonHovered(buttons);
         exitEvent = new OnButtonExited(buttons);
-        onButtonClicked = new OnButtonClicked(buttons, this);
+        //onButtonClicked = new OnButtonClicked(buttons, this);
     }
 
 
@@ -231,7 +233,7 @@ public class RegisterPageController implements Controller
 
                         if (a.get().getText().equals("Back"))
                         {
-                            Main.open("/loginpage");
+                            stageHandler.switchToStage("login");
                             return;
                         }
                         return;
@@ -333,26 +335,22 @@ public class RegisterPageController implements Controller
 
 
             SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyy");
-            Date date = format.parse(dobTextField.getText());
 
-
-            Main.users.put(emailTextField.getText(),
+            fileHandler.putUser(
                     new User(
                             firstNameTextField.getText(),
                             lastNameTextField.getText(),
                             emailTextField.getText(),
-                            date,
+                            format.parse(dobTextField.getText()),
                             phoneNumberTextField.getText(),
                             ssnTextField.getText(),
                             StringOperations.hashPassword(passwordField.getText())
-                    ));
-
-
-            FileOperations.writeToFile(FileOperations.users, Main.users);
+                    )
+            );
 
             clearTextFields();
 
-            Main.open("/loginpage");
+            stageHandler.switchToStage("login");
         }
     }
 
@@ -362,12 +360,12 @@ public class RegisterPageController implements Controller
     {
         try
         {
-            Main.open("/loginpage");
+            stageHandler.switchToStage("login");
             clearTextFields();
         }
         catch (Exception e)
         {
-            System.err.printf("Error occured: %s ", e.getLocalizedMessage());
+            System.err.printf("Error occurred: %s ", e.getLocalizedMessage());
         }
     }
 
@@ -386,16 +384,14 @@ public class RegisterPageController implements Controller
 
     private boolean checkEmail(String email) throws IOException
     {
-        return Main.users.containsKey(email);
+        return fileHandler.getUsers().containsKey(email);
     }
 
 
-    /**
-     * @param user
-     */
     @Override
-    public void initData(User user)
-    {
+    public void initData(User user, StageHandler stageHandler, FileHandler fileHandler) {
+        this.stageHandler = stageHandler;
+        this.fileHandler = fileHandler;
 
     }
 

@@ -9,6 +9,8 @@ import sample.core.interfaces.Controller;
 import sample.core.objects.bank.BankAccount;
 import sample.core.objects.bank.User;
 import sample.core.other.GungaObject;
+import sample.handlers.FileHandler;
+import sample.handlers.StageHandler;
 import sample.util.structures.ArrayList;
 
 import java.net.URL;
@@ -76,10 +78,15 @@ public class ProfilePageController implements Controller
     @GungaObject
     private OnIconClicked onIconClicked;
 
+    @GungaObject
+    private StageHandler stageHandler;
+
+    @GungaObject
+    private FileHandler fileHandler;
+
 
     @FXML
-    void initialize()
-    {
+    void initialize() {
 
     }
 
@@ -88,23 +95,23 @@ public class ProfilePageController implements Controller
      * @param user
      */
     @Override
-    public void initData(User user)
-    {
+    public void initData(User user, StageHandler stageHandler, FileHandler fileHandler) {
         userLoggedIn = user;
         bankAccount = user.getBankAccounts().get(0);
+        this.stageHandler = stageHandler;
+        this.fileHandler = fileHandler;
+        icons = new ArrayList<>();
+        icons.addAll(homeIcon, transferIcon, creditCardIcon, logoutIcon, profileIcon);
         FULL_NAME.setText(user.getLastName() + ", " + user.getFirstName());
         FULL_NAME.setTextAlignment(TextAlignment.CENTER);
         FIRST_NAME.setText(user.getFirstName());
-        System.out.println(user.getFirstName());
         LAST_NAME.setText(user.getLastName());
         LOGIN_ID.setText(user.getEmail());
         DATE_OF_BIRTH.setText(user.getDateOfBirth().toString());
         NUMBER_OF_ACCOUNTS.setText(Integer.toString(user.getBankAccounts().size()));
         NUMBER_OF_CARDS.setText(Integer.toString(user.getCards().size()));
         ACCOUNT_NUMBER.setText(Long.toString(bankAccount.getAccountNumber()));
-        icons = new ArrayList<>();
-        icons.addAll(homeIcon, transferIcon, creditCardIcon, logoutIcon, profileIcon);
-        onIconClicked = new OnIconClicked(icons, user);
+        onIconClicked = new OnIconClicked(icons, user, stageHandler, fileHandler);
     }
 
     @Override

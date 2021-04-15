@@ -51,6 +51,7 @@ public class Transaction implements Serializable
         this.transactionType = transactionType;
     }
 
+
     public void setAccountNumber(long accountNumber)
     {
         this.accountNumber = accountNumber;

@@ -14,30 +14,31 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import sample.core.interfaces.Controller;
 import sample.core.objects.bank.User;
+import sample.handlers.FileHandler;
+import sample.handlers.StageHandler;
 import sample.util.structures.ArrayList;
 
 import java.util.Optional;
 
-import static sample.GungaBank.getStageHandler;
 
-
-public class OnIconClicked implements EventHandler<MouseEvent>
-{
-    private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
+public class OnIconClicked implements EventHandler<MouseEvent> {
     private final ArrayList<ImageView> icons;
     private final Logger ICON_HANDLER;
+
+    private StageHandler stageHandler;
+    private FileHandler fileHandler;
     private User user;
 
-    public OnIconClicked(ArrayList<ImageView> iconsPassing, User user)
-    {
-        ICON_HANDLER = LoggerFactory.getLogger(OnIconClicked.class);
+    public OnIconClicked(ArrayList<ImageView> iconsPassing, User user, StageHandler stageHandler, FileHandler fileHandler) {
         icons = new ArrayList<>();
-        for (ImageView icons : iconsPassing)
-        {
+        for (ImageView icons : iconsPassing) {
             icons.addEventHandler(MouseEvent.MOUSE_CLICKED, this);
             this.icons.add(icons);
         }
+        ICON_HANDLER = LoggerFactory.getLogger(OnIconClicked.class);
         this.user = user;
+        this.stageHandler = stageHandler;
+        this.fileHandler = fileHandler;
     }
 
     /**
@@ -58,30 +59,26 @@ public class OnIconClicked implements EventHandler<MouseEvent>
             case "transferIcon":
                 stageToSwitch = "transfers";
                 Parent transRoot = preLoadData(stageToSwitch);
-                getStageHandler().switchToStage(stageToSwitch, transRoot);
+                stageHandler.switchToStage(stageToSwitch, transRoot);
                 break;
             case "homeIcon":
                 stageToSwitch = "dashboard";
                 Parent homeRoot = preLoadData(stageToSwitch);
-                getStageHandler().switchToStage(stageToSwitch, homeRoot);
+                stageHandler.switchToStage(stageToSwitch, homeRoot);
                 break;
             case "creditCardIcon":
                 stageToSwitch = "credit_card";
-                if (user.getCards().size() == 0)
-                {
-                    getStageHandler().openNewScene("credit_card_application", user);
-                    break;
-                }
-                else
-                {
+                if (user.getCards().size() == 0) {
+                    stageHandler.openNewScene("credit_card_application", user);
+                } else {
                     Parent cardRoot = preLoadData(stageToSwitch);
-                    getStageHandler().switchToStage(stageToSwitch, cardRoot);
-                    break;
+                    stageHandler.switchToStage(stageToSwitch, cardRoot);
                 }
+                break;
             case "profileIcon":
                 stageToSwitch = "profile";
                 Parent profileRoot = preLoadData(stageToSwitch);
-                getStageHandler().switchToStage(stageToSwitch, profileRoot);
+                stageHandler.switchToStage(stageToSwitch, profileRoot);
                 break;
             case "logoutIcon":
                 Alert alert = new Alert(Alert.AlertType.WARNING,
@@ -101,9 +98,10 @@ public class OnIconClicked implements EventHandler<MouseEvent>
                 PauseTransition delay = new PauseTransition(Duration.seconds(5.0));
                 delay.setOnFinished(event1 ->
                 {
-                    try
-                    {
-                        getStageHandler().switchToStage("login");
+                    try {
+                        String stage = "login";
+                        Parent login = preLoadData(stage);
+                        stageHandler.switchToStage("login", login);
                     }
                     catch (Exception e)
                     {
@@ -122,19 +120,19 @@ public class OnIconClicked implements EventHandler<MouseEvent>
     {
         try
         {
-            FXMLLoader loader = getStageHandler().getLoader("/" + stage);
+            FXMLLoader loader = stageHandler.getLoader("/" + stage);
 
             loader.setRoot(null);
             loader.setController(null);
 
             Parent root = loader.load();
             Controller controller = loader.getController();
-            controller.initData(user);
+            controller.initData(user, stageHandler, fileHandler);
             return root;
         }
         catch (Exception e)
         {
-            LOGGER.error("Error occurred: {}", e.getCause(), e);
+            ICON_HANDLER.error("Error occurred: {}", e.getCause(), e);
         }
         return null;
     }

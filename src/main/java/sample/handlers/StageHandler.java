@@ -6,9 +6,11 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import sample.GungaBank;
 import sample.core.interfaces.Controller;
 import sample.core.objects.StageWrapper;
 import sample.core.objects.bank.User;
+import sample.gui.LoginPageController;
 import sample.util.structures.ArrayList;
 import sample.util.structures.HashDictionary;
 
@@ -21,11 +23,12 @@ public class StageHandler
 {
     private final static Logger LOGGER = LoggerFactory.getLogger(StageHandler.class);
     private HashDictionary<String, StageWrapper> stages;
+    private GungaBank gungaBank;
     private static Scene scene;
 
-    public StageHandler()
-    {
+    public StageHandler(GungaBank gungaBank) {
         this.stages = generateStageMap();
+        this.gungaBank = gungaBank;
     }
 
     private HashDictionary<String, StageWrapper> generateStageMap()
@@ -97,7 +100,7 @@ public class StageHandler
             Scene newScene = new Scene(loadFXML("/" + newSceneString), wrap.getHeight(), wrap.getWidth());
             Stage stage = wrap.getStage();
             Controller controller = getLoader("/" + newSceneString).getController();
-            controller.initData(user);
+            controller.initData(user, gungaBank.getStageHandler(), gungaBank.getFileHandler());
             stage.setScene(newScene);
             stage.show();
         }
@@ -144,13 +147,18 @@ public class StageHandler
     public void start(Stage primaryStage)
     {
         stages.elements().forEachRemaining(stage -> System.out.println(stage.getResourceName()));
-        try
-        {
+        try {
             StageWrapper wrap = stages.get("/login");
             primaryStage = stages.get("/login").getStage();
             scene = new Scene(loadFXML("/login"), wrap.getHeight(), wrap.getWidth());
+
+            LoginPageController controller = wrap.getLoader().getController();
+            controller.initData(null, gungaBank.getStageHandler(), gungaBank.getFileHandler());
+
             primaryStage.setScene(scene);
             primaryStage.show();
+
+
             LOGGER.info("Main scene has loaded successfully!");
         }
         catch (Exception e)

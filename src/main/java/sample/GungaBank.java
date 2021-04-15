@@ -10,6 +10,7 @@ import sample.handlers.StageHandler;
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
 
+
 public class GungaBank extends Application
 {
     private static StageHandler stageHandler;
@@ -22,7 +23,7 @@ public class GungaBank extends Application
     {
         GUNGA_LOGGER = LoggerFactory.getLogger(GungaBank.class);
         fileHandler = new FileHandler();
-        stageHandler = new StageHandler();
+        stageHandler = new StageHandler(this);
         bankAppStartTime = LocalDateTime.now();
     }
 
@@ -68,13 +69,14 @@ public class GungaBank extends Application
         return GUNGA_LOGGER;
     }
 
-    public static FileHandler getFileHandler()
-    {
+    public FileHandler getFileHandler() {
         return fileHandler;
     }
 
-    public static StageHandler getStageHandler()
-    {
+    public StageHandler getStageHandler() {
         return stageHandler;
     }
+
+
+
 }

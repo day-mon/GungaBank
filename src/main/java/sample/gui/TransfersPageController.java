@@ -15,7 +15,6 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import sample.Main;
 import sample.actions.OnButtonExited;
 import sample.actions.OnButtonHovered;
 import sample.actions.OnIconClicked;
@@ -24,9 +23,10 @@ import sample.core.objects.bank.BankAccount;
 import sample.core.objects.bank.Transaction;
 import sample.core.objects.bank.User;
 import sample.core.other.GungaObject;
+import sample.handlers.FileHandler;
+import sample.handlers.StageHandler;
 import sample.util.Checks;
 import sample.util.operations.AlertOperations;
-import sample.util.operations.FileOperations;
 import sample.util.operations.StringOperations;
 import sample.util.structures.ArrayList;
 
@@ -110,14 +110,21 @@ public class TransfersPageController implements Controller
     @GungaObject
     private OnButtonHovered onButtonHovered;
 
+    @GungaObject
+    private StageHandler stageHandler;
+
+    @GungaObject
+    private FileHandler fileHandler;
+
 
     /**
      * @param user
      */
     @Override
-    public void initData(User user)
-    {
+    public void initData(User user, StageHandler stageHandler, FileHandler fileHandler) {
         userLoggedIn = user;
+        this.stageHandler = stageHandler;
+        this.fileHandler = fileHandler;
         preloadData();
     }
 
@@ -205,7 +212,6 @@ public class TransfersPageController implements Controller
 
                             bankAccount.removeToBalance(transaction.getAmount());
 
-                            FileOperations.writeToFile(FileOperations.users, Main.users);
 
 
                         }
@@ -244,7 +250,7 @@ public class TransfersPageController implements Controller
         transactionTable.setItems(s);
         icons = new ArrayList<>();
         icons.addAll(homeIcon, transferIcon, creditCardIcon, logoutIcon, profileIcon);
-        onIconClicked = new OnIconClicked(icons, userLoggedIn);
+        onIconClicked = new OnIconClicked(icons, userLoggedIn, stageHandler, fileHandler);
     }
 
 

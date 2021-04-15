@@ -5,15 +5,15 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import sample.Main;
 import sample.actions.OnButtonExited;
 import sample.actions.OnButtonHovered;
 import sample.core.interfaces.Controller;
 import sample.core.objects.bank.Card;
 import sample.core.objects.bank.User;
 import sample.core.other.GungaObject;
+import sample.handlers.FileHandler;
+import sample.handlers.StageHandler;
 import sample.util.Checks;
-import sample.util.operations.FileOperations;
 import sample.util.structures.ArrayList;
 import sample.util.structures.HashDictionary;
 
@@ -65,14 +65,12 @@ public class CardApplicationController implements Controller
      * @param user
      */
     @Override
-    public void initData(User user)
-    {
+    public void initData(User user, StageHandler handler, FileHandler fileHandler) {
         userLoggedIn = user;
     }
 
     @FXML
-    void initialize()
-    {
+    void initialize() {
         buttons = new ArrayList<>();
         textFields = new ArrayList<>();
         buttons.add(clearButton);
@@ -80,7 +78,6 @@ public class CardApplicationController implements Controller
         textFields.add(ANNUAL_INCOME);
         textFields.add(TOTAL_ASSETS);
         textFields.add(PHONE_NUMBER);
-
 
 
         onButtonExited = new OnButtonExited(buttons);
@@ -199,7 +196,6 @@ public class CardApplicationController implements Controller
 
 
 
-            FileOperations.writeToFile(FileOperations.users, Main.users);
 
 
             Iterator<Integer> keys = errorReasons.keys();

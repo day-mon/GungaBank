@@ -5,9 +5,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import sample.core.other.GungaObject;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -218,21 +215,6 @@ public class Card implements Serializable
 
     private void save()
     {
-        try
-        {
-            File file = new File("src/main/java/sample/files/users.ser");
-            FileOutputStream fos = new FileOutputStream(file);
-            ObjectOutputStream oos = new ObjectOutputStream(fos);
-
-            oos.writeObject(this.cardHolder);
-            fos.close();
-            oos.close();
-
-        }
-        catch (Exception e)
-        {
-            LOGGER.error("Could not save to: {}", this.getClass().getSimpleName() + ".java", e);
-        }
     }
 
 

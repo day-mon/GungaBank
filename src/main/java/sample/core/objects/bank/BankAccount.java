@@ -113,6 +113,7 @@ public class BankAccount implements Serializable
                 Objects.equals(transactions, that.transactions);
     }
 
+
     @Override
     public int hashCode()
     {

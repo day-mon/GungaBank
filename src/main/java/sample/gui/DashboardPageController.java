@@ -15,6 +15,8 @@ import sample.core.objects.bank.BankAccount;
 import sample.core.objects.bank.Transaction;
 import sample.core.objects.bank.User;
 import sample.core.other.GungaObject;
+import sample.handlers.FileHandler;
+import sample.handlers.StageHandler;
 import sample.util.structures.ArrayList;
 
 import java.net.URL;
@@ -84,16 +86,26 @@ public class DashboardPageController implements Controller
     @GungaObject
     private OnIconClicked onIconClicked;
 
+    @GungaObject
+    private StageHandler stageHandler;
+
+    @GungaObject
+    private FileHandler fileHandler;
 
 
     /**
      * @param user
      */
     @Override
-    public void initData(User user)
-    {
+    public void initData(User user, StageHandler stageHandler, FileHandler fileHandler) {
         userLoggedIn = user;
+        this.stageHandler = stageHandler;
+        this.fileHandler = fileHandler;
         BankAccount bankAccount = user.getBankAccounts().get(0);
+        icons = new ArrayList<>();
+        icons.addAll(homeIcon, transferIcon, creditCardIcon, logoutIcon, profileIcon);
+        onIconClicked = new OnIconClicked(icons, userLoggedIn, stageHandler, fileHandler);
+
         String replaced = nameText.getText().replace("%{name}", user.getFirstName());
         nameText.setText(replaced);
         creditCardBalance.setText(user.getCards().size() <= 0 ? "N/A" : user.getCards().get(0).getBalance().doubleValue() + "");
@@ -109,8 +121,6 @@ public class DashboardPageController implements Controller
         bankAccountBalance.setText(user.getBankAccounts().get(0).getBalance() + "");
 
         icons = new ArrayList<>();
-        icons.addAll(homeIcon, transferIcon, creditCardIcon, logoutIcon, profileIcon);
-        onIconClicked = new OnIconClicked(icons, userLoggedIn);
 
 
     }

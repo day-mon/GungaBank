@@ -1,13 +1,13 @@
 package sample.core.interfaces;
 
 import sample.core.objects.bank.User;
+import sample.handlers.FileHandler;
+import sample.handlers.StageHandler;
 
-public interface Controller
-{
-    /**
-     * @param user
-     */
-    void initData(User user);
+public interface Controller {
+
+    void initData(User user, StageHandler stageHandler, FileHandler fileHandler);
+
 
     User getUser();
 

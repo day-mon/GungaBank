@@ -15,23 +15,23 @@ import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import sample.Main;
-import sample.actions.OnButtonClicked;
 import sample.actions.OnButtonExited;
 import sample.actions.OnButtonHovered;
 import sample.core.interfaces.Controller;
 import sample.core.objects.bank.BankAccount;
 import sample.core.objects.bank.User;
 import sample.core.other.GungaObject;
-import sample.util.operations.FileOperations;
+import sample.handlers.FileHandler;
+import sample.handlers.StageHandler;
 import sample.util.operations.StringOperations;
 import sample.util.structures.ArrayList;
+import sample.util.structures.HashDictionary;
 
 import java.net.URL;
 import java.util.Date;
 import java.util.ResourceBundle;
 
-import static sample.GungaBank.getStageHandler;
+//import sample.actions.OnButtonClicked;
 
 public class LoginPageController implements Controller
 {
@@ -68,10 +68,14 @@ public class LoginPageController implements Controller
     @GungaObject
     private OnButtonExited exited;
 
-    @GungaObject
-    private OnButtonClicked buttonClicked;
+    //@GungaObject
+    //private OnButtonClicked buttonClicked;
 
-    public String s;
+    @GungaObject
+    private FileHandler fileHandler;
+
+    @GungaObject
+    private StageHandler stageHandler;
 
 
     private Parent root;
@@ -79,34 +83,31 @@ public class LoginPageController implements Controller
 
     @FXML
         // This method is called by the FXMLLoader when initialization is complete
-    void initialize()
-    {
+    void initialize() {
+
         buttons = new ArrayList<>();
         buttons.add(registerButton);
         buttons.add(loginTextLabel);
         hovered = new OnButtonHovered(buttons);
         exited = new OnButtonExited(buttons);
-        buttonClicked = new OnButtonClicked(buttons, this);
+        //   buttonClicked = new OnButtonClicked(buttons, this);
 
     }
 
     public void onRegisterButtonClick(ActionEvent actionEvent)
     {
-
-
-
+        stageHandler.switchToStage("register");
     }
 
 
-    public void onLoginClick(ActionEvent actionEvent)
-    {
-
+    public void onLoginClick(ActionEvent actionEvent) {
+        HashDictionary<String, User> users = fileHandler.getUsers();
+        System.out.println(users.size());
         String login = usernameTextField.getText();
         String password = StringOperations.hashPassword(passwordField.getText());
         Alert alert;
 
-        if (login.length() == 0)
-        {
+        if (login.length() == 0) {
             alert = new Alert(Alert.AlertType.ERROR);
             alert.setHeaderText("Missing text!");
             alert.setContentText("Login field is empty!");
@@ -118,13 +119,12 @@ public class LoginPageController implements Controller
         alert.setHeaderText("Incorrect login!");
         alert.setContentText("Your password or email may be incorrect");
 
-        if (!Main.users.containsKey(login))
-        {
+        if (!users.containsKey(login)) {
             alert.show();
             return;
         }
 
-        User userToLogin = Main.users.get(login);
+        User userToLogin = users.get(login);
 
         if (!userToLogin.gethashedPass().equals(password) && userToLogin.getEmail().equals(login))
         {
@@ -133,7 +133,7 @@ public class LoginPageController implements Controller
         }
 
         root = preLoadData(userToLogin);
-        getStageHandler().switchToStage("dashboard", root);
+        stageHandler.switchToStage("dashboard", root);
         String success = String.format("Welcome %s! \nYour last login was %s", userToLogin.getFirstName(), userToLogin.getLastLogin() == null ? "Never!" : userToLogin.getLastLogin());
 
         userToLogin.setLastLogin(new Date());
@@ -142,7 +142,6 @@ public class LoginPageController implements Controller
         alert.setHeaderText("Login success!");
         alert.setContentText(success);
         alert.show();
-        FileOperations.writeToFile(FileOperations.users, Main.users);
 
 
     }
@@ -151,14 +150,14 @@ public class LoginPageController implements Controller
     {
         try
         {
-            FXMLLoader loader = getStageHandler().getLoader("/dashboard");
+            FXMLLoader loader = stageHandler.getLoader("/dashboard");
             root = loader.load();
             DashboardPageController controller = loader.getController();
             if (userToLogin.getBankAccounts().size() <= 0)
             {
                 userToLogin.getBankAccounts().add(new BankAccount(userToLogin, BankAccount.AccountTypes.CHECKING));
             }
-            controller.initData(userToLogin);
+            controller.initData(userToLogin, stageHandler, fileHandler);
             return root;
         }
         catch (Exception e)
@@ -168,14 +167,13 @@ public class LoginPageController implements Controller
         return null;
     }
 
-    /**
-     * @param user
-     */
-    @Override
-    public void initData(User user)
-    {
 
+    @Override
+    public void initData(User user, StageHandler stageHandler, FileHandler fileHandler) {
+        this.stageHandler = stageHandler;
+        this.fileHandler = fileHandler;
     }
+
 
     @Override
     public User getUser()
