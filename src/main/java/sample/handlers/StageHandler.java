@@ -63,17 +63,21 @@ public class StageHandler
 
     public void switchToStage(String stageToSwitchTo)
     {
-        Iterator<StageWrapper> s = stages.elements();
         String resource_name = "/" + stageToSwitchTo;
+
+        Iterator<StageWrapper> s = stages.elements();
+        StageWrapper element = s.next();
+
 
         while (s.hasNext())
         {
-            StageWrapper element = s.next();
             Stage stg = element.getStage();
             if (stg.isShowing())
             {
+                if (Objects.equals(stg, stages.get(resource_name).getStage())) return;
                 try
                 {
+
                     stg.hide();
                     StageWrapper wrap = stages.get(resource_name);
                     FXMLLoader loader = getLoader(resource_name);
@@ -108,6 +112,7 @@ public class StageHandler
             Stage stg = element.getStage();
             if (stg.isShowing())
             {
+            if (Objects.equals(stg, stages.get(resource_name).getStage())) return;
                 try
                 {
                     stg.hide();

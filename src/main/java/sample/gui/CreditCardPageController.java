@@ -1,10 +1,19 @@
 package sample.gui;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import sample.Main;
 import sample.actions.OnButtonExited;
 import sample.actions.OnButtonHovered;
 import sample.actions.OnIconClicked;
@@ -17,6 +26,7 @@ import sample.handlers.StageHandler;
 import sample.util.structures.ArrayList;
 import sample.util.structures.HashDictionary;
 
+import java.math.BigDecimal;
 import java.net.URL;
 import java.time.format.DateTimeFormatter;
 import java.util.Iterator;
@@ -181,6 +191,25 @@ public class CreditCardPageController implements Controller
         onButtonExited = new OnButtonExited(buttons);
         onButtonHovered = new OnButtonHovered(buttons);
 
+        PIN_TEXT_FIELD.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observableValue, String s, String s2) {
+                String t = PIN_TEXT_FIELD.getText();
+                if (t.length() > 4) {
+                    PIN_TEXT_FIELD.setText(t.substring(0, 4));
+                }
+            }
+        });
+
+        CONFIRM_PIN_TEXT_FIELD.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observableValue, String s, String s2) {
+                String t = CONFIRM_PIN_TEXT_FIELD.getText();
+                if (t.length() > 4) {
+                    CONFIRM_PIN_TEXT_FIELD.setText(t.substring(0, 4));
+                }
+            }
+        });
 
     }
 
@@ -214,6 +243,11 @@ public class CreditCardPageController implements Controller
             genNewCard.show();
         }
 
+
+    }
+
+    @FXML
+    void textchanged(ActionEvent e) {
 
     }
 
@@ -257,6 +291,7 @@ public class CreditCardPageController implements Controller
     @FXML
     void onLimitIncreaseClick(ActionEvent event)
     {
+        Card c = userLoggedIn.getCards().get(0);
 
     }
 
@@ -346,10 +381,79 @@ public class CreditCardPageController implements Controller
         }
     }
 
+    private Card eval(String assets, String income)
+    {
+        //big assets low income = big spend, bad with money
+        //small assets big income = low spend, good with money
+        //mid assets mid income = mid with money, decent but not great
+
+        double as = Double.parseDouble(assets);
+        double in = Double.parseDouble(income);
+
+
+        if (in <= 20000)
+        {
+            if (as >= in * 2)
+            {
+                return addCard("18.99", Card.CardType.GOLD, Card.CardType.GOLD.getLowerLimit(), "0");
+            }
+            else if (as < in * 2 && as > in / 2)
+            {
+                return addCard("20.99", Card.CardType.SILVER, Card.CardType.SILVER.getLowerLimit(), "0");
+            }
+            else
+            {
+                return addCard("22.99", Card.CardType.BRONZE, Card.CardType.BRONZE.getLowerLimit(), "0");
+            }
+        }
+        else if (in > 20000 && in <= 150000)
+        {
+            if (as >= in * 4)
+            {
+                return addCard("15.99", Card.CardType.PLATINUM, Card.CardType.PLATINUM.getLowerLimit(), "0");
+            }
+            else if (as < in * 3 && as > in / 3)
+            {
+                return addCard("18.99", Card.CardType.GOLD, Card.CardType.GOLD.getUpperLimit(), "0");
+            }
+            else
+            {
+                return addCard("29.99", Card.CardType.SILVER, Card.CardType.SILVER.getUpperLimit(), "0");
+            }
+        }
+        else
+        {
+            if (as >= in * 6)
+            {
+                return addCard("13.99", Card.CardType.GUNGA, Card.CardType.GUNGA.getLowerLimit(), "0");
+            }
+            else if (as < in * 4 && as > in / 4)
+            {
+                return addCard("15.99", Card.CardType.PLATINUM, Card.CardType.PLATINUM.getUpperLimit(), "0");
+            }
+            else
+            {
+                return addCard("17.99", Card.CardType.GOLD, Card.CardType.GOLD.getUpperLimit(), "0");
+            }
+        }
+    }
+
+    private Card addCard(String apr, Card.CardType type, String limit, String bal) //too many lines to type
+    {
+        java.util.Random r = new java.util.Random();
+        int num = r.nextInt(999) + 1000;
+        return new Card(userLoggedIn, apr, String.valueOf(num), type, new BigDecimal(limit), new BigDecimal(bal));
+
+    }
+
     // ===================================== ON CLICKS (SWITCH SCENES) =====================================
 
 
     public void onApplyCardUpgradeClick(ActionEvent actionEvent)
     {
+
+      stageHandler.openNewScene("credit_card_application", userLoggedIn);
+
+        //Updated my bro!
     }
 }

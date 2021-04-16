@@ -19,8 +19,8 @@ public class FileHandler
 
     public FileHandler()
     {
-        initFile();
         initFolder();
+        initFile();
         users = initUsers();
         users.put("1", new User("Ryan", "Ruffing", "123", new Date(), "2142323232", "239239232", StringOperations.hashPassword("123")));
         users.put("2", new User("Dom", "D", "123", new Date(), "2142323232", "239239232", StringOperations.hashPassword("123")));
@@ -40,7 +40,7 @@ public class FileHandler
         }
         catch (Exception e)
         {
-            LOGGER.error("USER FOLDER COULD NOT BE CREATED" +
+            LOGGER.error("USER FOLDER COULD NOT BE CREATED\n" +
                     "Cause: {}", e.getCause(), e);
         }
     }
@@ -56,7 +56,7 @@ public class FileHandler
         }
         catch (Exception e)
         {
-            LOGGER.error("USER FILE COULD NOT BE CREATED" +
+            LOGGER.error("USER FILE COULD NOT BE CREATED\n" +
                     "Cause: {}", e.getCause(), e);
         }
     }

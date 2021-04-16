@@ -32,10 +32,7 @@ import sample.util.structures.ArrayList;
 
 import java.math.BigDecimal;
 import java.net.URL;
-import java.util.Date;
-import java.util.List;
-import java.util.Objects;
-import java.util.ResourceBundle;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class TransfersPageController implements Controller
@@ -199,7 +196,7 @@ public class TransfersPageController implements Controller
                     {
                         if (Objects.equals(userLoggedIn.gethashedPass(), StringOperations.hashPassword(passwordField.getText())))
                         {
-                            addTransaction(dialog, accNumber, accountNumber);
+                            addTransaction(dialog, amt, accountNumber);
                         }
                         else
                         {
@@ -239,7 +236,7 @@ public class TransfersPageController implements Controller
         onIconClicked = new OnIconClicked(icons, userLoggedIn, stageHandler, fileHandler);
     }
 
-    private void addTransaction(Stage dialog, long ammount, String accountNumber)
+    private void addTransaction(Stage dialog, double ammount, String accountNumber)
     {
         Transaction transaction = new Transaction(new BigDecimal(ammount + ""), Long.parseLong(accountNumber), new Date(), Transaction.TransactionType.TRANSFER);
         bankAccount.getTransactions().add(transaction);
@@ -254,6 +251,28 @@ public class TransfersPageController implements Controller
 
 
         bankAccount.removeToBalance(transaction.getAmount());
+        Iterator<User> it = fileHandler.getUsers().elements();
+        while (it.hasNext())
+        {
+            User u = it.next();
+            System.out.println(u.toString());
+            if (u.getBankAccounts().size() > 0)
+            {
+                System.out.println("First if statement is okay!");
+                if (Long.parseLong(accountNumber) == u.getBankAccounts().get(0).getAccountNumber())
+                {
+                    System.out.println(u.getFirstName() + " has the money!");
+                    System.out.println(u.getFirstName() + " balance is " + u.getBankAccounts().get(0).getBalance());
+                    u.getBankAccounts().get(0).addToBalance(transaction.getAmount());
+                    u.getBankAccounts().get(0).getTransactions().add(transaction);
+                    System.out.println("Activated");
+                    System.out.println(u.getFirstName() + " balance is " + u.getBankAccounts().get(0).getBalance());
+
+
+                }
+            }
+
+        }
         fileHandler.writeToFile();
 
     }

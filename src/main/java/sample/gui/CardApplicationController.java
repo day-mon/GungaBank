@@ -96,6 +96,7 @@ public class CardApplicationController implements Controller
     @FXML
     void onApplyClicked(ActionEvent event)
     {
+        boolean update = false;
         Button buttonClicked = (Button) event.getSource();
         System.out.println(buttonClicked.getId());
         int currentErrors = 0;
@@ -142,45 +143,59 @@ public class CardApplicationController implements Controller
                     }
                     break;
             }
+        }
+        // Evals users card
 
+        update = userLoggedIn.getCards().size() > 0;
+        Card usersCard = eval();
 
-            // Evals users card
-            Card usersCard = eval();
+        if (update) {
+            userLoggedIn.getCards().set(0, usersCard);
+        } else {
             userLoggedIn.getCards().add(usersCard);
-            fileHandler.writeToFile();
+        }
+        fileHandler.writeToFile();
 
 
-            Iterator<Integer> keys = errorReasons.keys();
-            Alert alert = new Alert(Alert.AlertType.WARNING);
+        Iterator<Integer> keys = errorReasons.keys();
+        Alert alert = new Alert(Alert.AlertType.WARNING);
 
 
-            if (keys.hasNext())
+        if (keys.hasNext())
+        {
+            StringBuilder errors = new StringBuilder();
+            int size = 0;
+            while (keys.hasNext())
             {
-                StringBuilder errors = new StringBuilder();
-                int size = 0;
-                while (keys.hasNext())
-                {
-                    int element = keys.next();
+                int element = keys.next();
 
-                    errors.append(errorReasons.get(element)).append("\n");
-                    size++;
-                }
-
-                alert.setHeaderText("You have " + size + " errors!");
-                alert.setContentText(errors.toString());
-                alert.show();
-                return;
+                errors.append(errorReasons.get(element)).append("\n");
+                size++;
             }
 
-            String limit = (usersCard.getLimit().toBigInteger().intValue() != -1) ? usersCard.getLimit().toPlainString() : "No Limit";
-            Alert xd = new Alert(Alert.AlertType.INFORMATION);
-            xd.setHeaderText("Credit Card Approved!");
-            xd.setContentText("You have been approved!" +
-                    "\nLimit: " + limit +
-                    "\nCard type: " + usersCard.getCardType().getCardName());
-            xd.show();
-            stageHandler.close("credit_card_application");
+            alert.setHeaderText("You have " + size + " errors!");
+            alert.setContentText(errors.toString());
+            alert.show();
+            return;
         }
+
+        String[] msg = new String [] { "Limit", "Card type", "" };
+
+        if (update) {
+            msg[0] = "New limit";
+            msg[1] = "New card type";
+            msg[2] = "Refresh this page to see your new card.";
+        }
+
+        String limit = (usersCard.getLimit().toBigInteger().intValue() != -1) ? usersCard.getLimit().toPlainString() : "No Limit";
+        Alert xd = new Alert(Alert.AlertType.INFORMATION);
+        xd.setHeaderText("Credit Card Approved!");
+        xd.setContentText("You have been approved!" +
+                "\n" + msg[0] + ": " + limit +
+                "\n" + msg[1] + ": " + usersCard.getCardType().getCardName() +
+                "\n" + msg[2]);
+        xd.show();
+        stageHandler.close("credit_card_application");
     }
 
     private Card addCard(String apr, Card.CardType type, String limit, String bal) //too many lines to type
@@ -220,7 +235,7 @@ public class CardApplicationController implements Controller
         {
             if (as >= in * 4)
             {
-                return addCard("15.99", Card.CardType.PLATINUM, Card.CardType.PLATINUM.getLowerLimit(), "0");
+                return addCard("29.99", Card.CardType.SILVER, Card.CardType.SILVER.getUpperLimit(), "0");
             }
             else if (as < in * 3 && as > in / 3)
             {
@@ -228,14 +243,14 @@ public class CardApplicationController implements Controller
             }
             else
             {
-                return addCard("29.99", Card.CardType.SILVER, Card.CardType.SILVER.getUpperLimit(), "0");
+                return addCard("15.99", Card.CardType.PLATINUM, Card.CardType.PLATINUM.getLowerLimit(), "0");
             }
         }
         else
         {
             if (as >= in * 6)
             {
-                return addCard("13.99", Card.CardType.GUNGA, Card.CardType.GUNGA.getLowerLimit(), "0");
+                return addCard("17.99", Card.CardType.GOLD, Card.CardType.GOLD.getUpperLimit(), "0");
             }
             else if (as < in * 4 && as > in / 4)
             {
@@ -243,7 +258,7 @@ public class CardApplicationController implements Controller
             }
             else
             {
-                return addCard("17.99", Card.CardType.GOLD, Card.CardType.GOLD.getUpperLimit(), "0");
+                return addCard("13.99", Card.CardType.GUNGA, Card.CardType.GUNGA.getLowerLimit(), "0");
             }
         }
     }
