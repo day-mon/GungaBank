@@ -42,8 +42,6 @@ public class StageWrapper
         stage.initStyle(GungaBankConstants.DEFAULT_STAGE_STYLE);
         this.loader = new FXMLLoader(Main.class.getResource(resourceName + ".fxml"));
         this.style = GungaBankConstants.DEFAULT_STAGE_STYLE;
-
-
     }
 
     public StageWrapper(String name)

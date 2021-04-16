@@ -6,7 +6,8 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
 
-public class User implements Serializable {
+public class User implements Serializable
+{
 
     /**
      *
@@ -58,17 +59,8 @@ public class User implements Serializable {
     private long netWorth;
 
 
-    /**
-     *
-     * @param firstName
-     * @param lastName
-     * @param email
-     * @param dateOfBirth
-     * @param phoneNumber
-     * @param ssn
-     * @param hashedPass
-     */
-    public User(String firstName, String lastName, String email, Date dateOfBirth, String phoneNumber, String ssn, String hashedPass) {
+    public User(String firstName, String lastName, String email, Date dateOfBirth, String phoneNumber, String ssn, String hashedPass)
+    {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -81,87 +73,108 @@ public class User implements Serializable {
         bankAccounts = new ArrayList();
     }
 
-    public Date getDateOfCreation() {
+    public Date getDateOfCreation()
+    {
         return dateOfCreation;
     }
 
-    public void setDateOfCreation(Date dateOfCreation) {
+    public void setDateOfCreation(Date dateOfCreation)
+    {
         this.dateOfCreation = dateOfCreation;
     }
 
-    public String getFirstName() {
+    public String getFirstName()
+    {
         return firstName;
     }
 
-    public void setFirstName(String firstName) {
+    public void setFirstName(String firstName)
+    {
         this.firstName = firstName;
     }
 
-    public String getLastName() {
+    public String getLastName()
+    {
         return lastName;
     }
 
-    public void setLastName(String lastName) {
+    public void setLastName(String lastName)
+    {
         this.lastName = lastName;
     }
 
-    public String getEmail() {
+    public String getEmail()
+    {
         return email;
     }
 
-    public void setEmail(String email) {
+    public void setEmail(String email)
+    {
         this.email = email;
     }
 
-    public Date getDateOfBirth() {
+    public Date getDateOfBirth()
+    {
         return dateOfBirth;
     }
 
-    public void setDateOfBirth(Date dateOfBirth) {
+    public void setDateOfBirth(Date dateOfBirth)
+    {
         this.dateOfBirth = dateOfBirth;
     }
 
-    public String getPhoneNumber() {
+    public String getPhoneNumber()
+    {
         return phoneNumber;
     }
 
-    public void setPhoneNumber(String phoneNumber) {
+    public void setPhoneNumber(String phoneNumber)
+    {
         this.phoneNumber = phoneNumber;
     }
 
-    public String getssn() {
+    public String getssn()
+    {
         return ssn;
     }
 
-    public void setSsN(String ssN) {
+    public void setSsN(String ssN)
+    {
         this.ssn = ssN;
     }
 
-    public String gethashedPass() {
+    public String gethashedPass()
+    {
         return hashedPass;
     }
 
-    public void sethashedPass(String hashedPass) {
+    public void sethashedPass(String hashedPass)
+    {
         this.hashedPass = hashedPass;
     }
 
-    public void setBankAccounts(ArrayList<BankAccount> bankAccounts) {
+    public void setBankAccounts(ArrayList<BankAccount> bankAccounts)
+    {
         this.bankAccounts = bankAccounts;
     }
 
-    public ArrayList<BankAccount> getBankAccounts() {
+    public ArrayList<BankAccount> getBankAccounts()
+    {
         return bankAccounts;
     }
 
-    public Date getLastLogin() {
+    public Date getLastLogin()
+    {
         return lastLogin;
     }
 
-    public ArrayList<Card> getCards() {
+    public ArrayList<Card> getCards()
+    {
         return cards;
     }
 
-    public void setCards(ArrayList<Card> cards) {
+    public void setCards(ArrayList<Card> cards)
+    {
         this.cards = cards;
     }
 
@@ -175,12 +188,14 @@ public class User implements Serializable {
         return netWorth;
     }
 
-    public void setLastLogin(Date lastLogin) {
+    public void setLastLogin(Date lastLogin)
+    {
         this.lastLogin = lastLogin;
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(Object o)
+    {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
@@ -195,7 +210,8 @@ public class User implements Serializable {
     }
 
     @Override
-    public int hashCode() {
+    public int hashCode()
+    {
         return Objects.hash(dateOfCreation, firstName, lastName, email, dateOfBirth, phoneNumber, ssn, hashedPass);
 
     }

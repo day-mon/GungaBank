@@ -34,7 +34,7 @@ public class OnButtonExited implements EventHandler<MouseEvent>
     @Override
     public void handle(MouseEvent event)
     {
-        Button button = (Button)event.getSource();
+        Button button = (Button) event.getSource();
 
         if (buttons.contains(button))
         {

@@ -15,6 +15,8 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import sample.actions.OnButtonExited;
 import sample.actions.OnButtonHovered;
 import sample.actions.OnIconClicked;
@@ -37,6 +39,9 @@ import java.util.stream.Collectors;
 
 public class TransfersPageController implements Controller
 {
+
+    @GungaObject
+    private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
 
     @FXML
     private ResourceBundle resources;
@@ -134,6 +139,9 @@ public class TransfersPageController implements Controller
         buttons.add(transferMoneyButton);
         onButtonExited = new OnButtonExited(buttons);
         onButtonHovered = new OnButtonHovered(buttons);
+
+        LOGGER.info("Transfers scene successfully loaded!");
+
 
     }
 
@@ -261,14 +269,8 @@ public class TransfersPageController implements Controller
                 System.out.println("First if statement is okay!");
                 if (Long.parseLong(accountNumber) == u.getBankAccounts().get(0).getAccountNumber())
                 {
-                    System.out.println(u.getFirstName() + " has the money!");
-                    System.out.println(u.getFirstName() + " balance is " + u.getBankAccounts().get(0).getBalance());
                     u.getBankAccounts().get(0).addToBalance(transaction.getAmount());
                     u.getBankAccounts().get(0).getTransactions().add(transaction);
-                    System.out.println("Activated");
-                    System.out.println(u.getFirstName() + " balance is " + u.getBankAccounts().get(0).getBalance());
-
-
                 }
             }
 

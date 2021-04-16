@@ -4,11 +4,15 @@ import javafx.application.Application;
 import javafx.stage.Stage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import sample.core.objects.bank.User;
 import sample.handlers.FileHandler;
 import sample.handlers.StageHandler;
+import sample.util.operations.StringOperations;
 
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
+import java.util.Date;
+import java.util.Scanner;
 
 
 public class GungaBank extends Application
@@ -25,6 +29,7 @@ public class GungaBank extends Application
         fileHandler = new FileHandler();
         stageHandler = new StageHandler(this);
         bankAppStartTime = LocalDateTime.now();
+        loadDemoUser();
     }
 
 
@@ -75,6 +80,21 @@ public class GungaBank extends Application
 
     public StageHandler getStageHandler() {
         return stageHandler;
+    }
+
+    private void loadDemoUser()
+    {
+        Scanner in = new Scanner(System.in);
+        System.out.print("Would you like demo users?: ");
+        String response = in.next();
+
+        if (response.toUpperCase().startsWith("Y"))
+        {
+            fileHandler.getUsers().put("1", new User("Ryan", "Ruffing", "123", new Date(), "2142323232", "239239232", StringOperations.hashPassword("123")));
+            fileHandler.getUsers().put("2", new User("Dom", "D", "123", new Date(), "2142323232", "239239232", StringOperations.hashPassword("123")));
+            fileHandler.getUsers().put("3", new User("Ryan", "L.", "123", new Date(), "2142323232", "239239232", StringOperations.hashPassword("123")));
+            GUNGA_LOGGER.info("There was 3 demo users loaded with the user-names [{}, {}, {}] with the password of 123", 1, 2, 3);
+        }
     }
 
 

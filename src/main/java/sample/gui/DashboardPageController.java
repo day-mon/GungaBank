@@ -9,6 +9,8 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import sample.actions.OnIconClicked;
 import sample.core.interfaces.Controller;
 import sample.core.objects.bank.BankAccount;
@@ -25,6 +27,8 @@ import java.util.ResourceBundle;
 public class DashboardPageController implements Controller
 {
 
+    @GungaObject
+    private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
 
     @FXML
     private ResourceBundle resources;
@@ -95,6 +99,11 @@ public class DashboardPageController implements Controller
 
     /**
      * @param user
+     *      User Logged in
+     * @param fileHandler
+     *      Main File Handler
+     * @param stageHandler
+     *      Main Stage Handler
      */
     @Override
     public void initData(User user, StageHandler stageHandler, FileHandler fileHandler) {
@@ -135,7 +144,7 @@ public class DashboardPageController implements Controller
     @FXML
     void initialize()
     {
-
+        LOGGER.info("Dashboard scene loaded successfully!");
     }
 
 

@@ -36,6 +36,7 @@ import java.util.ResourceBundle;
 public class LoginPageController implements Controller
 {
 
+    @GungaObject
     private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
 
     @FXML // ResourceBundle that was given to the FXMLLoader
@@ -85,13 +86,12 @@ public class LoginPageController implements Controller
         // This method is called by the FXMLLoader when initialization is complete
     void initialize()
     {
-
         buttons = new ArrayList<>();
         buttons.add(registerButton);
         buttons.add(loginTextLabel);
         hovered = new OnButtonHovered(buttons);
         exited = new OnButtonExited(buttons);
-        //   buttonClicked = new OnButtonClicked(buttons, this);
+        LOGGER.info("Login scene loaded successfully");
 
     }
 

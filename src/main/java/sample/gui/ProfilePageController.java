@@ -4,6 +4,8 @@ import javafx.fxml.FXML;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import sample.actions.OnIconClicked;
 import sample.core.interfaces.Controller;
 import sample.core.objects.bank.BankAccount;
@@ -19,7 +21,8 @@ import java.util.ResourceBundle;
 public class ProfilePageController implements Controller
 {
 
-    private Controller prevoiusController;
+    @GungaObject
+    private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
 
     @FXML
     private ResourceBundle resources;
@@ -86,16 +89,23 @@ public class ProfilePageController implements Controller
 
 
     @FXML
-    void initialize() {
-
+    void initialize()
+    {
+        LOGGER.info("Profile scene successfully loaded!");
     }
 
 
     /**
      * @param user
+     *      User Logged in
+     * @param fileHandler
+     *      Main File Handler
+     * @param stageHandler
+     *      Main Stage Handler
      */
     @Override
-    public void initData(User user, StageHandler stageHandler, FileHandler fileHandler) {
+    public void initData(User user, StageHandler stageHandler, FileHandler fileHandler)
+    {
         userLoggedIn = user;
         bankAccount = user.getBankAccounts().get(0);
         this.stageHandler = stageHandler;

@@ -13,6 +13,8 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import sample.Main;
 import sample.actions.OnButtonExited;
 import sample.actions.OnButtonHovered;
@@ -35,6 +37,9 @@ import java.util.ResourceBundle;
 
 public class CreditCardPageController implements Controller
 {
+
+    @GungaObject
+    private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
 
     @FXML
     private ResourceBundle resources;
@@ -144,32 +149,25 @@ public class CreditCardPageController implements Controller
     @GungaObject
     private FileHandler fileHandler;
 
+
+    /**
+     * @param user
+     *      User Logged in
+     * @param fileHandler
+     *      Main File Handler
+     * @param stageHandler
+     *      Main Stage Handler
+     */
     @Override
     public void initData(User user, StageHandler stageHandler, FileHandler fileHandler)
     {
         userLoggedIn = user;
         this.stageHandler = stageHandler;
         this.fileHandler = fileHandler;
-        card = user.getCards().get(0);
         icons = new ArrayList<>();
         icons.addAll(homeIcon, transferIcon, creditCardIcon, profileIcon, logoutIcon);
         onIconClicked = new OnIconClicked(icons, userLoggedIn, stageHandler, fileHandler);
-
-
-        FULL_NAME_IN_CARD.setText(userLoggedIn.getFirstName().toUpperCase() + " " + userLoggedIn.getLastName().toUpperCase());
-        CARD_NUMBER_IN_CARD.setText(userLoggedIn.getCards().get(0).getCardNumber());
-        CREDIT_CARD_NUMBER.setText(card.getCardNumber());
-        APR.setText(card.getApr());
-        CREDIT_CARD_BALANCE.setText(card.getBalance().toString());
-        CREDIT_CARD_TYPE.setText(card.getCardType().toString());
-        CVV_NUMBER.setText(card.getCID());
-        CREDIT_CARD_TYPE.setText(card.getCardType().toString());
-        CARD_ISSUED_DATE.setText(card.getDateIssued().format(DateTimeFormatter.ofPattern("MM/yyyy")));
-        CARD_EXPIRY_DATE.setText(card.getExpirationDate().format(DateTimeFormatter.ofPattern("MM/yyyy")));
-        EXPR_DATE.setText(card.getExpirationDate().format(DateTimeFormatter.ofPattern("MM/yyyy")));
-        CARD_ENABLED.setText(card.isDisabled() ? "No" : "Yes");
-        DISABLE_CARD.setText(card.isDisabled() ? "Enable Card" : DISABLE_CARD.getText());
-        CREDIT_CARD_LIMIT.setText((card.getLimit().toBigInteger().intValue() != -1) ? card.getLimit().toPlainString() : "No Limit");
+        preloadTextFields(user);
     }
 
     @Override
@@ -184,30 +182,26 @@ public class CreditCardPageController implements Controller
         buttons = new ArrayList<>();
         pinPasswordFields = new ArrayList<>();
 
-        buttons.addAll(PIN_CONFIRM, DISABLE_CARD, CARD_UPGRADE, LIMIT_INCREASE);
+        buttons.addAll(PIN_CONFIRM, DISABLE_CARD, CARD_UPGRADE);
         pinPasswordFields.addAll(PIN_TEXT_FIELD, CONFIRM_PIN_TEXT_FIELD);
 
 
         onButtonExited = new OnButtonExited(buttons);
         onButtonHovered = new OnButtonHovered(buttons);
 
-        PIN_TEXT_FIELD.textProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observableValue, String s, String s2) {
-                String t = PIN_TEXT_FIELD.getText();
-                if (t.length() > 4) {
-                    PIN_TEXT_FIELD.setText(t.substring(0, 4));
-                }
+        PIN_TEXT_FIELD.textProperty().addListener((observableValue, s, s2) ->
+        {
+            String t = PIN_TEXT_FIELD.getText();
+            if (t.length() > 4) {
+                PIN_TEXT_FIELD.setText(t.substring(0, 4));
             }
         });
 
-        CONFIRM_PIN_TEXT_FIELD.textProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observableValue, String s, String s2) {
-                String t = CONFIRM_PIN_TEXT_FIELD.getText();
-                if (t.length() > 4) {
-                    CONFIRM_PIN_TEXT_FIELD.setText(t.substring(0, 4));
-                }
+        CONFIRM_PIN_TEXT_FIELD.textProperty().addListener((observableValue, s, s2) ->
+        {
+            String t = CONFIRM_PIN_TEXT_FIELD.getText();
+            if (t.length() > 4) {
+                CONFIRM_PIN_TEXT_FIELD.setText(t.substring(0, 4));
             }
         });
 
@@ -246,10 +240,6 @@ public class CreditCardPageController implements Controller
 
     }
 
-    @FXML
-    void textchanged(ActionEvent e) {
-
-    }
 
 
     @FXML
@@ -288,12 +278,6 @@ public class CreditCardPageController implements Controller
         }
     }
 
-    @FXML
-    void onLimitIncreaseClick(ActionEvent event)
-    {
-        Card c = userLoggedIn.getCards().get(0);
-
-    }
 
     @FXML
     void onPinConfirmedClick(ActionEvent event)
@@ -337,7 +321,7 @@ public class CreditCardPageController implements Controller
                     String otherTextFieldData = pinPasswordFields.get(i - 1).getText();
                     if (!(currentField.getText().equals(otherTextFieldData)))
                     {
-                        errorReasons.put(currentErrors++, "Your pins dont match");
+                        errorReasons.put(currentErrors++, "Your pins don't match");
                     }
                     break;
             }
@@ -354,9 +338,6 @@ public class CreditCardPageController implements Controller
                 while (keys.hasNext())
                 {
                     int element = keys.next();
-                    /**
-                     * Could use a stringbuilder but meh.
-                     */
                     errors.append(errorReasons.get(element)).append("\n");
                     size++;
                 }
@@ -381,72 +362,6 @@ public class CreditCardPageController implements Controller
         }
     }
 
-    private Card eval(String assets, String income)
-    {
-        //big assets low income = big spend, bad with money
-        //small assets big income = low spend, good with money
-        //mid assets mid income = mid with money, decent but not great
-
-        double as = Double.parseDouble(assets);
-        double in = Double.parseDouble(income);
-
-
-        if (in <= 20000)
-        {
-            if (as >= in * 2)
-            {
-                return addCard("18.99", Card.CardType.GOLD, Card.CardType.GOLD.getLowerLimit(), "0");
-            }
-            else if (as < in * 2 && as > in / 2)
-            {
-                return addCard("20.99", Card.CardType.SILVER, Card.CardType.SILVER.getLowerLimit(), "0");
-            }
-            else
-            {
-                return addCard("22.99", Card.CardType.BRONZE, Card.CardType.BRONZE.getLowerLimit(), "0");
-            }
-        }
-        else if (in > 20000 && in <= 150000)
-        {
-            if (as >= in * 4)
-            {
-                return addCard("15.99", Card.CardType.PLATINUM, Card.CardType.PLATINUM.getLowerLimit(), "0");
-            }
-            else if (as < in * 3 && as > in / 3)
-            {
-                return addCard("18.99", Card.CardType.GOLD, Card.CardType.GOLD.getUpperLimit(), "0");
-            }
-            else
-            {
-                return addCard("29.99", Card.CardType.SILVER, Card.CardType.SILVER.getUpperLimit(), "0");
-            }
-        }
-        else
-        {
-            if (as >= in * 6)
-            {
-                return addCard("13.99", Card.CardType.GUNGA, Card.CardType.GUNGA.getLowerLimit(), "0");
-            }
-            else if (as < in * 4 && as > in / 4)
-            {
-                return addCard("15.99", Card.CardType.PLATINUM, Card.CardType.PLATINUM.getUpperLimit(), "0");
-            }
-            else
-            {
-                return addCard("17.99", Card.CardType.GOLD, Card.CardType.GOLD.getUpperLimit(), "0");
-            }
-        }
-    }
-
-    private Card addCard(String apr, Card.CardType type, String limit, String bal) //too many lines to type
-    {
-        java.util.Random r = new java.util.Random();
-        int num = r.nextInt(999) + 1000;
-        return new Card(userLoggedIn, apr, String.valueOf(num), type, new BigDecimal(limit), new BigDecimal(bal));
-
-    }
-
-    // ===================================== ON CLICKS (SWITCH SCENES) =====================================
 
 
     public void onApplyCardUpgradeClick(ActionEvent actionEvent)
@@ -454,6 +369,25 @@ public class CreditCardPageController implements Controller
 
       stageHandler.openNewScene("credit_card_application", userLoggedIn);
 
-        //Updated my bro!
+    }
+
+    private void preloadTextFields(User user)
+    {
+        card = user.getCards().get(0);
+
+        FULL_NAME_IN_CARD.setText(user.getFirstName().toUpperCase() + " " + userLoggedIn.getLastName().toUpperCase());
+        CARD_NUMBER_IN_CARD.setText(user.getCards().get(0).getCardNumber());
+        CREDIT_CARD_NUMBER.setText(card.getCardNumber());
+        APR.setText(card.getApr());
+        CREDIT_CARD_BALANCE.setText(card.getBalance().toString());
+        CREDIT_CARD_TYPE.setText(card.getCardType().toString());
+        CVV_NUMBER.setText(card.getCID());
+        CREDIT_CARD_TYPE.setText(card.getCardType().toString());
+        CARD_ISSUED_DATE.setText(card.getDateIssued().format(DateTimeFormatter.ofPattern("MM/yyyy")));
+        CARD_EXPIRY_DATE.setText(card.getExpirationDate().format(DateTimeFormatter.ofPattern("MM/yyyy")));
+        EXPR_DATE.setText(card.getExpirationDate().format(DateTimeFormatter.ofPattern("MM/yyyy")));
+        CARD_ENABLED.setText(card.isDisabled() ? "No" : "Yes");
+        DISABLE_CARD.setText(card.isDisabled() ? "Enable Card" : DISABLE_CARD.getText());
+        CREDIT_CARD_LIMIT.setText((card.getLimit().toBigInteger().intValue() != -1) ? card.getLimit().toPlainString() : "No Limit");
     }
 }

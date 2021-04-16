@@ -5,6 +5,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import sample.actions.OnButtonExited;
 import sample.actions.OnButtonHovered;
 import sample.core.interfaces.Controller;
@@ -24,6 +26,9 @@ import java.util.ResourceBundle;
 
 public class CardApplicationController implements Controller
 {
+
+    @GungaObject
+    private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
 
     @FXML
     private ResourceBundle resources;
@@ -58,17 +63,25 @@ public class CardApplicationController implements Controller
     @GungaObject
     private OnButtonExited onButtonExited;
 
+    @GungaObject
     private StageHandler stageHandler;
+
+    @GungaObject
     private FileHandler fileHandler;
 
     /**
      * @param user
+     *      User Logged in
+     * @param fileHandler
+     *      Main File Handler
+     * @param stageHandler
+     *      Main Stage Handler
      */
     @Override
-    public void initData(User user, StageHandler handler, FileHandler fileHandler)
+    public void initData(User user, StageHandler stageHandler, FileHandler fileHandler)
     {
         userLoggedIn = user;
-        this.stageHandler = handler;
+        this.stageHandler = stageHandler;
         this.fileHandler = fileHandler;
     }
 
@@ -198,11 +211,11 @@ public class CardApplicationController implements Controller
         stageHandler.close("credit_card_application");
     }
 
-    private Card addCard(String apr, Card.CardType type, String limit, String bal) //too many lines to type
+    private Card addCard(String apr, Card.CardType type, String limit) //too many lines to type
     {
         java.util.Random r = new java.util.Random();
         int num = r.nextInt(999) + 1000;
-        return new Card(userLoggedIn, apr, String.valueOf(num), type, new BigDecimal(limit), new BigDecimal(bal));
+        return new Card(userLoggedIn, apr, String.valueOf(num), type, new BigDecimal(limit), new BigDecimal("0"));
 
     }
 
@@ -220,45 +233,45 @@ public class CardApplicationController implements Controller
         {
             if (as >= in * 2)
             {
-                return addCard("18.99", Card.CardType.GOLD, Card.CardType.GOLD.getLowerLimit(), "0");
+                return addCard("18.99", Card.CardType.GOLD, Card.CardType.GOLD.getLowerLimit());
             }
             else if (as < in * 2 && as > in / 2)
             {
-                return addCard("20.99", Card.CardType.SILVER, Card.CardType.SILVER.getLowerLimit(), "0");
+                return addCard("20.99", Card.CardType.SILVER, Card.CardType.SILVER.getLowerLimit());
             }
             else
             {
-                return addCard("22.99", Card.CardType.BRONZE, Card.CardType.BRONZE.getLowerLimit(), "0");
+                return addCard("22.99", Card.CardType.BRONZE, Card.CardType.BRONZE.getLowerLimit());
             }
         }
         else if (in > 20000 && in <= 150000)
         {
             if (as >= in * 4)
             {
-                return addCard("29.99", Card.CardType.SILVER, Card.CardType.SILVER.getUpperLimit(), "0");
+                return addCard("29.99", Card.CardType.SILVER, Card.CardType.SILVER.getUpperLimit());
             }
             else if (as < in * 3 && as > in / 3)
             {
-                return addCard("18.99", Card.CardType.GOLD, Card.CardType.GOLD.getUpperLimit(), "0");
+                return addCard("18.99", Card.CardType.GOLD, Card.CardType.GOLD.getUpperLimit());
             }
             else
             {
-                return addCard("15.99", Card.CardType.PLATINUM, Card.CardType.PLATINUM.getLowerLimit(), "0");
+                return addCard("15.99", Card.CardType.PLATINUM, Card.CardType.PLATINUM.getLowerLimit());
             }
         }
         else
         {
             if (as >= in * 6)
             {
-                return addCard("17.99", Card.CardType.GOLD, Card.CardType.GOLD.getUpperLimit(), "0");
+                return addCard("17.99", Card.CardType.GOLD, Card.CardType.GOLD.getUpperLimit());
             }
             else if (as < in * 4 && as > in / 4)
             {
-                return addCard("15.99", Card.CardType.PLATINUM, Card.CardType.PLATINUM.getUpperLimit(), "0");
+                return addCard("15.99", Card.CardType.PLATINUM, Card.CardType.PLATINUM.getUpperLimit());
             }
             else
             {
-                return addCard("13.99", Card.CardType.GUNGA, Card.CardType.GUNGA.getLowerLimit(), "0");
+                return addCard("13.99", Card.CardType.GUNGA, Card.CardType.GUNGA.getLowerLimit());
             }
         }
     }

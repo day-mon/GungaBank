@@ -24,6 +24,7 @@ public class OnButtonHovered implements EventHandler<MouseEvent>
             buttons.add(buttonInList);
         }
     }
+
     /**
      * Invoked when a specific event of the type for which this handler is
      * registered happens.
@@ -33,7 +34,7 @@ public class OnButtonHovered implements EventHandler<MouseEvent>
     @Override
     public void handle(MouseEvent event)
     {
-        Button button = (Button)event.getSource();
+        Button button = (Button) event.getSource();
         if (buttons.contains(button))
         {
             button.setStyle(GungaBankConstants.BUTTON_HOVER_COLOR_STYLE);

@@ -20,7 +20,7 @@ public class Card implements Serializable
     private String apr;
     private String pin;
     private String cid;
-    private LocalDateTime experationDate;
+    private LocalDateTime expirationDate;
     private LocalDateTime dateIssued;
     private CardType cardType;
     private BigDecimal limit;
@@ -40,7 +40,7 @@ public class Card implements Serializable
         this.totalLimitForUse = limit;
         this.cid = generateRandomCID();
         this.cardNumber = getCardNameMoified();
-        this.experationDate = LocalDateTime.now().plusSeconds(157788000);
+        this.expirationDate = LocalDateTime.now().plusSeconds(157788000);
         this.dateIssued = LocalDateTime.now();
         this.isDisabled = false;
     }
@@ -53,8 +53,6 @@ public class Card implements Serializable
     public void setCardHolder(User cardHolder)
     {
         this.cardHolder = cardHolder;
-        save();
-
     }
 
     public String getCardNumber()
@@ -65,8 +63,6 @@ public class Card implements Serializable
     public void setCardNumber(String cardNumber)
     {
         this.cardNumber = cardNumber;
-        save();
-
     }
 
     public String getApr()
@@ -77,8 +73,6 @@ public class Card implements Serializable
     public void setApr(String apr)
     {
         this.apr = apr;
-        save();
-
     }
 
     public String getPin()
@@ -89,8 +83,6 @@ public class Card implements Serializable
     public void setPin(String pin)
     {
         this.pin = pin;
-        save();
-
     }
 
     public String getCID()
@@ -101,19 +93,16 @@ public class Card implements Serializable
     public void setCid(String cid)
     {
         this.cid = cid;
-        save();
-
     }
 
     public LocalDateTime getExpirationDate()
     {
-        return experationDate;
+        return expirationDate;
     }
 
-    public void setExperationDate(LocalDateTime expirationDate)
+    public void setExpirationDate(LocalDateTime expirationDate)
     {
-        this.experationDate = expirationDate;
-        save();
+        this.expirationDate = expirationDate;
     }
 
     public LocalDateTime getDateIssued()
@@ -124,7 +113,6 @@ public class Card implements Serializable
     public void setDateIssued(LocalDateTime dateIssued)
     {
         this.dateIssued = dateIssued;
-        save();
     }
 
     public CardType getCardType()
@@ -135,7 +123,6 @@ public class Card implements Serializable
     public void setCardType(CardType cardType)
     {
         this.cardType = cardType;
-        save();
     }
 
     public BigDecimal getLimit()
@@ -146,7 +133,6 @@ public class Card implements Serializable
     public void setLimit(BigDecimal limit)
     {
         this.limit = limit;
-        save();
     }
 
     public BigDecimal getBalance()
@@ -157,7 +143,6 @@ public class Card implements Serializable
     public void setBalance(BigDecimal balance)
     {
         this.balance = balance;
-        save();
     }
 
     public boolean isDisabled()
@@ -173,7 +158,6 @@ public class Card implements Serializable
     public void setDisabled(boolean disabled)
     {
         this.isDisabled = disabled;
-        save();
     }
 
     private String generateRandomCID()
@@ -209,12 +193,8 @@ public class Card implements Serializable
     {
         this.cid = generateRandomCID();
         this.cardNumber = getCardNameMoified();
-        this.experationDate = LocalDateTime.now().plusSeconds(157788000);
+        this.expirationDate = LocalDateTime.now().plusSeconds(157788000);
         this.dateIssued = LocalDateTime.now();
-    }
-
-    private void save()
-    {
     }
 
 

@@ -233,9 +233,6 @@
                         <Button fx:id="CARD_UPGRADE" mnemonicParsing="false" onAction="#onApplyCardUpgradeClick"
                                 prefHeight="25.0" prefWidth="159.0" style="-fx-background-color: #212121;"
                                 text="Apply for Card Upgrade" textFill="WHITE"/>
-                        <Button fx:id="LIMIT_INCREASE" mnemonicParsing="false" onAction="#onLimitIncreaseClick"
-                                prefHeight="25.0" prefWidth="159.0" style="-fx-background-color: #212121;"
-                                text="Apply for a Limit Increase" textFill="WHITE"/>
                      </children>
                   </VBox>
                </children>

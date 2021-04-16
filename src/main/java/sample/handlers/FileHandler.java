@@ -7,6 +7,8 @@ import sample.util.operations.StringOperations;
 import sample.util.structures.HashDictionary;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Date;
 
 public class FileHandler
@@ -17,16 +19,12 @@ public class FileHandler
     private HashDictionary<String, User> users;
 
 
+
     public FileHandler()
     {
         initFolder();
         initFile();
         users = initUsers();
-        users.put("1", new User("Ryan", "Ruffing", "123", new Date(), "2142323232", "239239232", StringOperations.hashPassword("123")));
-        users.put("2", new User("Dom", "D", "123", new Date(), "2142323232", "239239232", StringOperations.hashPassword("123")));
-        users.put("3", new User("Ryan", "L.", "123", new Date(), "2142323232", "239239232", StringOperations.hashPassword("123")));
-
-
     }
 
     private void initFolder()
@@ -68,6 +66,9 @@ public class FileHandler
     }
 
 
+    /**
+     * Function to universally write to the user.ser file.
+     */
     public void writeToFile()
     {
         try
@@ -86,11 +87,16 @@ public class FileHandler
     }
 
 
+    /**
+     * Fills users HashDictionary with values in ser file.
+     * @return HashDictionary<String, User> users in ser file
+     */
     public static HashDictionary<String, User> initUsers()
     {
         HashDictionary<String, User> users = new HashDictionary<>();
         try
         {
+            if ( Files.size ( Paths.get( USER_FILE.getAbsolutePath() ) )  == 0 ) return users;
             FileInputStream fis = new FileInputStream(USER_FILE);
             ObjectInputStream ois = new ObjectInputStream(fis);
             users = (HashDictionary<String, User>) ois.readObject();

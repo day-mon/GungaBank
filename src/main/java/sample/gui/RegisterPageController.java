@@ -73,9 +73,6 @@ public class RegisterPageController implements Controller
     @GungaObject
     private OnButtonExited exitEvent;
 
-    //@GungaObject
-    //private OnButtonClicked onButtonClicked;
-
     @GungaObject
     private StageHandler stageHandler;
 
@@ -139,7 +136,10 @@ public class RegisterPageController implements Controller
         buttons.add(registerButton);
         hoverEvent = new OnButtonHovered(buttons);
         exitEvent = new OnButtonExited(buttons);
-        //onButtonClicked = new OnButtonClicked(buttons, this);
+
+        LOGGER.info("Register scene successfully loaded!");
+
+
     }
 
 

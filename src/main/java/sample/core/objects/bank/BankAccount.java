@@ -17,15 +17,15 @@ public class BankAccount implements Serializable
     private AccountTypes accountType;
     private ArrayList<Transaction> transactions;
     private BigDecimal balance;
-    private long accNum;
+    private long accountNumber;
 
     public BankAccount(User user, AccountTypes type)
     {
         owner = user;
         accountType = type;
-        accNum = generateAccNum();
+        accountNumber = generateAccNum();
         transactions = new ArrayList<>();
-        transactions.add(new Transaction(new BigDecimal(1000), accNum, owner.getDateOfCreation(), Transaction.TransactionType.CREDIT));
+        transactions.add(new Transaction(new BigDecimal(1000), accountNumber, owner.getDateOfCreation(), Transaction.TransactionType.CREDIT));
         balance = new BigDecimal("1000");
     }
 
@@ -33,17 +33,17 @@ public class BankAccount implements Serializable
     {
         Random r = new Random();
 
-        String num = ACC_NUM_PREFIX;
+        StringBuilder num = new StringBuilder(ACC_NUM_PREFIX);
         for (int i = 0; i < 10; i++)
         {
-            num += r.nextInt(10);
+            num.append(r.nextInt(10));
         }
-        return Long.parseLong(num);
+        return Long.parseLong(num.toString());
     }
 
     public long getAccountNumber()
     {
-        return accNum;
+        return accountNumber;
     }
 
     public User getOwner()

@@ -10,7 +10,7 @@ public class Transaction implements Serializable
 
 
     /**
-     * Sender and Reciever
+     * Sender and Receiver
      */
     private User sender;
     private BigDecimal amount;
@@ -83,9 +83,6 @@ public class Transaction implements Serializable
             this.transactionColor = transactionColor;
             this.transactionType = transactionType;
         }
-
-
-
 
         public Color getTransactionColor()
         {

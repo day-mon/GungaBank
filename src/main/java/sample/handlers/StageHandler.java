@@ -166,38 +166,6 @@ public class StageHandler
         }
     }
 
-    public void switchToStage(String stageToSwitchTo, Parent root)
-    {
-
-        Iterator<StageWrapper> s = stages.elements();
-        String resource_name = "/" + stageToSwitchTo;
-
-        while (s.hasNext())
-        {
-            StageWrapper element = s.next();
-            Stage stg = element.getStage();
-            StageWrapper wrap = stages.get(resource_name);
-            if (stg.isShowing())
-            {
-                try
-                {
-                    if (Objects.equals(stg, wrap.getStage())) return;
-                    stg.hide();
-                    scene = new Scene(root, wrap.getHeight(), wrap.getWidth());
-                    Stage stage = wrap.getStage();
-                    stage.setScene(scene);
-                    stage.show();
-
-                    break;
-                }
-                catch (Exception e)
-                {
-                    LOGGER.error("Error occurred: {}", e.getCause(), e);
-                }
-            }
-        }
-    }
-
 
     public void close(String name)
     {
