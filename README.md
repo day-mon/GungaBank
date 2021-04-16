@@ -97,9 +97,9 @@ Distributed under the MIT License. See `LICENSE` for more information.
 <!-- CONTACT -->
 ## Contact
 
-Damon M. --> [Email](mailto:dam286@pitt.edu)
-Ryan L. --> [Email](mailto:dam286@pitt.edu)
-Shane W. --> [Email](mailto:dam286@pitt.edu)
+Damon M. --> [Email](mailto:dam286@pitt.edu) <br>
+Ryan L. --> [Email](mailto:rpl18@pitt.edu) <br>
+Shane W. --> [Email](mailto:saw190@pitt.edu) 
 
 
 Project Link: [https://github.com/tykoooo/GungaBank](https://github.com/tykoooo/GungaBank)
