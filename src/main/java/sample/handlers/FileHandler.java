@@ -100,6 +100,8 @@ public class FileHandler
             FileInputStream fis = new FileInputStream(USER_FILE);
             ObjectInputStream ois = new ObjectInputStream(fis);
             users = (HashDictionary<String, User>) ois.readObject();
+            fis.close();
+            ois.close();
         }
         catch (Exception e)
         {
