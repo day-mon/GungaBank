@@ -4,7 +4,6 @@
 
 package sample.gui;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -95,13 +94,13 @@ public class LoginPageController implements Controller
 
     }
 
-    public void onRegisterButtonClick(ActionEvent actionEvent)
+    public void onRegisterButtonClick()
     {
         stageHandler.switchToStage(null, "register");
     }
 
 
-    public void onLoginClick(ActionEvent actionEvent)
+    public void onLoginClick()
     {
         HashDictionary<String, User> users = fileHandler.getUsers();
         String login = usernameTextField.getText();

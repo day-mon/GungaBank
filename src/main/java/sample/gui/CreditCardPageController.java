@@ -1,21 +1,12 @@
 package sample.gui;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import sample.Main;
 import sample.actions.OnButtonExited;
 import sample.actions.OnButtonHovered;
 import sample.actions.OnIconClicked;
@@ -28,7 +19,6 @@ import sample.handlers.StageHandler;
 import sample.util.structures.ArrayList;
 import sample.util.structures.HashDictionary;
 
-import java.math.BigDecimal;
 import java.net.URL;
 import java.time.format.DateTimeFormatter;
 import java.util.Iterator;
@@ -364,7 +354,7 @@ public class CreditCardPageController implements Controller
 
 
 
-    public void onApplyCardUpgradeClick(ActionEvent actionEvent)
+    public void onApplyCardUpgradeClick()
     {
 
       stageHandler.openNewScene("credit_card_application", userLoggedIn);

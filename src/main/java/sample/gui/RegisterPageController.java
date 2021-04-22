@@ -29,7 +29,7 @@ import java.util.Optional;
 public class RegisterPageController implements Controller
 {
 
-    private Logger LOGGER = LoggerFactory.getLogger(this.getClass());
+    private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
 
     @FXML
     private TextField firstNameTextField;

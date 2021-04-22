@@ -17,7 +17,7 @@ public class BankAccount implements Serializable
     private AccountTypes accountType;
     private ArrayList<Transaction> transactions;
     private BigDecimal balance;
-    private long accountNumber;
+    private final long accountNumber;
 
     public BankAccount(User user, AccountTypes type)
     {

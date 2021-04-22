@@ -24,7 +24,7 @@ public class Card implements Serializable
     private LocalDateTime dateIssued;
     private CardType cardType;
     private BigDecimal limit;
-    private BigDecimal totalLimitForUse;
+    private final BigDecimal totalLimitForUse;
     private BigDecimal balance;
     private boolean isDisabled;
 
@@ -206,9 +206,9 @@ public class Card implements Serializable
         PLATINUM("Platinum", 10000, 50000),
         GUNGA("Gunga", -1, -1);
 
-        private int lowerLimit;
-        private int upperLimit;
-        private String cardName;
+        private final int lowerLimit;
+        private final int upperLimit;
+        private final String cardName;
 
         CardType(String cardName, int lowerLimit, int upperLimit)
         {

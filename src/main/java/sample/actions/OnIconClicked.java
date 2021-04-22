@@ -23,9 +23,9 @@ public class OnIconClicked implements EventHandler<MouseEvent>
     private final ArrayList<ImageView> icons;
     private final Logger ICON_HANDLER;
 
-    private StageHandler stageHandler;
-    private FileHandler fileHandler;
-    private User user;
+    private final StageHandler stageHandler;
+    private final FileHandler fileHandler;
+    private final User user;
 
     public OnIconClicked(ArrayList<ImageView> iconsPassing, User user, StageHandler stageHandler, FileHandler fileHandler)
     {

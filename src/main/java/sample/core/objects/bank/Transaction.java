@@ -75,8 +75,8 @@ public class Transaction implements Serializable
         DEPOSIT("DEPOSIT", Color.GREEN),
         CREDIT("CREDIT", Color.green);
 
-        private String transactionType;
-        private Color transactionColor;
+        private final String transactionType;
+        private final Color transactionColor;
 
         TransactionType(String transactionType, Color transactionColor)
         {

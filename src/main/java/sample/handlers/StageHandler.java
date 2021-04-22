@@ -22,8 +22,8 @@ import java.util.Objects;
 public class StageHandler
 {
     private final static Logger LOGGER = LoggerFactory.getLogger(StageHandler.class);
-    private HashDictionary<String, StageWrapper> stages;
-    private GungaBank gungaBank;
+    private final HashDictionary<String, StageWrapper> stages;
+    private final GungaBank gungaBank;
     private static Scene scene;
 
     public StageHandler(GungaBank gungaBank) {
@@ -180,7 +180,7 @@ public class StageHandler
         {
             StageWrapper wrap = stages.get("/login");
             primaryStage = stages.get("/login").getStage();
-            scene = new Scene(loadFXML("/login"), wrap.getHeight(), wrap.getWidth());
+            scene = new Scene(loadFXML(), wrap.getHeight(), wrap.getWidth());
 
             LoginPageController controller = wrap.getLoader().getController();
             controller.initData(null, gungaBank.getStageHandler(), gungaBank.getFileHandler());
@@ -197,9 +197,9 @@ public class StageHandler
         }
     }
 
-    private Parent loadFXML(String title) throws IOException
+    private Parent loadFXML() throws IOException
     {
-        return getLoader(title).load();
+        return getLoader("/login").load();
     }
 
 

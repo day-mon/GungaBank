@@ -111,7 +111,6 @@ public class CardApplicationController implements Controller
     {
         boolean update = false;
         Button buttonClicked = (Button) event.getSource();
-        System.out.println(buttonClicked.getId());
         int currentErrors = 0;
         HashDictionary<Integer, String> errorReasons = new HashDictionary<>();
 

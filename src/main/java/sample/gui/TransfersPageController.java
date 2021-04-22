@@ -2,7 +2,6 @@ package sample.gui;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -50,7 +49,7 @@ public class TransfersPageController implements Controller
     private URL location;
 
     @FXML
-    private ObservableList<Transaction> s = FXCollections.observableArrayList();
+    private final ObservableList<Transaction> s = FXCollections.observableArrayList();
 
     @FXML
     private ImageView homeIcon;
@@ -145,9 +144,8 @@ public class TransfersPageController implements Controller
 
     }
 
-    public void transferMoneyButtonClicked(ActionEvent actionEvent)
+    public void transferMoneyButtonClicked()
     {
-        System.out.println("Event triggered");
         String amountTosend = amountToSend.getText();
         String accountNumber = accountNumberTF.getText();
 
@@ -263,10 +261,8 @@ public class TransfersPageController implements Controller
         while (it.hasNext())
         {
             User u = it.next();
-            System.out.println(u.toString());
             if (u.getBankAccounts().size() > 0)
             {
-                System.out.println("First if statement is okay!");
                 if (Long.parseLong(accountNumber) == u.getBankAccounts().get(0).getAccountNumber())
                 {
                     u.getBankAccounts().get(0).addToBalance(transaction.getAmount());

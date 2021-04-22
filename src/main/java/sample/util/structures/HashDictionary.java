@@ -29,7 +29,7 @@ public class HashDictionary<K, V> implements Serializable, Dictionary<K, V>
         private int size;
     private static final int DEFAULT_CAPACITY = 17;
     private static final float LOAD_FACTOR = 0.75f;
-    private float loadfactor;
+    private final float loadfactor;
 
     public HashDictionary()
     {

@@ -12,13 +12,13 @@ import java.io.IOException;
 
 public class StageWrapper
 {
-    private FXMLLoader loader;
-    private Stage stage;
-    private String name;
-    private String resourceName;
-    private int height;
-    private int width;
-    private StageStyle style;
+    private final FXMLLoader loader;
+    private final Stage stage;
+    private final String name;
+    private final String resourceName;
+    private final int height;
+    private final int width;
+    private final StageStyle style;
 
 
 

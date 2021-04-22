@@ -16,7 +16,7 @@ public class FileHandler
     private final static Logger LOGGER = LoggerFactory.getLogger(FileHandler.class);
     public final static File USER_FOLDER = new File("src/main/java/sample/files");
     public final static File USER_FILE = new File(USER_FOLDER, "users.ser");
-    private HashDictionary<String, User> users;
+    private final HashDictionary<String, User> users;
 
 
 
