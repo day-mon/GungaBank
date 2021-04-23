@@ -26,10 +26,10 @@ import java.util.Objects;
 public class HashDictionary<K, V> implements Serializable, Dictionary<K, V>
 {
     private Object[] entries; //array of Nodes
-        private int size;
+    private int size;
     private static final int DEFAULT_CAPACITY = 17;
     private static final float LOAD_FACTOR = 0.75f;
-    private final float loadfactor;
+    private float loadfactor;
 
     public HashDictionary()
     {
