@@ -16,6 +16,7 @@ import sample.handlers.StageHandler;
 import sample.util.structures.ArrayList;
 
 import java.net.URL;
+import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
 public class ProfilePageController implements Controller
@@ -117,7 +118,7 @@ public class ProfilePageController implements Controller
         FIRST_NAME.setText(user.getFirstName());
         LAST_NAME.setText(user.getLastName());
         LOGIN_ID.setText(user.getEmail());
-        DATE_OF_BIRTH.setText(user.getDateOfBirth().toString());
+        DATE_OF_BIRTH.setText(user.getDateOfBirth().format(DateTimeFormatter.ofPattern("MM/dd/yyyy")));
         NUMBER_OF_ACCOUNTS.setText(Integer.toString(user.getBankAccounts().size()));
         NUMBER_OF_CARDS.setText(Integer.toString(user.getCards().size()));
         ACCOUNT_NUMBER.setText(Long.toString(bankAccount.getAccountNumber()));

@@ -20,7 +20,11 @@ import sample.util.structures.HashDictionary;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Iterator;
+import java.util.Locale;
 import java.util.Optional;
 
 //mport sample.actions.OnButtonClicked;
@@ -222,7 +226,7 @@ public class RegisterPageController implements Controller
                     {
                         errorReasons.put(currentErrors++, "Your email field is empty!");
                     }
-                    else if (!Checks.emailVaildaotr(currentField.getText()))
+                    else if (!Checks.emailValidator(currentField.getText()))
                     {
                         errorReasons.put(currentErrors++, "Your email field is wrong!");
                     }
@@ -254,7 +258,7 @@ public class RegisterPageController implements Controller
                     {
                         errorReasons.put(currentErrors++, "Your Password field is empty!");
                     }
-                    else if (!Checks.paswordValidator(currentField.getText()))
+                    else if (!Checks.passwordValidator(currentField.getText()))
                     {
                         errorReasons.put(currentErrors++, "Password field must be contain a digit (4-20), a number, special char, upper and lower case letter at least once!");
                     }
@@ -321,9 +325,7 @@ public class RegisterPageController implements Controller
                 while (keys.hasNext())
                 {
                     int element = keys.next();
-                    /*
-                      Could use a stringbuilder but meh.
-                     */
+
                     errors.append(errorReasons.get(element)).append("\n");
                     size++;
                 }
@@ -334,18 +336,12 @@ public class RegisterPageController implements Controller
                 return;
             }
 
-            alert = new Alert(Alert.AlertType.CONFIRMATION,
-                    "You have successfully registered \nSending you back to the login page");
-
-
-            SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyy");
-
             fileHandler.putUser(
                     new User(
                             firstNameTextField.getText(),
                             lastNameTextField.getText(),
                             emailTextField.getText(),
-                            format.parse(dobTextField.getText()),
+                            LocalDate.parse(dobTextField.getText(), DateTimeFormatter.ofPattern("MM/dd/yyyy").withLocale(Locale.ENGLISH)).atStartOfDay(),
                             phoneNumberTextField.getText(),
                             ssnTextField.getText(),
                             StringOperations.hashPassword(passwordField.getText())
@@ -364,7 +360,6 @@ public class RegisterPageController implements Controller
     {
         try
         {
-            System.out.println(stageHandler == null);
             stageHandler.switchToStage("login");
             clearTextFields();
         }
@@ -387,7 +382,7 @@ public class RegisterPageController implements Controller
         textFields.forEach(textField -> textField.setText(""));
     }
 
-    private boolean checkEmail(String email) throws IOException
+    private boolean checkEmail(String email)
     {
         return fileHandler.getUsers().containsKey(email);
     }

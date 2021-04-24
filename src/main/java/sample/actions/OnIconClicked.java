@@ -52,10 +52,9 @@ public class OnIconClicked implements EventHandler<MouseEvent>
     {
         ImageView imageClicked = (ImageView) event.getSource();
         String imageClickedName = imageClicked.getId();
-        String stageToSwitch = "";
+        String stageToSwitch;
         switch (imageClickedName)
         {
-
             case "transferIcon":
                 stageToSwitch = "transfers";
                 stageHandler.switchToStage(user, stageToSwitch);

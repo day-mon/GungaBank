@@ -109,7 +109,7 @@ public class CardApplicationController implements Controller
     @FXML
     void onApplyClicked(ActionEvent event)
     {
-        boolean update = false;
+
         Button buttonClicked = (Button) event.getSource();
         int currentErrors = 0;
         HashDictionary<Integer, String> errorReasons = new HashDictionary<>();
@@ -158,7 +158,7 @@ public class CardApplicationController implements Controller
         }
         // Evals users card
 
-        update = userLoggedIn.getCards().size() > 0;
+        boolean update = userLoggedIn.getCards().size() > 0;
         Card usersCard = eval();
 
         if (update) {

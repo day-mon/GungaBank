@@ -2,18 +2,18 @@ package sample.util.structures.interfaces;
 
 public interface Set<T>
 {
-    public boolean add(T obj);
+    boolean add(T obj);
 
-    public void clear();
+    void clear();
 
-    public int size();
+    int size();
 
-    public Object[] toArray();
+    Object[] toArray();
 
-    public boolean remove(T obj);
+    boolean remove(T obj);
 
-    public boolean contains(T obj);
+    boolean contains(T obj);
 
-    public boolean isEmpty();
+    boolean isEmpty();
 
 }

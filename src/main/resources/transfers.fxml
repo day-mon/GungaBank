@@ -59,7 +59,7 @@
                           <columns>
                             <TableColumn fx:id="dateColumn" prefWidth="112.0" style="-fx-text-fill: #000000;" text="Date" />
                             <TableColumn fx:id="accountColumn" prefWidth="131.0" style="-fx-text-fill: #000000;" text="Account #" />
-                              <TableColumn fx:id="ammountColumn" prefWidth="156.0" style="-fx-text-fill: #000000;" text="Amount" />
+                              <TableColumn fx:id="amountColumn" prefWidth="156.0" style="-fx-text-fill: #000000;" text="Amount" />
                               <TableColumn fx:id="transactionColumn" prefWidth="108.0" style="-fx-text-fill: #000000;" text="Transaction Type" />
                           </columns>
                         </TableView>

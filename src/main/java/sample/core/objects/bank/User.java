@@ -3,6 +3,7 @@ package sample.core.objects.bank;
 import sample.util.structures.ArrayList;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.Objects;
 
@@ -28,7 +29,7 @@ public class User implements Serializable
     /**
      *
      */
-    private Date dateOfBirth;
+    private LocalDateTime dateOfBirth;
     /**
      *
      */
@@ -59,7 +60,7 @@ public class User implements Serializable
     private long netWorth;
 
 
-    public User(String firstName, String lastName, String email, Date dateOfBirth, String phoneNumber, String ssn, String hashedPass)
+    public User(String firstName, String lastName, String email, LocalDateTime dateOfBirth, String phoneNumber, String ssn, String hashedPass)
     {
         this.firstName = firstName;
         this.lastName = lastName;
@@ -113,12 +114,12 @@ public class User implements Serializable
         this.email = email;
     }
 
-    public Date getDateOfBirth()
+    public LocalDateTime getDateOfBirth()
     {
         return dateOfBirth;
     }
 
-    public void setDateOfBirth(Date dateOfBirth)
+    public void setDateOfBirth(LocalDateTime dateOfBirth)
     {
         this.dateOfBirth = dateOfBirth;
     }

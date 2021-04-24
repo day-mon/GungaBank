@@ -97,7 +97,8 @@ public class ArrayList<E> implements ListInterface<E>, Serializable, Iterable<E>
         return true;
     }
 
-    public void addAll(E... e)
+    @SafeVarargs
+    public final void addAll(E... e)
     {
         for (E ele : e)
         {

@@ -1,14 +1,11 @@
 package sample.core.objects;
 
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import sample.GungaBankConstants;
 import sample.Main;
-
-import java.io.IOException;
 
 public class StageWrapper
 {
@@ -19,7 +16,6 @@ public class StageWrapper
     private final int height;
     private final int width;
     private final StageStyle style;
-
 
 
     public StageWrapper(String name, int width, int height)
@@ -100,11 +96,5 @@ public class StageWrapper
     {
         return resourceName;
     }
-
-    private static Parent loadFXML(String title) throws IOException
-    {
-        return new FXMLLoader(Main.class.getResource(title + ".fxml")).load();
-    }
-
-
 }
+

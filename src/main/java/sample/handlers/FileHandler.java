@@ -3,14 +3,13 @@ package sample.handlers;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import sample.core.objects.bank.User;
-import sample.util.operations.StringOperations;
 import sample.util.structures.HashDictionary;
 
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.Date;
 
+@SuppressWarnings("unchecked")
 public class FileHandler
 {
     private final static Logger LOGGER = LoggerFactory.getLogger(FileHandler.class);

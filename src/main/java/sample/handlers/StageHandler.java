@@ -81,8 +81,10 @@ public class StageHandler
                     stg.hide();
                     StageWrapper wrap = stages.get(resource_name);
                     FXMLLoader loader = getLoader(resource_name);
+
                     loader.setController(null);
                     loader.setRoot(null);
+
                     Parent root = wrap.getLoader().load();
                     Controller controller = getLoader(resource_name).getController();
                     controller.initData(null, gungaBank.getStageHandler(), gungaBank.getFileHandler());

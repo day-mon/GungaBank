@@ -43,7 +43,7 @@
                   <Image url="@icons8_user_36px_4.png" />
                </image>
             </ImageView>
-            <ImageView id="passswordIcon" layoutX="94.0" layoutY="244.0">
+            <ImageView id="passwordIcon" layoutX="94.0" layoutY="244.0">
                <image>
                   <Image url="@icons8_lock_36px_2.png" />
                </image>

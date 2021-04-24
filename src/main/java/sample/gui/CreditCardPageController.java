@@ -357,7 +357,7 @@ public class CreditCardPageController implements Controller
     public void onApplyCardUpgradeClick()
     {
 
-      stageHandler.openNewScene("credit_card_application", userLoggedIn);
+        stageHandler.openNewScene("credit_card_application", userLoggedIn);
 
     }
 

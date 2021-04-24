@@ -12,13 +12,13 @@ public interface Dictionary<K,V> {
      * This returns an iterator over the collection of keys.
      * @return key iterator
      */
-    public Iterator<K> keys();
+     Iterator<K> keys();
 
     /**
      * This returns an iterator over the collection of values.
      * @return values iterator
      */
-    public Iterator<V> elements();
+     Iterator<V> elements();
 
     /**
      * If the key is in the collection of keys, return the associated
@@ -27,7 +27,7 @@ public interface Dictionary<K,V> {
      * @param key
      * @return value associated with key
      */
-    public V get(K key);
+     V get(K key);
 
     /**
      * If the key is in the collection of keys, return the associated
@@ -38,7 +38,7 @@ public interface Dictionary<K,V> {
      * @param key
      * @return value associated with key
      */
-    public V remove(K key);
+    V remove(K key);
 
     /**
      * If the key is in the collection of keys, update the associated
@@ -51,17 +51,17 @@ public interface Dictionary<K,V> {
      * @param value
      * @return
      */
-    public V put(K key, V value);
+    V put(K key, V value);
 
     /**
      * You know what this does.
      * @return
      */
-    public boolean isEmpty();
+    boolean isEmpty();
 
     /**
      * You know what this does.
      * @return
      */
-    public int size();
+    int size();
 }

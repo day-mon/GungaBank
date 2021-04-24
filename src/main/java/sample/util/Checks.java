@@ -10,7 +10,7 @@ public class Checks
         return number.chars().allMatch(Character::isDigit);
     }
 
-    public static boolean emailVaildaotr(String email)
+    public static boolean emailValidator(String email)
     {
         // Checks pattern for emails
         final String EMAIL_REGEX = "^(.+)@(.+)$";
@@ -19,7 +19,7 @@ public class Checks
         return match.matches();
     }
 
-    public static boolean paswordValidator(String pass)
+    public static boolean passwordValidator(String pass)
     {
         final String PASS_REGEX = "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{4,20}$";
         Pattern pt = Pattern.compile(PASS_REGEX);

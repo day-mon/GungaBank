@@ -1,7 +1,3 @@
-/**
- * Sample Skeleton for 'login.fxml' Controller Class
- */
-
 package sample.gui;
 
 import javafx.fxml.FXML;
@@ -68,8 +64,7 @@ public class LoginPageController implements Controller
     @GungaObject
     private OnButtonExited exited;
 
-    //@GungaObject
-    //private OnButtonClicked buttonClicked;
+
 
     @GungaObject
     private FileHandler fileHandler;

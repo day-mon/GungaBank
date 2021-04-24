@@ -23,28 +23,28 @@ public interface ListInterface<E> {
    * @param e
    * @return
    */
-  public boolean add(int index, E e);
+  boolean add(int index, E e);
 
   /**
    *
    * @param e
    * @return
    */
-  public boolean add(E e);
+  boolean add(E e);
 
   /**
    *
    * @param index
    * @return
    */
-  public E get(int index);
+  E get(int index);
 
   /**
    *
    * @param e
    * @return
    */
-  public int indexOf(E e);
+  int indexOf(E e);
 
   /**
    *
@@ -52,77 +52,77 @@ public interface ListInterface<E> {
    * @param element
    * @return
    */
-  public E set(int index, E element);
+  E set(int index, E element);
 
   /**
    *
    * @param e
    * @return
    */
-  public int lastIndexOf(E e);
+  int lastIndexOf(E e);
 
   /**
    *
    * @param o
    * @return
    */
-  public boolean remove(Object o);
+  boolean remove(Object o);
 
   /**
    *
    * @param index
    * @return
    */
-  public E remove(int index);
+  E remove(int index);
 
   /**
    *
    */
-  public void clear();
+  void clear();
 
   /**
    *
    * @return
    */
-  public int size();
+  int size();
 
   /**
    *
    * @param e
    * @return
    */
-  public boolean contains(E e);
+  boolean contains(E e);
 
   /**
    *
    * @return
    */
-  public boolean isEmpty();
+  boolean isEmpty();
 
   /**
    *
    * @return
    */
-  public Object[] toArray();
+  Object[] toArray();
 
   /**
    *
    * @param e
    * @return
    */
-  public E[] toArray(E[] e);
+  E[] toArray(E[] e);
 
   /**
    *
    * @return
    */
-  public ListIterator<E> listIterator();
+  ListIterator<E> listIterator();
 
   /**
    *
    * @return
    */
-  public default Iterator<E> iterator() {
+  default Iterator<E> iterator() {
     return listIterator();
   }
 }

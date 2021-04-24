@@ -26,9 +26,9 @@ public class StringOperations
 
             StringBuilder hash = new StringBuilder();
 
-            for (int i = 0; i < bytes.length; i++)
+            for (byte aByte : bytes)
             {
-                hash.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16).substring(1));
+                hash.append(Integer.toString((aByte & 0xff) + 0x100, 16).substring(1));
             }
             //Get complete hashed password in hex format
             generatedPassword = hash.toString();

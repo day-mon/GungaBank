@@ -10,6 +10,7 @@ import sample.handlers.StageHandler;
 import sample.util.operations.StringOperations;
 
 import java.nio.file.Paths;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.Scanner;
@@ -17,13 +18,16 @@ import java.util.Scanner;
 
 public class GungaBank extends Application
 {
+    /**
+     * Using Simpleton pattern
+     */
     private static StageHandler stageHandler;
     private static FileHandler fileHandler;
     private final Logger GUNGA_LOGGER;
     private final LocalDateTime bankAppStartTime;
 
 
-    public GungaBank() throws Exception
+    public GungaBank()
     {
         GUNGA_LOGGER = LoggerFactory.getLogger(GungaBank.class);
         fileHandler = new FileHandler();
@@ -49,7 +53,7 @@ public class GungaBank extends Application
      *                     primary stages and will not be embedded in the browser.
      */
     @Override
-    public void start(Stage primaryStage) throws Exception
+    public void start(Stage primaryStage)
     {
         GUNGA_LOGGER.info("======================== [ Initializing GungaBank ] ========================");
         GUNGA_LOGGER.info("Start time:           " + bankAppStartTime);
@@ -63,16 +67,12 @@ public class GungaBank extends Application
     }
 
     @Override
-    public void stop() throws Exception
+    public void stop()
     {
         GUNGA_LOGGER.warn("======================== [ Stopping GungaBank ] ========================");
         System.exit(1);
     }
 
-    public Logger getLogger()
-    {
-        return GUNGA_LOGGER;
-    }
 
     public FileHandler getFileHandler() {
         return fileHandler;
@@ -90,9 +90,9 @@ public class GungaBank extends Application
 
         if (response.toUpperCase().startsWith("Y"))
         {
-            fileHandler.getUsers().put("1", new User("Ryan", "Ruffing", "123", new Date(), "2142323232", "239239232", StringOperations.hashPassword("123")));
-            fileHandler.getUsers().put("2", new User("Dom", "D", "123", new Date(), "2142323232", "239239232", StringOperations.hashPassword("123")));
-            fileHandler.getUsers().put("3", new User("Ryan", "L.", "123", new Date(), "2142323232", "239239232", StringOperations.hashPassword("123")));
+            fileHandler.getUsers().put("1", new User("Ryan", "Ruffing", "123", LocalDateTime.now().minusYears(21), "5079283765", "123456789", StringOperations.hashPassword("123")));
+            fileHandler.getUsers().put("2", new User("Gavin", "Heinrichs", "123", LocalDateTime.now().minusYears(17), "2542665103", "123456789", StringOperations.hashPassword("123")));
+            fileHandler.getUsers().put("3", new User("Stephen", "Ohl", "123", LocalDateTime.now().minusYears(45), "2158922313", "123456789", StringOperations.hashPassword("123")));
             GUNGA_LOGGER.info("There was 3 demo users loaded with the user-names [{}, {}, {}] with the password of 123", 1, 2, 3);
         }
     }

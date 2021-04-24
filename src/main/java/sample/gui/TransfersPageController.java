@@ -27,7 +27,6 @@ import sample.core.other.GungaObject;
 import sample.handlers.FileHandler;
 import sample.handlers.StageHandler;
 import sample.util.Checks;
-import sample.util.operations.AlertOperations;
 import sample.util.operations.StringOperations;
 import sample.util.structures.ArrayList;
 
@@ -76,7 +75,7 @@ public class TransfersPageController implements Controller
     private TableColumn<Transaction, String> accountColumn;
 
     @FXML
-    private TableColumn<Transaction, String> ammountColumn;
+    private TableColumn<Transaction, String> amountColumn;
 
     @FXML
     private TableColumn<Transaction, String> transactionColumn;
@@ -147,12 +146,38 @@ public class TransfersPageController implements Controller
     public void transferMoneyButtonClicked()
     {
         String amountTosend = amountToSend.getText();
-        String accountNumber = accountNumberTF.getText();
+        String accountNumber = accountNumberTF.getText().trim();
+        String userAccountNumber = String.valueOf(userLoggedIn.getBankAccounts().get(0).getAccountNumber());
 
-        if (!Checks.number(amountTosend) && !Checks.number(accountNumber))
+        if (!Checks.number(amountTosend) || !Checks.number(accountNumber))
         {
-            // change this.
-            AlertOperations.AlertShortner("bad", "Invalid Number!", "Please only insert numbers in the sending field!");
+            Alert invalidNumber = new Alert(Alert.AlertType.ERROR, "Please only insert numbers in sending field");
+            invalidNumber.show();
+            return;
+        }
+
+
+        if (!accountNumber.startsWith("814") || accountNumber.length() != userAccountNumber.length())
+        {
+            Alert unknownAccount = new Alert(Alert.AlertType.WARNING,  "This account number is not associated with Gungabank Inc.. \nAre you sure you want to send to ("+accountNumber+")",
+                    new ButtonType("Yes"),
+                    new ButtonType("Go back"));
+            unknownAccount.setHeaderText("Unknown Account");
+            Optional<ButtonType> buttonType = unknownAccount.showAndWait();
+
+            if (buttonType.get().getText().equalsIgnoreCase("Go back"))
+            {
+                amountToSend.setText("");
+                accountNumberTF.setText("");
+                return;
+
+            }
+        }
+
+        if (accountNumber.equals(userAccountNumber))
+        {
+            Alert selfSending = new Alert(Alert.AlertType.ERROR, "You cannot send money to yourself!");
+            selfSending.show();
             return;
         }
 
@@ -185,10 +210,10 @@ public class TransfersPageController implements Controller
 
 
         double amt = Double.parseDouble(amountTosend);
-        long accNumber = Long.parseLong(accountNumber);
         if (bankAccount.getBalance() < amt)
         {
-            AlertOperations.AlertShortner("bad", "Not enough funds", "You do not have enough funds in your account to complete this transaction");
+            Alert notEnoughFunds = new Alert(Alert.AlertType.ERROR, "Not enough funds!");
+            notEnoughFunds.show();
             return;
         }
 
@@ -233,7 +258,7 @@ public class TransfersPageController implements Controller
 
         dateColumn.setCellValueFactory(new PropertyValueFactory<Transaction, String>("Date"));
         accountColumn.setCellValueFactory(new PropertyValueFactory<Transaction, String>("accountNumber"));
-        ammountColumn.setCellValueFactory(new PropertyValueFactory<Transaction, String>("amount"));
+        amountColumn.setCellValueFactory(new PropertyValueFactory<Transaction, String>("amount"));
         transactionColumn.setCellValueFactory(new PropertyValueFactory<Transaction, String>("TransactionType"));
 
         transactionTable.setItems(s);
@@ -242,16 +267,16 @@ public class TransfersPageController implements Controller
         onIconClicked = new OnIconClicked(icons, userLoggedIn, stageHandler, fileHandler);
     }
 
-    private void addTransaction(Stage dialog, double ammount, String accountNumber)
+    private void addTransaction(Stage dialog, double amount, String accountNumber)
     {
-        Transaction transaction = new Transaction(new BigDecimal(ammount + ""), Long.parseLong(accountNumber), new Date(), Transaction.TransactionType.TRANSFER);
+        Transaction transaction = new Transaction(new BigDecimal(amount + ""), Long.parseLong(accountNumber), new Date(), Transaction.TransactionType.TRANSFER);
         bankAccount.getTransactions().add(transaction);
         dialog.close();
 
         s.add(transaction);
         dateColumn.setCellValueFactory(new PropertyValueFactory<Transaction, String>("Date"));
         accountColumn.setCellValueFactory(new PropertyValueFactory<Transaction, String>("accountNumber"));
-        ammountColumn.setCellValueFactory(new PropertyValueFactory<Transaction, String>("amount"));
+        amountColumn.setCellValueFactory(new PropertyValueFactory<Transaction, String>("amount"));
         transactionColumn.setCellValueFactory(new PropertyValueFactory<Transaction, String>("TransactionType"));
         transactionTable.setItems(s);
 
