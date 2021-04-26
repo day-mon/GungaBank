@@ -19,7 +19,7 @@ import java.util.Scanner;
 public class GungaBank extends Application
 {
     /**
-     * Using Simpleton pattern
+     * Using Singleton pattern
      */
     private static StageHandler stageHandler;
     private static FileHandler fileHandler;
